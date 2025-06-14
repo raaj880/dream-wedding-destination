@@ -5,14 +5,16 @@ import { Heart, MessageCircle, Users, Eye, TrendingUp, Settings, Bell } from 'lu
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
-import { useDashboard } from '@/hooks/useDashboard';
+import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { useFilters } from '@/hooks/useFilters';
+import StatsCard from '@/components/dashboard/StatsCard';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
-  const stats = useDashboard();
+  const stats = useDashboardStats();
   const { isActive: hasActiveFilters } = useFilters();
+  const navigate = useNavigate();
 
   const quickActions = [
     {
@@ -41,32 +43,25 @@ const Dashboard: React.FC = () => {
     }
   ];
 
-  const statsCards = [
-    {
-      title: 'Profile Views',
-      value: stats.profileViews,
-      icon: Eye,
-      description: 'This week'
-    },
-    {
-      title: 'Likes Sent',
-      value: stats.totalLikes,
-      icon: Heart,
-      description: 'Total'
-    },
-    {
-      title: 'Matches',
-      value: stats.totalMatches,
-      icon: Users,
-      description: 'Mutual likes'
-    },
-    {
-      title: 'Activity',
-      value: stats.recentActivity,
-      icon: TrendingUp,
-      description: 'Last 7 days'
-    }
-  ];
+  const handleProfileViewsClick = () => {
+    // Navigate to profile page to encourage completing profile
+    navigate('/profile');
+  };
+
+  const handleLikesSentClick = () => {
+    // Navigate to swipe interface
+    navigate('/swipe');
+  };
+
+  const handleMatchesClick = () => {
+    // Navigate to matches page
+    navigate('/matches');
+  };
+
+  const handleActivityClick = () => {
+    // Show activity breakdown or navigate to swipe
+    navigate('/swipe');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -149,28 +144,78 @@ const Dashboard: React.FC = () => {
           ))}
         </div>
 
-        {/* Statistics */}
+        {/* Enhanced Statistics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {statsCards.map((stat, index) => (
-            <motion.div
-              key={stat.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
-            >
-              <Card className="bg-white border-0 shadow-sm">
-                <CardContent className="p-4 text-center">
-                  <stat.icon className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-deep-blue">{stat.value}</div>
-                  <div className="text-xs font-medium text-gray-900">{stat.title}</div>
-                  <div className="text-xs text-gray-500">{stat.description}</div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+          <StatsCard
+            title="Profile Views"
+            value={stats.profileViews}
+            icon={Eye}
+            description="This week"
+            color="text-blue-500"
+            onClick={handleProfileViewsClick}
+            loading={stats.loading}
+          />
+          <StatsCard
+            title="Likes Sent"
+            value={stats.likesSent}
+            icon={Heart}
+            description="Total"
+            color="text-red-500"
+            onClick={handleLikesSentClick}
+            loading={stats.loading}
+          />
+          <StatsCard
+            title="Matches"
+            value={stats.totalMatches}
+            icon={Users}
+            description="Mutual likes"
+            color="text-green-500"
+            onClick={handleMatchesClick}
+            loading={stats.loading}
+          />
+          <StatsCard
+            title="Activity"
+            value={stats.recentActivity}
+            icon={TrendingUp}
+            description="Last 7 days"
+            color="text-purple-500"
+            onClick={handleActivityClick}
+            loading={stats.loading}
+          />
         </div>
 
-        {/* Recent Activity */}
+        {/* Additional Stats Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card className="bg-white border-0 shadow-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium text-gray-600">Likes Received</div>
+                  <div className="text-2xl font-bold text-deep-blue">
+                    {stats.loading ? '...' : stats.likesReceived}
+                  </div>
+                </div>
+                <Heart className="w-8 h-8 text-soft-pink" />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-white border-0 shadow-sm">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium text-gray-600">Match Rate</div>
+                  <div className="text-2xl font-bold text-deep-blue">
+                    {stats.loading ? '...' : stats.likesSent > 0 ? Math.round((stats.totalMatches / stats.likesSent) * 100) : 0}%
+                  </div>
+                </div>
+                <TrendingUp className="w-8 h-8 text-green-500" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Quick Tips */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
