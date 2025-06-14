@@ -80,8 +80,10 @@ const Matches: React.FC = () => {
           </div>
           
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon">
-              <Filter className="w-5 h-5 text-gray-600" />
+            <Button variant="ghost" size="icon" asChild>
+              <Link to="/filter">
+                <Filter className="w-5 h-5 text-gray-600" />
+              </Link>
             </Button>
             <Button variant="ghost" size="icon">
               <Bell className="w-5 h-5 text-gray-600" />

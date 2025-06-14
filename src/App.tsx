@@ -19,6 +19,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import SwipeInterface from "./pages/SwipeInterface";
 import ChatInterface from "./pages/ChatInterface";
+import FilterScreen from "./pages/FilterScreen";
 import { ThemeProvider } from "next-themes";
 import ProfileSetupWizard from "./pages/ProfileSetupWizard";
 import Navbar from "./components/landing/Navbar";
@@ -46,6 +47,7 @@ const App = () => (
                 <Route path="/chat/:userId" element={<ChatInterface />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/profile-setup" element={<ProfileSetupWizard />} />
+                <Route path="/filter" element={<FilterScreen />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/contact" element={<ContactPage />} />
