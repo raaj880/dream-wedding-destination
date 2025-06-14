@@ -96,6 +96,50 @@ export const useMatches = () => {
 
   useEffect(() => {
     fetchMatches();
+
+    if (!user) return;
+
+    // Set up real-time subscription for match updates
+    const matchesChannel = supabase
+      .channel('matches-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'matches'
+        },
+        (payload) => {
+          const newMatch = payload.new;
+          const isUserInvolved = newMatch.user1_id === user.id || newMatch.user2_id === user.id;
+          
+          if (isUserInvolved) {
+            // Refetch matches to include the new one
+            fetchMatches();
+          }
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'matches'
+        },
+        (payload) => {
+          const updatedMatch = payload.new;
+          const isUserInvolved = updatedMatch.user1_id === user.id || updatedMatch.user2_id === user.id;
+          
+          if (isUserInvolved) {
+            fetchMatches();
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(matchesChannel);
+    };
   }, [user]);
 
   return {

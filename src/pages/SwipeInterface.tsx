@@ -1,21 +1,18 @@
-
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePotentialMatches } from '@/hooks/usePotentialMatches';
 import { useSwipeActions } from '@/hooks/useSwipeActions';
 import ProfileCard from '@/components/swipe/ProfileCard';
+import MatchNotificationManager from '@/components/matches/MatchNotificationManager';
 import { toast } from '@/hooks/use-toast';
 
 const SwipeInterface: React.FC = () => {
-  const navigate = useNavigate();
   const { matches, loading, error, refetch } = usePotentialMatches();
   const { recordInteraction, loading: swipeLoading } = useSwipeActions();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showMatchModal, setShowMatchModal] = useState(false);
-  const [matchedUser, setMatchedUser] = useState<string>('');
 
   const currentProfile = matches[currentIndex];
 
@@ -25,14 +22,8 @@ const SwipeInterface: React.FC = () => {
     try {
       const result = await recordInteraction(currentProfile.id, action);
       
-      if (result.isMatch) {
-        setMatchedUser(currentProfile.full_name);
-        setShowMatchModal(true);
-        toast({
-          title: "It's a Match! 💕",
-          description: `You and ${currentProfile.full_name} liked each other!`,
-        });
-      } else if (action === 'like') {
+      // Show appropriate feedback based on action
+      if (action === 'like') {
         toast({
           title: "Profile Liked! ❤️",
           description: "You'll be notified if they like you back.",
@@ -44,10 +35,8 @@ const SwipeInterface: React.FC = () => {
         });
       }
 
-      // Move to next profile after a short delay
-      setTimeout(() => {
-        setCurrentIndex(prev => prev + 1);
-      }, result.isMatch ? 2000 : 500);
+      // Move to next profile immediately (match notification will be handled by MatchNotificationManager)
+      setCurrentIndex(prev => prev + 1);
     } catch (error) {
       console.error('Error handling swipe:', error);
       toast({
@@ -188,50 +177,8 @@ const SwipeInterface: React.FC = () => {
         </div>
       </div>
 
-      {/* Match Modal */}
-      <AnimatePresence>
-        {showMatchModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
-            onClick={() => setShowMatchModal(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="bg-white rounded-2xl p-8 text-center max-w-sm w-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="text-6xl mb-4">💕</div>
-              <h2 className="text-2xl font-bold text-deep-blue mb-2">It's a Match!</h2>
-              <p className="text-gray-600 mb-6">
-                You and {matchedUser} liked each other
-              </p>
-              <div className="space-y-3">
-                <Button 
-                  className="w-full bg-deep-blue text-white"
-                  onClick={() => {
-                    setShowMatchModal(false);
-                    navigate('/matches');
-                  }}
-                >
-                  Send Message
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => setShowMatchModal(false)}
-                >
-                  Keep Swiping
-                </Button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Real-time Match Notifications */}
+      <MatchNotificationManager />
     </div>
   );
 };

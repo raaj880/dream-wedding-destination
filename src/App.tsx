@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -30,6 +29,7 @@ import FilterScreen from "./pages/FilterScreen";
 import ProfileSetupWizard from "./pages/ProfileSetupWizard";
 import Navbar from "./components/landing/Navbar";
 import Footer from "./components/landing/Footer";
+import MatchNotificationManager from "./components/matches/MatchNotificationManager";
 
 const queryClient = new QueryClient();
 
@@ -119,6 +119,9 @@ const App = () => (
                 </Routes>
               </main>
               <Footer />
+              
+              {/* Global Match Notifications */}
+              <MatchNotificationManager />
             </div>
           </BrowserRouter>
         </AuthProvider>
