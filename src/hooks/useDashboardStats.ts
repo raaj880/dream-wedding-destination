@@ -82,6 +82,21 @@ export function useDashboardStats() {
 
       console.log('✅ Matches data:', matchesData);
 
+      // Get profile views - for now we'll fetch from user_interactions where interaction_type is 'view'
+      console.log('👀 Fetching profile views...');
+      const { data: profileViewsData, error: profileViewsError } = await supabase
+        .from('user_interactions')
+        .select('id, created_at')
+        .eq('target_user_id', user.id)
+        .eq('interaction_type', 'view');
+
+      if (profileViewsError) {
+        console.error('❌ Error fetching profile views:', profileViewsError);
+        // Don't throw error for profile views as this might not be implemented yet
+      }
+
+      console.log('✅ Profile views data:', profileViewsData);
+
       // Calculate recent activity (last 7 days)
       const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
@@ -94,16 +109,17 @@ export function useDashboardStats() {
         match => new Date(match.matched_at) > weekAgo
       ).length || 0;
 
-      console.log('📈 Recent activity calculation:', { recentLikes, recentMatches });
+      const recentViews = profileViewsData?.filter(
+        view => new Date(view.created_at) > weekAgo
+      ).length || 0;
 
-      // Mock profile views for now (would need view tracking table)
-      const profileViews = Math.floor(Math.random() * 50) + 20;
+      console.log('📈 Recent activity calculation:', { recentLikes, recentMatches, recentViews });
 
       const newStats = {
-        profileViews,
+        profileViews: profileViewsData?.length || 0,
         likesSent: likesSentData?.length || 0,
         totalMatches: matchesData?.length || 0,
-        recentActivity: recentLikes + recentMatches,
+        recentActivity: recentLikes + recentMatches + recentViews,
         likesReceived: likesReceivedData?.length || 0,
         loading: false,
         error: null

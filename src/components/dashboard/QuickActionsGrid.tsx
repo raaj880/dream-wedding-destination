@@ -21,7 +21,7 @@ const QuickActionsGrid: React.FC<QuickActionsGridProps> = ({ totalMatches }) => 
     },
     {
       title: 'View Matches',
-      description: `${totalMatches} mutual matches`,
+      description: `${totalMatches} ${totalMatches === 1 ? 'match' : 'matches'}`,
       icon: Users,
       href: '/matches',
       color: 'bg-blue-50',
