@@ -12,6 +12,9 @@ import { useFilters } from '@/hooks/useFilters';
 import { useMatchFiltering } from '@/hooks/useMatchFiltering';
 import { useSwipeTutorial } from '@/hooks/useSwipeTutorial';
 import ProfileCard from '@/components/swipe/ProfileCard';
+import SwipeTips from '@/components/swipe/SwipeTips';
+import FilterSummary from '@/components/swipe/FilterSummary';
+import SwipeFeedback from '@/components/swipe/SwipeFeedback';
 import SwipeTutorial from '@/components/swipe/SwipeTutorial';
 import MatchNotificationManager from '@/components/matches/MatchNotificationManager';
 import { toast } from '@/hooks/use-toast';
@@ -20,7 +23,7 @@ const SwipeInterface: React.FC = () => {
   const navigate = useNavigate();
   const { matches, loading, error, refetch } = usePotentialMatches();
   const { recordInteraction, loading: swipeLoading } = useSwipeActions();
-  const { appliedFilters, isActive: isFilterActive } = useFilters();
+  const { appliedFilters, isActive: isFilterActive, clearFilter, clearAllFilters } = useFilters();
   const { filteredMatches, filteredCount, totalCount } = useMatchFiltering(matches, appliedFilters);
   const { showTutorial, completeTutorial } = useSwipeTutorial();
   
@@ -33,6 +36,7 @@ const SwipeInterface: React.FC = () => {
     streak: 0
   });
   const [showStats, setShowStats] = useState(false);
+  const [feedbackAction, setFeedbackAction] = useState<'like' | 'pass' | 'superlike' | null>(null);
 
   const currentProfile = filteredMatches[currentIndex];
   const remainingProfiles = filteredMatches.length - currentIndex;
@@ -51,6 +55,9 @@ const SwipeInterface: React.FC = () => {
         streak: action === 'like' || action === 'superlike' ? prev.streak + 1 : 0
       }));
 
+      // Show feedback animation
+      setFeedbackAction(action);
+
       // Show appropriate feedback based on action
       if (action === 'like') {
         toast({
@@ -68,11 +75,6 @@ const SwipeInterface: React.FC = () => {
           description: "Moving to the next profile.",
         });
       }
-
-      // Move to next profile with a slight delay for animation
-      setTimeout(() => {
-        setCurrentIndex(prev => prev + 1);
-      }, 300);
       
     } catch (error) {
       console.error('Error handling swipe:', error);
@@ -82,6 +84,11 @@ const SwipeInterface: React.FC = () => {
         variant: "destructive"
       });
     }
+  };
+
+  const handleFeedbackComplete = () => {
+    setFeedbackAction(null);
+    setCurrentIndex(prev => prev + 1);
   };
 
   const resetSwipes = async () => {
@@ -364,8 +371,25 @@ const SwipeInterface: React.FC = () => {
         </div>
       </div>
 
-      {/* Profile Cards */}
+      {/* Container */}
       <div className="container mx-auto px-4 py-6 max-w-md">
+        {/* Swipe Tips */}
+        <div className="mb-4">
+          <SwipeTips />
+        </div>
+
+        {/* Filter Summary */}
+        {isFilterActive && (
+          <div className="mb-4">
+            <FilterSummary 
+              filters={appliedFilters} 
+              onClearFilter={clearFilter}
+              onClearAll={clearAllFilters}
+            />
+          </div>
+        )}
+
+        {/* Profile Cards */}
         <div className="relative h-[600px]">
           <AnimatePresence mode="wait">
             {currentProfile && (
@@ -441,6 +465,9 @@ const SwipeInterface: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Swipe Feedback Overlay */}
+      <SwipeFeedback action={feedbackAction} onComplete={handleFeedbackComplete} />
 
       {/* Real-time Match Notifications */}
       <MatchNotificationManager />

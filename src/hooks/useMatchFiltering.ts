@@ -1,9 +1,9 @@
 
 import { useMemo } from 'react';
-import { UserProfile } from '@/types/match';
+import { PotentialMatch } from '@/hooks/usePotentialMatches';
 import { FilterOptions } from '@/types/filters';
 
-export function useMatchFiltering(matches: UserProfile[], filters: FilterOptions) {
+export function useMatchFiltering(matches: PotentialMatch[], filters: FilterOptions) {
   const filteredMatches = useMemo(() => {
     return matches.filter(match => {
       // Age range filter
@@ -18,6 +18,24 @@ export function useMatchFiltering(matches: UserProfile[], filters: FilterOptions
       // Religion filter
       if (filters.religions.length > 0 && !filters.religions.includes('Any')) {
         if (!filters.religions.includes(match.religion)) return false;
+      }
+
+      // Community filter
+      if (filters.community && match.community && match.community !== filters.community) {
+        return false;
+      }
+
+      // Education filter
+      if (filters.education && match.education && match.education !== filters.education) {
+        return false;
+      }
+
+      // Languages filter
+      if (filters.languages.length > 0) {
+        const hasMatchingLanguage = match.languages && match.languages.some(lang => 
+          filters.languages.includes(lang)
+        );
+        if (!hasMatchingLanguage) return false;
       }
 
       // Verified filter
