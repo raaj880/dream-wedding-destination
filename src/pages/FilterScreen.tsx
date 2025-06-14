@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -8,47 +8,32 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { motion } from 'framer-motion';
+import { useFilters } from '@/hooks/useFilters';
+import { useToast } from '@/hooks/use-toast';
 
 const FilterScreen: React.FC = () => {
-  const [ageRange, setAgeRange] = useState([24, 30]);
-  const [location, setLocation] = useState('');
-  const [nearbyOnly, setNearbyOnly] = useState(false);
-  const [religions, setReligions] = useState<string[]>([]);
-  const [community, setCommunity] = useState('');
-  const [education, setEducation] = useState('');
-  const [maritalIntent, setMaritalIntent] = useState('');
-  const [languages, setLanguages] = useState<string[]>([]);
-  const [verifiedOnly, setVerifiedOnly] = useState(false);
-
-  const handleReset = () => {
-    setAgeRange([20, 45]);
-    setLocation('');
-    setNearbyOnly(false);
-    setReligions([]);
-    setCommunity('');
-    setEducation('');
-    setMaritalIntent('');
-    setLanguages([]);
-    setVerifiedOnly(false);
-  };
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { filters, updateFilter, applyFilters, resetFilters } = useFilters();
 
   const handleApplyFilters = () => {
-    console.log('Applying filters:', {
-      ageRange,
-      location,
-      nearbyOnly,
-      religions,
-      community,
-      education,
-      maritalIntent,
-      languages,
-      verifiedOnly
+    applyFilters();
+    toast({
+      title: "Filters Applied",
+      description: "Your match preferences have been updated.",
     });
-    // Here you would typically apply the filters and navigate back
+    navigate('/matches');
+  };
+
+  const handleReset = () => {
+    resetFilters();
+    toast({
+      title: "Filters Reset",
+      description: "All filters have been cleared.",
+    });
   };
 
   const religionOptions = ['Hindu', 'Muslim', 'Christian', 'Jain', 'Sikh', 'Buddhist', 'Any'];
@@ -88,12 +73,12 @@ const FilterScreen: React.FC = () => {
               <Label className="text-lg font-semibold text-deep-blue mb-4 block">Age Range</Label>
               <div className="text-center mb-4">
                 <span className="text-2xl font-bold text-deep-blue">
-                  {ageRange[0]} – {ageRange[1]} years
+                  {filters.ageRange[0]} – {filters.ageRange[1]} years
                 </span>
               </div>
               <Slider
-                value={ageRange}
-                onValueChange={setAgeRange}
+                value={filters.ageRange}
+                onValueChange={(value) => updateFilter('ageRange', value as [number, number])}
                 max={45}
                 min={20}
                 step={1}
@@ -116,7 +101,7 @@ const FilterScreen: React.FC = () => {
           <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-6">
               <Label className="text-lg font-semibold text-deep-blue mb-4 block">Location</Label>
-              <Select value={location} onValueChange={setLocation}>
+              <Select value={filters.location} onValueChange={(value) => updateFilter('location', value)}>
                 <SelectTrigger className="w-full mb-4">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
@@ -133,8 +118,8 @@ const FilterScreen: React.FC = () => {
                 <Label htmlFor="nearby" className="text-sm font-medium">Nearby only</Label>
                 <Switch
                   id="nearby"
-                  checked={nearbyOnly}
-                  onCheckedChange={setNearbyOnly}
+                  checked={filters.nearbyOnly}
+                  onCheckedChange={(checked) => updateFilter('nearbyOnly', checked)}
                 />
               </div>
             </CardContent>
@@ -150,7 +135,11 @@ const FilterScreen: React.FC = () => {
           <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-6">
               <Label className="text-lg font-semibold text-deep-blue mb-4 block">Religion</Label>
-              <ToggleGroup type="multiple" value={religions} onValueChange={setReligions}>
+              <ToggleGroup 
+                type="multiple" 
+                value={filters.religions} 
+                onValueChange={(value) => updateFilter('religions', value)}
+              >
                 <div className="flex flex-wrap gap-2">
                   {religionOptions.map((religion) => (
                     <ToggleGroupItem
@@ -176,7 +165,7 @@ const FilterScreen: React.FC = () => {
           <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-6">
               <Label className="text-lg font-semibold text-deep-blue mb-4 block">Community / Caste</Label>
-              <Select value={community} onValueChange={setCommunity}>
+              <Select value={filters.community} onValueChange={(value) => updateFilter('community', value)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select community" />
                 </SelectTrigger>
@@ -201,7 +190,7 @@ const FilterScreen: React.FC = () => {
           <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-6">
               <Label className="text-lg font-semibold text-deep-blue mb-4 block">Education</Label>
-              <Select value={education} onValueChange={setEducation}>
+              <Select value={filters.education} onValueChange={(value) => updateFilter('education', value)}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select education level" />
                 </SelectTrigger>
@@ -228,7 +217,7 @@ const FilterScreen: React.FC = () => {
               <Label className="text-lg font-semibold text-deep-blue mb-4 block">
                 Looking to marry in:
               </Label>
-              <RadioGroup value={maritalIntent} onValueChange={setMaritalIntent}>
+              <RadioGroup value={filters.maritalIntent} onValueChange={(value) => updateFilter('maritalIntent', value)}>
                 <div className="space-y-3">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="6months" id="6months" />
@@ -263,7 +252,11 @@ const FilterScreen: React.FC = () => {
           <Card className="bg-white border-0 shadow-sm">
             <CardContent className="p-6">
               <Label className="text-lg font-semibold text-deep-blue mb-4 block">Languages Spoken</Label>
-              <ToggleGroup type="multiple" value={languages} onValueChange={setLanguages}>
+              <ToggleGroup 
+                type="multiple" 
+                value={filters.languages} 
+                onValueChange={(value) => updateFilter('languages', value)}
+              >
                 <div className="flex flex-wrap gap-2">
                   {languageOptions.map((language) => (
                     <ToggleGroupItem
@@ -297,8 +290,8 @@ const FilterScreen: React.FC = () => {
                 </div>
                 <Switch
                   id="verified"
-                  checked={verifiedOnly}
-                  onCheckedChange={setVerifiedOnly}
+                  checked={filters.verifiedOnly}
+                  onCheckedChange={(checked) => updateFilter('verifiedOnly', checked)}
                 />
               </div>
             </CardContent>

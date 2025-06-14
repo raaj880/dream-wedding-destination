@@ -7,45 +7,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
-
-const mockMatches = [
-  {
-    id: 1,
-    name: 'Ananya Sharma',
-    age: 27,
-    location: 'Mumbai, India',
-    profession: 'Product Manager',
-    religion: 'Hindu',
-    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face',
-    status: 'new',
-    verified: true,
-    lastSeen: 'Online'
-  },
-  {
-    id: 2,
-    name: 'Rahul Gupta',
-    age: 29,
-    location: 'Bangalore, India',
-    profession: 'Software Engineer',
-    religion: 'Hindu',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
-    status: 'typing',
-    verified: true,
-    lastSeen: 'Typing...'
-  },
-  {
-    id: 3,
-    name: 'Kavya Reddy',
-    age: 26,
-    location: 'Hyderabad, India',
-    profession: 'Doctor',
-    religion: 'Hindu',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=face',
-    status: 'seen',
-    verified: false,
-    lastSeen: 'Last seen 2h ago'
-  }
-];
+import { mockUsers } from '@/store/mockData';
+import { useFilters } from '@/hooks/useFilters';
+import { useMatchFiltering } from '@/hooks/useMatchFiltering';
 
 const getStatusBadge = (status: string) => {
   switch (status) {
@@ -64,7 +28,27 @@ const getStatusColor = (status: string) => {
   return 'text-gray-500';
 };
 
+// Mock status data for display
+const mockMatchStatuses = [
+  { id: '1', status: 'new', lastSeen: 'Online' },
+  { id: '2', status: 'typing', lastSeen: 'Typing...' },
+  { id: '3', status: 'seen', lastSeen: 'Last seen 2h ago' }
+];
+
 const Matches: React.FC = () => {
+  const { appliedFilters, isActive } = useFilters();
+  const { filteredMatches, filteredCount } = useMatchFiltering(mockUsers, appliedFilters);
+
+  // Combine filtered users with mock status data
+  const matchesWithStatus = filteredMatches.map(user => {
+    const statusData = mockMatchStatuses.find(s => s.id === user.id);
+    return {
+      ...user,
+      status: statusData?.status || 'seen',
+      lastSeen: statusData?.lastSeen || 'Last seen recently'
+    };
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -82,7 +66,8 @@ const Matches: React.FC = () => {
           <div className="flex items-center space-x-2">
             <Button variant="ghost" size="icon" asChild>
               <Link to="/filter">
-                <Filter className="w-5 h-5 text-gray-600" />
+                <Filter className={`w-5 h-5 ${isActive ? 'text-deep-blue' : 'text-gray-600'}`} />
+                {isActive && <div className="w-2 h-2 bg-soft-pink rounded-full absolute top-2 right-2" />}
               </Link>
             </Button>
             <Button variant="ghost" size="icon">
@@ -93,17 +78,41 @@ const Matches: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-4 py-6 max-w-4xl">
+        {/* Filter Status */}
+        {isActive && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="mb-4"
+          >
+            <Card className="bg-soft-pink/10 border-soft-pink/20">
+              <CardContent className="p-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-deep-blue">
+                    🎯 Filters active - showing {filteredCount} matches
+                  </span>
+                  <Button variant="ghost" size="sm" asChild>
+                    <Link to="/filter" className="text-deep-blue text-xs">
+                      Edit Filters
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
         {/* Matches Count */}
         <div className="mb-6">
           <p className="text-gray-600">
-            {mockMatches.length} mutual matches
+            {filteredCount} mutual matches
           </p>
         </div>
 
         {/* Matches List */}
-        {mockMatches.length > 0 ? (
+        {matchesWithStatus.length > 0 ? (
           <div className="space-y-4">
-            {mockMatches.map((match, index) => (
+            {matchesWithStatus.map((match, index) => (
               <motion.div
                 key={match.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -117,9 +126,9 @@ const Matches: React.FC = () => {
                         {/* Profile Picture */}
                         <div className="relative">
                           <Avatar className="w-16 h-16">
-                            <AvatarImage src={match.image} alt={match.name} className="object-cover" />
+                            <AvatarImage src={match.photos[0]} alt={match.fullName} className="object-cover" />
                             <AvatarFallback className="text-lg bg-soft-pink text-deep-blue">
-                              {match.name.charAt(0)}
+                              {match.fullName.charAt(0)}
                             </AvatarFallback>
                           </Avatar>
                           {match.verified && (
@@ -133,7 +142,7 @@ const Matches: React.FC = () => {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center space-x-2 mb-1">
                             <h3 className="text-lg font-semibold text-deep-blue truncate">
-                              {match.name}, {match.age}
+                              {match.fullName}, {match.age}
                             </h3>
                             {getStatusBadge(match.status)}
                           </div>
@@ -173,14 +182,29 @@ const Matches: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center py-16"
           >
-            <div className="text-6xl mb-4">💌</div>
-            <h3 className="text-lg font-semibold text-deep-blue mb-2">No matches yet</h3>
-            <p className="text-gray-600 mb-6">Keep swiping to find your perfect match!</p>
-            <Button className="bg-deep-blue text-white hover:bg-deep-blue/90" asChild>
-              <Link to="/swipe">
-                Explore Profiles
-              </Link>
-            </Button>
+            <div className="text-6xl mb-4">
+              {isActive ? '🔍' : '💌'}
+            </div>
+            <h3 className="text-lg font-semibold text-deep-blue mb-2">
+              {isActive ? 'No matches found' : 'No matches yet'}
+            </h3>
+            <p className="text-gray-600 mb-6">
+              {isActive ? 'Try adjusting your filters to see more profiles.' : 'Keep swiping to find your perfect match!'}
+            </p>
+            <div className="space-y-2">
+              <Button className="bg-deep-blue text-white hover:bg-deep-blue/90" asChild>
+                <Link to="/swipe">
+                  Explore Profiles
+                </Link>
+              </Button>
+              {isActive && (
+                <Button variant="outline" asChild>
+                  <Link to="/filter">
+                    Adjust Filters
+                  </Link>
+                </Button>
+              )}
+            </div>
           </motion.div>
         )}
 
