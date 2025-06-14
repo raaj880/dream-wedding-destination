@@ -32,6 +32,21 @@ export function useFilters() {
     console.log('Filters reset');
   }, [setStoredFilters]);
 
+  const clearFilter = useCallback((key: keyof FilterOptions) => {
+    const resetValue = initialFilterOptions[key];
+    const updatedFilters = {
+      ...storedFilters,
+      [key]: resetValue
+    };
+    setStoredFilters(updatedFilters);
+    setCurrentFilters(updatedFilters);
+    console.log(`Filter ${key} cleared`);
+  }, [storedFilters, setStoredFilters]);
+
+  const clearAllFilters = useCallback(() => {
+    resetFilters();
+  }, [resetFilters]);
+
   const hasActiveFilters = useCallback(() => {
     return JSON.stringify(currentFilters) !== JSON.stringify(initialFilterOptions);
   }, [currentFilters]);
@@ -42,6 +57,8 @@ export function useFilters() {
     isActive: hasActiveFilters(),
     updateFilter,
     applyFilters,
-    resetFilters
+    resetFilters,
+    clearFilter,
+    clearAllFilters
   };
 }

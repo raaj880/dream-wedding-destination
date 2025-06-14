@@ -15,43 +15,34 @@ const Matches: React.FC = () => {
   const { appliedFilters, isActive } = useFilters();
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
 
-  // Transform data to match UserProfile interface for filtering
+  // Transform data to match PotentialMatch interface for filtering
   const displayProfiles = matches.length > 0 ? matches.map(match => ({
     id: match.user.id,
-    fullName: match.user.full_name,
+    full_name: match.user.full_name,
     age: match.user.age,
     location: match.user.location,
     profession: match.user.profession,
     religion: 'Not specified', // Default value since matches don't have religion
+    bio: 'Bio not available',
     photos: match.user.photos,
     verified: match.user.verified,
-    isOnline: true, // Default value
-    lastSeen: new Date(),
-    bio: 'Bio not available'
-  })) : potentialMatches.map(profile => ({
-    id: profile.id,
-    fullName: profile.full_name,
-    age: profile.age,
-    location: profile.location,
-    profession: profile.profession,
-    religion: profile.religion || 'Not specified',
-    photos: profile.photos,
-    verified: profile.verified,
-    isOnline: true, // Default value
-    lastSeen: new Date(),
-    bio: profile.bio || 'Bio not available'
-  }));
+    education: undefined,
+    community: undefined,
+    languages: undefined,
+    height: undefined,
+    marry_timeframe: undefined
+  })) : potentialMatches;
 
   const { filteredMatches, filteredCount } = useMatchFiltering(displayProfiles, appliedFilters);
 
   // Transform filtered matches to the format expected by MatchesList
   const matchesForDisplay = filteredMatches.map(profile => ({
     id: profile.id,
-    fullName: profile.fullName,
+    fullName: profile.full_name,
     age: profile.age,
     location: profile.location,
     profession: profile.profession,
-    religion: profile.religion,
+    religion: profile.religion || 'Not specified',
     photos: profile.photos,
     verified: profile.verified,
     status: 'seen',
