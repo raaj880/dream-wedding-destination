@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 import { MapPin, Briefcase, GraduationCap, Heart, X, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { UserProfile } from '@/types/match';
+import { PotentialMatch } from '@/hooks/usePotentialMatches';
 
 interface ProfileCardProps {
-  profile: UserProfile;
+  profile: PotentialMatch;
   onSwipe: (action: 'like' | 'pass' | 'superlike') => void;
   isVisible: boolean;
   index: number;
@@ -27,8 +27,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, onSwipe, isVisible, 
       {/* Photo */}
       <div className="relative h-2/3">
         <img 
-          src={profile.photos[0]} 
-          alt={profile.fullName}
+          src={profile.photos?.[0] || '/placeholder.svg'} 
+          alt={profile.full_name}
           className="w-full h-full object-cover"
         />
         {profile.verified && (
@@ -36,16 +36,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, onSwipe, isVisible, 
             ✓ Verified
           </Badge>
         )}
-        {profile.isOnline && (
-          <div className="absolute top-4 left-4 w-3 h-3 bg-green-500 rounded-full"></div>
-        )}
       </div>
 
       {/* Profile Info */}
       <div className="p-6 h-1/3 flex flex-col justify-between">
         <div>
           <h2 className="text-2xl font-bold text-deep-blue mb-2">
-            {profile.fullName}, {profile.age}
+            {profile.full_name}, {profile.age}
           </h2>
           
           <div className="space-y-1 text-sm text-gray-600">
