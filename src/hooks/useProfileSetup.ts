@@ -7,15 +7,29 @@ import { useProfile } from '@/hooks/useProfile';
 
 export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [profileData, setProfileData] = useState<ProfileData>(initialData || initialProfileData);
+  const [profileData, setProfileData] = useState<ProfileData>(() => {
+    console.log('🏗️ Initializing profile setup with data:', initialData);
+    return initialData || initialProfileData;
+  });
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { saveProfile, loading } = useProfile();
   const isEditMode = !!initialData;
 
+  console.log('🔧 useProfileSetup initialized:', {
+    isEditMode,
+    hasInitialData: !!initialData,
+    currentProfileData: profileData
+  });
+
   const updateData = useCallback((newData: Partial<ProfileData>) => {
-    setProfileData(prev => ({ ...prev, ...newData }));
+    console.log('📝 Updating profile data:', newData);
+    setProfileData(prev => {
+      const updated = { ...prev, ...newData };
+      console.log('📋 Updated profile data:', updated);
+      return updated;
+    });
     // Clear errors for updated fields
     const updatedFields = Object.keys(newData);
     setErrors(prev => {
@@ -87,35 +101,44 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    const isValid = Object.keys(newErrors).length === 0;
+    console.log(`✅ Step ${step} validation:`, { isValid, errors: newErrors });
+    return isValid;
   }, [profileData]);
 
   const nextStep = useCallback(() => {
+    console.log(`➡️ Attempting to go to next step from ${currentStep}`);
     if (validateStep(currentStep)) {
       setCurrentStep(prev => Math.min(prev + 1, totalSteps));
     }
   }, [currentStep, totalSteps, validateStep]);
 
   const prevStep = useCallback(() => {
+    console.log(`⬅️ Going to previous step from ${currentStep}`);
     setCurrentStep(prev => Math.max(prev - 1, 1));
-  }, []);
+  }, [currentStep]);
 
   const handleSubmit = useCallback(async () => {
-    if (!validateStep(currentStep)) return;
+    console.log('🚀 Submitting profile:', { isEditMode, profileData });
+    
+    if (!validateStep(currentStep)) {
+      console.log('❌ Validation failed, not submitting');
+      return;
+    }
 
     setIsSubmitting(true);
     try {
       await saveProfile(profileData);
       
       toast({
-        title: isEditMode ? "Profile Updated!" : "Profile Created Successfully! 🎉",
+        title: isEditMode ? "Profile Updated! 🎉" : "Profile Created Successfully! 🎉",
         description: isEditMode ? "Your changes have been saved." : "Welcome to Wedder! Your profile is now live.",
       });
 
       // Navigate to profile page after edit, or dashboard after creation
       navigate(isEditMode ? '/profile' : '/dashboard', { replace: true });
     } catch (error) {
-      console.error('Error saving profile:', error);
+      console.error('❌ Error saving profile:', error);
       toast({
         title: isEditMode ? "Update Failed" : "Profile Save Failed",
         description: "Something went wrong. Please try again.",

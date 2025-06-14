@@ -15,6 +15,8 @@ const ProfilePage: React.FC = () => {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
   const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
+    console.log('🔄 Transforming raw profile:', rawProfile);
+    
     return {
       fullName: rawProfile.full_name || '',
       // Fix date parsing to avoid timezone issues
@@ -45,16 +47,19 @@ const ProfilePage: React.FC = () => {
     const fetchProfile = async () => {
       if (user) {
         try {
+          console.log('🔍 Fetching profile for user:', user.id);
           const rawProfile = await getProfile();
           if (rawProfile) {
             const transformedProfile = transformRawProfile(rawProfile);
+            console.log('✅ Profile transformed successfully:', transformedProfile);
             setProfileData(transformedProfile);
           } else {
+            console.log('❌ No profile found, redirecting to setup');
             // If no profile exists, redirect to setup
             navigate('/profile-setup', { replace: true });
           }
         } catch (error) {
-          console.error('Error fetching profile:', error);
+          console.error('❌ Error fetching profile:', error);
           toast({
             title: "Error Loading Profile",
             description: "Could not load your profile. Please try again.",
@@ -101,7 +106,7 @@ const ProfilePage: React.FC = () => {
           });
         }
       } catch (error) {
-        console.error('Error updating photo:', error);
+        console.error('❌ Error updating photo:', error);
         toast({
           title: "Photo Update Failed",
           description: "Could not update your profile photo. Please try again.",
@@ -112,9 +117,16 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleEditProfile = () => {
+    console.log('🔧 Edit profile clicked, current profile data:', profileData);
+    
     if (profileData) {
-      navigate('/profile-setup', { state: { profileData } });
+      // Navigate to profile setup with current profile data
+      navigate('/profile-setup', { 
+        state: { profileData },
+        replace: false 
+      });
     } else {
+      console.error('❌ No profile data available for editing');
       toast({
         title: "Could Not Edit Profile",
         description: "Your profile data is not available at the moment. Please try again.",

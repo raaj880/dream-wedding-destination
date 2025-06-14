@@ -20,6 +20,8 @@ const ProfileSetupWizard: React.FC = () => {
   const location = useLocation();
   const existingProfileData = location.state?.profileData;
   
+  console.log('🔍 ProfileSetupWizard loaded with existing data:', existingProfileData);
+  
   const {
     currentStep,
     profileData,
@@ -33,6 +35,13 @@ const ProfileSetupWizard: React.FC = () => {
     triggerValidation,
     isEditMode,
   } = useProfileSetup(totalSteps, existingProfileData);
+
+  console.log('🔧 ProfileSetup hook state:', {
+    currentStep,
+    isEditMode,
+    hasProfileData: !!profileData,
+    profileDataKeys: profileData ? Object.keys(profileData) : []
+  });
 
   const renderStep = () => {
     switch (currentStep) {
