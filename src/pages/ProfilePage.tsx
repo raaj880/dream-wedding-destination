@@ -13,7 +13,7 @@ const ProfilePage: React.FC = () => {
   const { getProfile, loading } = useProfile();
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
-  const transformRawProfile = (rawProfile: Tables<'profiles'>['Row']): ProfileData => {
+  const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
     return {
       fullName: rawProfile.full_name || '',
       dob: rawProfile.date_of_birth ? new Date(rawProfile.date_of_birth) : undefined,
