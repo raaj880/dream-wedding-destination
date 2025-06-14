@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -25,6 +25,7 @@ export const useMatches = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
+  const channelRef = useRef<any>(null);
 
   const fetchMatches = async () => {
     if (!user) return;
@@ -99,9 +100,16 @@ export const useMatches = () => {
 
     if (!user) return;
 
-    // Set up real-time subscription for match updates
-    const matchesChannel = supabase
-      .channel('matches-updates')
+    // Clean up any existing channel first
+    if (channelRef.current) {
+      supabase.removeChannel(channelRef.current);
+      channelRef.current = null;
+    }
+
+    // Set up real-time subscription for match updates with unique channel name
+    const channelName = `matches-updates-${user.id}-${Date.now()}`;
+    channelRef.current = supabase
+      .channel(channelName)
       .on(
         'postgres_changes',
         {
@@ -138,7 +146,10 @@ export const useMatches = () => {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(matchesChannel);
+      if (channelRef.current) {
+        supabase.removeChannel(channelRef.current);
+        channelRef.current = null;
+      }
     };
   }, [user]);
 

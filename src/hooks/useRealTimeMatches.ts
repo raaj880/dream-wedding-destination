@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
@@ -16,15 +16,26 @@ export const useRealTimeMatches = () => {
   const [newMatches, setNewMatches] = useState<RealTimeMatch[]>([]);
   const [isListening, setIsListening] = useState(false);
   const { user } = useAuth();
+  const channelRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setIsListening(false);
+      return;
+    }
 
     setIsListening(true);
 
-    // Subscribe to real-time match insertions
-    const matchesChannel = supabase
-      .channel('realtime-matches')
+    // Clean up any existing channel first
+    if (channelRef.current) {
+      supabase.removeChannel(channelRef.current);
+      channelRef.current = null;
+    }
+
+    // Create new channel with a unique identifier
+    const channelName = `realtime-matches-${user.id}-${Date.now()}`;
+    channelRef.current = supabase
+      .channel(channelName)
       .on(
         'postgres_changes',
         {
@@ -86,7 +97,10 @@ export const useRealTimeMatches = () => {
     }
 
     return () => {
-      supabase.removeChannel(matchesChannel);
+      if (channelRef.current) {
+        supabase.removeChannel(channelRef.current);
+        channelRef.current = null;
+      }
       setIsListening(false);
     };
   }, [user]);
