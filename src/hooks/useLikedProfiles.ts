@@ -75,7 +75,7 @@ export const useLikedProfiles = () => {
             profession: profile.profession || undefined,
             interaction_type: interaction.interaction_type,
             created_at: interaction.created_at
-          };
+          } as LikedProfile;
         })
         .filter((profile): profile is LikedProfile => profile !== null);
 
