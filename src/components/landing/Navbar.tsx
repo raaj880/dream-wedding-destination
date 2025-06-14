@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -53,9 +55,11 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
-            <Button asChild className="ml-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-6 py-2.5 text-base font-semibold transition-transform hover:scale-105">
-              <Link to="/auth">Join Now</Link>
-            </Button>
+            {!isAuthenticated && (
+              <Button asChild className="ml-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-6 py-2.5 text-base font-semibold transition-transform hover:scale-105">
+                <Link to="/auth">Join Now</Link>
+              </Button>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -90,9 +94,11 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
-            <Button asChild className="mt-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-8 py-3 text-lg font-semibold transition-transform hover:scale-105 w-3/4">
-              <Link to="/auth" onClick={closeMobileMenu}>Join Now</Link>
-            </Button>
+            {!isAuthenticated && (
+              <Button asChild className="mt-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-8 py-3 text-lg font-semibold transition-transform hover:scale-105 w-3/4">
+                <Link to="/auth" onClick={closeMobileMenu}>Join Now</Link>
+              </Button>
+            )}
           </nav>
         </div>
       )}

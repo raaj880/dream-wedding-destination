@@ -77,7 +77,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="fullName"
@@ -200,7 +200,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
         >
           {form.formState.isSubmitting ? 'Creating Account...' : 'Create Account'}
         </Button>
-        <div className="relative my-4 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-300">
+        <div className="relative my-6 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-300">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
@@ -216,9 +216,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
           <a href="/terms" className="underline hover:text-soft-pink">Terms of Service</a> and{' '}
           <a href="/privacy" className="underline hover:text-soft-pink">Privacy Policy</a>.
         </p>
-        <p className="text-center text-sm text-gray-600 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-450">
+        <p className="text-center text-sm text-gray-600 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-450 pt-2">
           Already have an account?{' '}
-          <Button variant="link" className="p-0 h-auto text-soft-pink hover:underline" onClick={onSwitchToLogin}>
+          <Button variant="link" className="p-0 h-auto text-deep-blue hover:text-deep-blue/80 hover:underline font-medium" onClick={onSwitchToLogin}>
             Login
           </Button>
         </p>

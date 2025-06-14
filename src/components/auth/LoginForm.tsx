@@ -65,7 +65,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
           name="emailOrPhone"
@@ -115,11 +115,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
           {form.formState.isSubmitting ? 'Logging in...' : 'Login'}
         </Button>
         <div className="text-center animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-100">
-          <a href="#" className="text-sm text-soft-pink hover:underline">
+          <a href="#" className="text-sm text-deep-blue hover:text-deep-blue/80 hover:underline font-medium">
             Forgot Password?
           </a>
         </div>
-        <div className="relative my-4 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-150">
+        <div className="relative my-6 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-150">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
@@ -130,10 +130,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
         <div className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-200">
           <SocialAuthButtons actionText="Login" />
         </div>
-        <p className="text-center text-sm text-gray-600 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-250">
+        <p className="text-center text-sm text-gray-600 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-250 pt-2">
           Don't have an account?{' '}
-          <Button variant="link" className="p-0 h-auto text-soft-pink hover:underline" onClick={onSwitchToSignup}>
-            Create one now
+          <Button variant="link" className="p-0 h-auto text-deep-blue hover:text-deep-blue/80 hover:underline font-medium" onClick={onSwitchToSignup}>
+            Create new one
           </Button>
         </p>
       </form>
