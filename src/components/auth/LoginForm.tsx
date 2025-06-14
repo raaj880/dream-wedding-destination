@@ -35,9 +35,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
 
   const onSubmit = (data: LoginFormValues) => {
     console.log('Login data:', data);
-    // Placeholder for actual login logic
     toast({ title: "Login Submitted", description: "Simulating login..." });
-    onLoginSuccess(); // Simulate success
+    onLoginSuccess();
   };
 
   return (
@@ -47,7 +46,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
           control={form.control}
           name="emailOrPhone"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out">
               <FormLabel>Email or Phone Number</FormLabel>
               <FormControl>
                 <Input placeholder="you@example.com or 9876543210" {...field} />
@@ -60,7 +59,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-50">
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="relative">
@@ -84,15 +83,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full">
+        <Button 
+          type="submit" 
+          className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
+        >
           Login
         </Button>
-        <div className="text-center">
+        <div className="text-center animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-100">
           <a href="#" className="text-sm text-soft-pink hover:underline">
             Forgot Password?
           </a>
         </div>
-        <div className="relative my-4">
+        <div className="relative my-4 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-150">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
@@ -100,8 +102,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
             <span className="bg-background px-2 text-muted-foreground">Or</span>
           </div>
         </div>
-        <SocialAuthButtons actionText="Login" />
-        <p className="text-center text-sm text-gray-600">
+        <div className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-200">
+          <SocialAuthButtons actionText="Login" />
+        </div>
+        <p className="text-center text-sm text-gray-600 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-250">
           Don’t have an account?{' '}
           <Button variant="link" className="p-0 h-auto text-soft-pink hover:underline" onClick={onSwitchToSignup}>
             Create one now

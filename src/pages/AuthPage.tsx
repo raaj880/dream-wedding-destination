@@ -13,21 +13,18 @@ const AuthPage: React.FC = () => {
 
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);
-    // In a real app, you'd redirect or update global state
     console.log("Login successful, showing placeholder.");
   };
 
   const handleSignupSuccess = () => {
     setIsAuthenticated(true);
-    // In a real app, you'd redirect or update global state
     console.log("Signup successful, showing placeholder.");
   };
   
   const handleSetupProfile = () => {
     console.log("Redirecting to profile setup...");
-    // Placeholder for navigation
     alert("Navigate to profile setup page (not implemented).");
-    setIsAuthenticated(false); // Reset for demo purposes
+    setIsAuthenticated(false); 
     setActiveTab('login');
   };
 
@@ -44,27 +41,27 @@ const AuthPage: React.FC = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-soft-pink/20 via-white to-white p-4 font-sans">
       <div className="w-full max-w-md">
         <LogoWithTagline />
-        <Card className="shadow-xl rounded-2xl">
+        <Card className="shadow-xl rounded-2xl overflow-hidden"> {/* Added overflow-hidden for animations */}
           <CardContent className="p-6 md:p-8">
             <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'signup')} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6 bg-gray-100 rounded-xl">
+              <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/30 dark:bg-muted/20 rounded-xl p-1">
                 <TabsTrigger 
                   value="login" 
-                  className="data-[state=active]:bg-deep-blue data-[state=active]:text-white rounded-lg py-2.5"
+                  className="data-[state=active]:bg-deep-blue data-[state=active]:text-white rounded-lg py-2.5 transition-all duration-300"
                 >
                   Login
                 </TabsTrigger>
                 <TabsTrigger 
                   value="signup" 
-                  className="data-[state=active]:bg-deep-blue data-[state=active]:text-white rounded-lg py-2.5"
+                  className="data-[state=active]:bg-deep-blue data-[state=active]:text-white rounded-lg py-2.5 transition-all duration-300"
                 >
                   Sign Up
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="login">
+              <TabsContent value="login" className="animate-in fade-in-50 duration-400 ease-out">
                 <LoginForm onSwitchToSignup={() => setActiveTab('signup')} onLoginSuccess={handleLoginSuccess} />
               </TabsContent>
-              <TabsContent value="signup">
+              <TabsContent value="signup" className="animate-in fade-in-50 duration-400 ease-out">
                 <SignupForm onSwitchToLogin={() => setActiveTab('login')} onSignupSuccess={handleSignupSuccess} />
               </TabsContent>
             </Tabs>

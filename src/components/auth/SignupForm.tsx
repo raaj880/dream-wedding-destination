@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Label } from '@/components/ui/label';
+// import { Label } from '@/components/ui/label'; // Label from Form is usually sufficient
 import { Eye, EyeOff } from 'lucide-react';
 import SocialAuthButtons from './SocialAuthButtons';
 import { toast } from '@/components/ui/use-toast';
@@ -49,7 +49,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
 
   const onSubmit = (data: SignupFormValues) => {
     console.log('Signup data:', data);
-    // Placeholder for actual signup logic
     toast({ title: "Signup Submitted", description: "Simulating account creation..." });
     onSignupSuccess();
   };
@@ -61,7 +60,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
           control={form.control}
           name="fullName"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out">
               <FormLabel>Full Name</FormLabel>
               <FormControl>
                 <Input placeholder="e.g., Aditi Sharma" {...field} />
@@ -74,7 +73,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
           control={form.control}
           name="phoneNumber"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-50">
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
                 <Input type="tel" placeholder="e.g., 9876543210" {...field} />
@@ -87,7 +86,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-100">
               <FormLabel>Email (Optional)</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="you@example.com" {...field} />
@@ -100,7 +99,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-150">
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <div className="relative">
@@ -128,7 +127,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
           control={form.control}
           name="confirmPassword"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-200">
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
                 <div className="relative">
@@ -156,25 +155,29 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
           control={form.control}
           name="profileForSelf"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+            <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-3 shadow-sm animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-250 bg-background">
               <FormControl>
                 <Checkbox
                   checked={field.value}
                   onCheckedChange={field.onChange}
+                  id="profileForSelf"
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
+                <FormLabel htmlFor="profileForSelf" className="font-normal text-sm">
                   I’m creating this profile for myself
                 </FormLabel>
               </div>
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full">
+        <Button 
+          type="submit" 
+          className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
+        >
           Create Account
         </Button>
-        <div className="relative my-4">
+        <div className="relative my-4 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-300">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
           </div>
@@ -182,13 +185,15 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
             <span className="bg-background px-2 text-muted-foreground">Or</span>
           </div>
         </div>
-        <SocialAuthButtons actionText="Sign up" />
-        <p className="text-center text-xs text-gray-500">
+        <div className="animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-350">
+          <SocialAuthButtons actionText="Sign up" />
+        </div>
+        <p className="text-center text-xs text-gray-500 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-400">
           By signing up, you agree to our{' '}
           <a href="/terms" className="underline hover:text-soft-pink">Terms of Service</a> and{' '}
           <a href="/privacy" className="underline hover:text-soft-pink">Privacy Policy</a>.
         </p>
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-gray-600 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-450">
           Already have an account?{' '}
           <Button variant="link" className="p-0 h-auto text-soft-pink hover:underline" onClick={onSwitchToLogin}>
             Login
