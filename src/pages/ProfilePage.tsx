@@ -28,9 +28,13 @@ const ProfilePage: React.FC = () => {
       education: rawProfile.education || '',
       height: rawProfile.height || '',
       marryTimeframe: (rawProfile.marry_timeframe as ProfileData['marryTimeframe']) || '',
-      partnerAgeRange: [rawProfile.partner_age_range_min || 20, rawProfile.partner_age_range_max || 40],
+      // Fix partner age range with proper defaults
+      partnerAgeRange: [
+        rawProfile.partner_age_range_min || 20, 
+        rawProfile.partner_age_range_max || 40
+      ],
       partnerLocation: rawProfile.partner_location || '',
-      profileVisibility: (rawProfile.profile_visibility as ProfileData['profileVisibility']) || '',
+      profileVisibility: (rawProfile.profile_visibility as ProfileData['profileVisibility']) || 'everyone',
       bio: rawProfile.bio || '',
       photos: [], // Files are not fetched, only URLs
       photoPreviews: rawProfile.photos || [],
@@ -40,13 +44,22 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (user) {
-        const rawProfile = await getProfile();
-        if (rawProfile) {
-          const transformedProfile = transformRawProfile(rawProfile);
-          setProfileData(transformedProfile);
-        } else {
-          // If no profile exists, redirect to setup
-          navigate('/profile-setup', { replace: true });
+        try {
+          const rawProfile = await getProfile();
+          if (rawProfile) {
+            const transformedProfile = transformRawProfile(rawProfile);
+            setProfileData(transformedProfile);
+          } else {
+            // If no profile exists, redirect to setup
+            navigate('/profile-setup', { replace: true });
+          }
+        } catch (error) {
+          console.error('Error fetching profile:', error);
+          toast({
+            title: "Error Loading Profile",
+            description: "Could not load your profile. Please try again.",
+            variant: "destructive",
+          });
         }
       }
     };
@@ -55,24 +68,46 @@ const ProfilePage: React.FC = () => {
 
   const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0] && profileData) {
-        const file = event.target.files[0];
-        try {
-            const updatedRawProfile = await replaceMainProfilePhoto(file, profileData.photoPreviews);
-            if (updatedRawProfile) {
-                const transformedProfile = transformRawProfile(updatedRawProfile);
-                setProfileData(transformedProfile);
-                toast({
-                    title: "Profile Photo Updated!",
-                    description: "Your new photo is now your main profile picture.",
-                });
-            }
-        } catch (error) {
-            toast({
-                title: "Photo Update Failed",
-                description: "Could not update your profile photo. Please try again.",
-                variant: "destructive",
-            });
+      const file = event.target.files[0];
+      
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: "Invalid File Type",
+          description: "Please select an image file.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Validate file size (10MB limit)
+      if (file.size > 10 * 1024 * 1024) {
+        toast({
+          title: "File Too Large",
+          description: "Please select an image smaller than 10MB.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      try {
+        const updatedRawProfile = await replaceMainProfilePhoto(file, profileData.photoPreviews);
+        if (updatedRawProfile) {
+          const transformedProfile = transformRawProfile(updatedRawProfile);
+          setProfileData(transformedProfile);
+          toast({
+            title: "Profile Photo Updated!",
+            description: "Your new photo is now your main profile picture.",
+          });
         }
+      } catch (error) {
+        console.error('Error updating photo:', error);
+        toast({
+          title: "Photo Update Failed",
+          description: "Could not update your profile photo. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
