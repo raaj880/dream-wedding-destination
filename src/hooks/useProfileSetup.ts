@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProfileData, initialProfileData } from '@/types/profile';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/use-toast';
 import { useProfile } from '@/hooks/useProfile';
 
 export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) => {
@@ -12,6 +12,7 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { saveProfile, loading } = useProfile();
+  const isEditMode = !!initialData;
 
   const updateData = useCallback((newData: Partial<ProfileData>) => {
     setProfileData(prev => ({ ...prev, ...newData }));
@@ -29,7 +30,7 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
 
     switch (step) {
       case 1:
-        if (profileData.photos.length === 0) {
+        if (profileData.photoPreviews.length === 0) {
           newErrors.photos = 'Please upload at least one photo';
         }
         break;
@@ -107,23 +108,23 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
       await saveProfile(profileData);
       
       toast({
-        title: "Profile Created Successfully! 🎉",
-        description: "Welcome to Wedder! Your profile is now live.",
+        title: isEditMode ? "Profile Updated!" : "Profile Created Successfully! 🎉",
+        description: isEditMode ? "Your changes have been saved." : "Welcome to Wedder! Your profile is now live.",
       });
 
-      // Navigate to dashboard after successful save
-      navigate('/dashboard', { replace: true });
+      // Navigate to profile page after edit, or dashboard after creation
+      navigate(isEditMode ? '/profile' : '/dashboard', { replace: true });
     } catch (error) {
       console.error('Error saving profile:', error);
       toast({
-        title: "Profile Save Failed",
+        title: isEditMode ? "Update Failed" : "Profile Save Failed",
         description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
     } finally {
       setIsSubmitting(false);
     }
-  }, [currentStep, validateStep, saveProfile, profileData, navigate]);
+  }, [currentStep, validateStep, saveProfile, profileData, navigate, isEditMode]);
 
   const triggerValidation = useCallback(() => validateStep(currentStep), [currentStep, validateStep]);
 
@@ -138,5 +139,6 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
     prevStep,
     handleSubmit,
     triggerValidation,
+    isEditMode,
   };
 };

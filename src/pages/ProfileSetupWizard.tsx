@@ -31,6 +31,7 @@ const ProfileSetupWizard: React.FC = () => {
     prevStep,
     handleSubmit,
     triggerValidation,
+    isEditMode,
   } = useProfileSetup(totalSteps, existingProfileData);
 
   const renderStep = () => {
@@ -56,7 +57,7 @@ const ProfileSetupWizard: React.FC = () => {
         <Card className="shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold text-deep-blue dark:text-white mb-2">
-              Complete Your Profile
+              {isEditMode ? 'Edit Your Profile' : 'Complete Your Profile'}
             </CardTitle>
             <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
           </CardHeader>
@@ -89,10 +90,10 @@ const ProfileSetupWizard: React.FC = () => {
                   className="bg-soft-pink hover:bg-soft-pink/90 text-deep-blue flex items-center"
                 >
                   {isSubmitting || loading ? (
-                    'Creating Profile...'
+                    isEditMode ? 'Saving Changes...' : 'Creating Profile...'
                   ) : (
                     <>
-                      Complete Profile
+                      {isEditMode ? 'Update Profile' : 'Complete Profile'}
                       <CheckCircle className="w-4 h-4 ml-2" />
                     </>
                   )}
