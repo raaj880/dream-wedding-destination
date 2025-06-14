@@ -72,7 +72,7 @@ export const useLikedProfiles = () => {
             age: profile.age || 0,
             location: profile.location || 'Location not specified',
             photos: profile.photos || [],
-            profession: profile.profession || undefined,
+            profession: profile.profession,
             interaction_type: interaction.interaction_type,
             created_at: interaction.created_at
           };
