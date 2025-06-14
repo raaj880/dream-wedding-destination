@@ -1,133 +1,62 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
-import { AuthProvider } from "@/contexts/AuthContext";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import ProfileCompletionCheck from "@/components/auth/ProfileCompletionCheck";
-import Index from "./pages/Index";
-import AuthPage from "./pages/AuthPage";
-import ProfilePage from "./pages/ProfilePage";
-import Dashboard from "./pages/Dashboard";
-import Matches from "./pages/Matches";
-import Settings from "./pages/Settings";
-import NotFound from "./pages/NotFound";
-import AboutPage from "./pages/AboutPage";
-import BlogPage from "./pages/BlogPage";
-import ContactPage from "./pages/ContactPage";
-import HelpCenterPage from "./pages/HelpCenterPage";
-import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
-import TermsOfServicePage from "./pages/TermsOfServicePage";
-import FeaturesPage from "./pages/FeaturesPage";
-import TestimonialsPage from "./pages/TestimonialsPage";
-import FAQPage from "./pages/FAQPage";
-import SwipeInterface from "./pages/SwipeInterface";
-import ChatInterface from "./pages/ChatInterface";
-import FilterScreen from "./pages/FilterScreen";
-import ProfileSetupWizard from "./pages/ProfileSetupWizard";
-import Navbar from "./components/landing/Navbar";
-import Footer from "./components/landing/Footer";
-import MatchNotificationManager from "./components/matches/MatchNotificationManager";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Dashboard from '@/pages/Dashboard';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import Profile from '@/pages/Profile';
+import EditProfile from '@/pages/EditProfile';
+import Matches from '@/pages/Matches';
+import Filter from '@/pages/Filter';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import ProfileCompletionCheck from '@/components/ProfileCompletionCheck';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { Toaster } from '@/components/ui/toaster';
+import { QueryClient } from 'react-query';
+import SwipeInterface from '@/pages/SwipeInterface';
+import EnhancedSwipeInterface from '@/pages/EnhancedSwipeInterface';
+import Chat from '@/pages/Chat';
+import SuperAdmin from '@/pages/SuperAdmin';
+import AdminRoute from '@/components/AdminRoute';
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <div className="min-h-screen flex flex-col">
-              <Navbar />
-              <main className="flex-grow">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/auth" element={<AuthPage />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="/blog" element={<BlogPage />} />
-                  <Route path="/contact" element={<ContactPage />} />
-                  <Route path="/help" element={<HelpCenterPage />} />
-                  <Route path="/privacy" element={<PrivacyPolicyPage />} />
-                  <Route path="/terms" element={<TermsOfServicePage />} />
-                  <Route path="/features" element={<FeaturesPage />} />
-                  <Route path="/testimonials" element={<TestimonialsPage />} />
-                  <Route path="/faq" element={<FAQPage />} />
-                  
-                  {/* Protected Routes with Profile Completion Check */}
-                  <Route path="/dashboard" element={
-                    <ProtectedRoute>
-                      <ProfileCompletionCheck>
-                        <Dashboard />
-                      </ProfileCompletionCheck>
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/profile" element={
-                    <ProtectedRoute>
-                      <ProfileCompletionCheck>
-                        <ProfilePage />
-                      </ProfileCompletionCheck>
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/matches" element={
-                    <ProtectedRoute>
-                      <ProfileCompletionCheck>
-                        <Matches />
-                      </ProfileCompletionCheck>
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/swipe" element={
-                    <ProtectedRoute>
-                      <ProfileCompletionCheck>
-                        <SwipeInterface />
-                      </ProfileCompletionCheck>
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/chat/:userId" element={
-                    <ProtectedRoute>
-                      <ProfileCompletionCheck>
-                        <ChatInterface />
-                      </ProfileCompletionCheck>
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/settings" element={
-                    <ProtectedRoute>
-                      <ProfileCompletionCheck>
-                        <Settings />
-                      </ProfileCompletionCheck>
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/filter" element={
-                    <ProtectedRoute>
-                      <ProfileCompletionCheck>
-                        <FilterScreen />
-                      </ProfileCompletionCheck>
-                    </ProtectedRoute>
-                  } />
-                  
-                  {/* Profile Setup - No profile completion check */}
-                  <Route path="/profile-setup" element={
-                    <ProtectedRoute>
-                      <ProfileSetupWizard />
-                    </ProtectedRoute>
-                  } />
-                  
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-              <Footer />
-              
-              {/* Global Match Notifications */}
-              <MatchNotificationManager />
-            </div>
-          </BrowserRouter>
-        </AuthProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ThemeProvider>
-);
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <QueryClient>
+          <div className="min-h-screen bg-background font-sans antialiased">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/profile/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/edit-profile" element={
+                <ProtectedRoute>
+                  <ProfileCompletionCheck>
+                    <EditProfile />
+                  </ProfileCompletionCheck>
+                </ProtectedRoute>
+              } />
+              <Route path="/matches" element={<ProtectedRoute><Matches /></ProtectedRoute>} />
+              <Route path="/filter" element={<ProtectedRoute><Filter /></ProtectedRoute>} />
+              <Route path="/swipe" element={
+                <ProtectedRoute>
+                  <ProfileCompletionCheck>
+                    <EnhancedSwipeInterface />
+                  </ProfileCompletionCheck>
+                </ProtectedRoute>
+              } />
+              <Route path="/chat/:matchId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+              <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+              <Route path="/admin" element={<AdminRoute><SuperAdmin /></AdminRoute>} />
+            </Routes>
+            <Toaster />
+          </div>
+        </QueryClient>
+      </AuthProvider>
+    </Router>
+  );
+}
 
 export default App;
