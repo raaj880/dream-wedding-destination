@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 
 interface TestUser {
@@ -286,15 +285,16 @@ const maleProfiles: Omit<TestUser, 'email' | 'password'>[] = [
 export const generateTestUsers = async () => {
   console.log('🚀 Starting test user generation...');
   
+  // Use example.com domain which is valid and commonly accepted
   const allProfiles = [
     ...femaleProfiles.map((profile, index) => ({
       ...profile,
-      email: `female${index + 1}@wedder.app`,
+      email: `female${index + 1}@example.com`,
       password: 'TestUser123!'
     })),
     ...maleProfiles.map((profile, index) => ({
       ...profile,
-      email: `male${index + 1}@wedder.app`,
+      email: `male${index + 1}@example.com`,
       password: 'TestUser123!'
     }))
   ];

@@ -72,7 +72,7 @@ const TestDataGenerator: React.FC = () => {
         )}
 
         <div className="text-sm text-gray-500">
-          <p><strong>Note:</strong> Test users will have emails like female1@wedder.app, male1@wedder.app, etc.</p>
+          <p><strong>Note:</strong> Test users will have emails like female1@example.com, male1@example.com, etc.</p>
           <p>All passwords are: <code>TestUser123!</code></p>
         </div>
       </CardContent>
