@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ArrowLeft, MapPin, Briefcase } from 'lucide-react';
+import { MapPin, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -43,29 +43,9 @@ const mockMatches = [
 const Matches: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" asChild>
-                <Link to="/dashboard">
-                  <ArrowLeft className="w-5 h-5" />
-                </Link>
-              </Button>
-              <h1 className="text-xl font-semibold text-deep-blue dark:text-white">Your Matches</h1>
-            </div>
-            <Link to="/" className="flex items-center space-x-2 text-deep-blue hover:text-deep-blue/80 transition-colors">
-              <Heart className="w-6 h-6 text-soft-pink fill-soft-pink" />
-              <span className="text-xl font-bold">Wedder</span>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-6">
+          <h1 className="text-2xl font-bold text-deep-blue dark:text-white mb-2">Your Matches</h1>
           <p className="text-gray-600 dark:text-gray-300">
             {mockMatches.length} matches found based on your preferences
           </p>
@@ -122,7 +102,7 @@ const Matches: React.FC = () => {
             </Card>
           ))}
         </div>
-      </main>
+      </div>
     </div>
   );
 };

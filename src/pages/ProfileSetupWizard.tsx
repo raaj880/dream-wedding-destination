@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProfileData, initialProfileData } from '@/types/profile';
@@ -150,17 +149,17 @@ const ProfileSetupWizard: React.FC = () => {
 
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black font-sans">
+    <div className="bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black font-sans">
       <ProgressBar currentStep={currentStep} totalSteps={TOTAL_STEPS} />
-      <main className="flex-grow container mx-auto max-w-2xl py-8 px-4">
-        <div className="flex flex-col min-h-[calc(100vh-200px)]"> {/* Ensure content pushes TrustNote down */}
+      <div className="container mx-auto max-w-2xl py-8 px-4 min-h-[calc(100vh-200px)]">
+        <div className="flex flex-col min-h-[calc(100vh-300px)]">
            <div className="flex-grow">
             {renderStep()}
            </div>
           <TrustNote />
         </div>
-      </main>
-      <div className="sticky bottom-0 bg-white dark:bg-gray-800 shadow-md_dark"> {/* shadow-md_dark is a placeholder for dark mode shadow */}
+      </div>
+      <div className="sticky bottom-0 bg-white dark:bg-gray-800 shadow-lg border-t">
          <NavigationButtons
             currentStep={currentStep}
             totalSteps={TOTAL_STEPS}

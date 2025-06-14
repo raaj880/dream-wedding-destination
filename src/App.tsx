@@ -13,6 +13,8 @@ import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "next-themes";
 import ProfileSetupWizard from "./pages/ProfileSetupWizard";
+import Navbar from "./components/landing/Navbar";
+import Footer from "./components/landing/Footer";
 
 const queryClient = new QueryClient();
 
@@ -23,16 +25,22 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/matches" element={<Matches />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/profile-setup" element={<ProfileSetupWizard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/matches" element={<Matches />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/profile-setup" element={<ProfileSetupWizard />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
