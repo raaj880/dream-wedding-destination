@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import ProfileCompletionCheck from "@/components/auth/ProfileCompletionCheck";
 import Index from "./pages/Index";
 import AuthPage from "./pages/AuthPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -50,45 +51,61 @@ const App = () => (
                   <Route path="/privacy" element={<PrivacyPolicyPage />} />
                   <Route path="/terms" element={<TermsOfServicePage />} />
                   
-                  {/* Protected Routes */}
+                  {/* Protected Routes with Profile Completion Check */}
                   <Route path="/dashboard" element={
                     <ProtectedRoute>
-                      <Dashboard />
+                      <ProfileCompletionCheck>
+                        <Dashboard />
+                      </ProfileCompletionCheck>
                     </ProtectedRoute>
                   } />
                   <Route path="/profile" element={
                     <ProtectedRoute>
-                      <ProfilePage />
+                      <ProfileCompletionCheck>
+                        <ProfilePage />
+                      </ProfileCompletionCheck>
                     </ProtectedRoute>
                   } />
                   <Route path="/matches" element={
                     <ProtectedRoute>
-                      <Matches />
+                      <ProfileCompletionCheck>
+                        <Matches />
+                      </ProfileCompletionCheck>
                     </ProtectedRoute>
                   } />
                   <Route path="/swipe" element={
                     <ProtectedRoute>
-                      <SwipeInterface />
+                      <ProfileCompletionCheck>
+                        <SwipeInterface />
+                      </ProfileCompletionCheck>
                     </ProtectedRoute>
                   } />
                   <Route path="/chat/:userId" element={
                     <ProtectedRoute>
-                      <ChatInterface />
+                      <ProfileCompletionCheck>
+                        <ChatInterface />
+                      </ProfileCompletionCheck>
                     </ProtectedRoute>
                   } />
                   <Route path="/settings" element={
                     <ProtectedRoute>
-                      <Settings />
-                    </ProtectedRoute>
-                  } />
-                  <Route path="/profile-setup" element={
-                    <ProtectedRoute>
-                      <ProfileSetupWizard />
+                      <ProfileCompletionCheck>
+                        <Settings />
+                      </ProfileCompletionCheck>
                     </ProtectedRoute>
                   } />
                   <Route path="/filter" element={
                     <ProtectedRoute>
-                      <FilterScreen />
+                      <ProfileCompletionCheck>
+                        <FilterScreen />
+                      </ProfileCompletionCheck>
+                    </ProtectedRoute>
+                  } />
+                  
+                  {/* Profile Setup - No profile completion check */}
+                  <Route path="/profile-setup" element={
+                    <ProtectedRoute>
+                      <ProfileSetupWizard />
                     </ProtectedRoute>
                   } />
                   
