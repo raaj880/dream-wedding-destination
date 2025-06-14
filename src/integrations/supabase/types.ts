@@ -79,6 +79,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          account_status: string
           age: number | null
           bio: string | null
           community: string | null
@@ -88,23 +89,27 @@ export type Database = {
           full_name: string | null
           gender: string | null
           height: string | null
+          hide_from_search: boolean
           id: string
           is_online: boolean | null
           languages: string[] | null
           last_seen: string | null
           location: string | null
           marry_timeframe: string | null
+          notification_settings: Json
           partner_age_range_max: number | null
           partner_age_range_min: number | null
           partner_location: string | null
           photos: string[] | null
           profession: string | null
-          profile_visibility: string | null
+          profile_visibility: string
           religion: string | null
+          show_online_status: boolean
           updated_at: string | null
           verified: boolean | null
         }
         Insert: {
+          account_status?: string
           age?: number | null
           bio?: string | null
           community?: string | null
@@ -114,23 +119,27 @@ export type Database = {
           full_name?: string | null
           gender?: string | null
           height?: string | null
+          hide_from_search?: boolean
           id: string
           is_online?: boolean | null
           languages?: string[] | null
           last_seen?: string | null
           location?: string | null
           marry_timeframe?: string | null
+          notification_settings?: Json
           partner_age_range_max?: number | null
           partner_age_range_min?: number | null
           partner_location?: string | null
           photos?: string[] | null
           profession?: string | null
-          profile_visibility?: string | null
+          profile_visibility?: string
           religion?: string | null
+          show_online_status?: boolean
           updated_at?: string | null
           verified?: boolean | null
         }
         Update: {
+          account_status?: string
           age?: number | null
           bio?: string | null
           community?: string | null
@@ -140,19 +149,22 @@ export type Database = {
           full_name?: string | null
           gender?: string | null
           height?: string | null
+          hide_from_search?: boolean
           id?: string
           is_online?: boolean | null
           languages?: string[] | null
           last_seen?: string | null
           location?: string | null
           marry_timeframe?: string | null
+          notification_settings?: Json
           partner_age_range_max?: number | null
           partner_age_range_min?: number | null
           partner_location?: string | null
           photos?: string[] | null
           profession?: string | null
-          profile_visibility?: string | null
+          profile_visibility?: string
           religion?: string | null
+          show_online_status?: boolean
           updated_at?: string | null
           verified?: boolean | null
         }
