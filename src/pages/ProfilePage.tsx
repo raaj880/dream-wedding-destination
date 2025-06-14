@@ -17,10 +17,21 @@ const ProfilePage: React.FC = () => {
   const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
     console.log('🔄 Transforming raw profile:', rawProfile);
     
+    // Improved date parsing to handle timezone issues
+    let dobDate: Date | undefined = undefined;
+    if (rawProfile.date_of_birth) {
+      try {
+        // Parse the date string more carefully
+        const dateStr = rawProfile.date_of_birth;
+        dobDate = new Date(dateStr + 'T12:00:00'); // Add noon time to avoid timezone issues
+      } catch (error) {
+        console.warn('Date parsing error:', error);
+      }
+    }
+    
     return {
       fullName: rawProfile.full_name || '',
-      // Fix date parsing to avoid timezone issues
-      dob: rawProfile.date_of_birth ? new Date(`${rawProfile.date_of_birth}T00:00:00`) : undefined,
+      dob: dobDate,
       gender: (rawProfile.gender as ProfileData['gender']) || '',
       location: rawProfile.location || '',
       religion: rawProfile.religion || '',
@@ -30,16 +41,16 @@ const ProfilePage: React.FC = () => {
       education: rawProfile.education || '',
       height: rawProfile.height || '',
       marryTimeframe: (rawProfile.marry_timeframe as ProfileData['marryTimeframe']) || '',
-      // Fix partner age range with proper defaults
+      // Ensure valid age range with proper bounds
       partnerAgeRange: [
-        rawProfile.partner_age_range_min || 20, 
-        rawProfile.partner_age_range_max || 40
+        Math.max(18, rawProfile.partner_age_range_min || 20), 
+        Math.min(100, rawProfile.partner_age_range_max || 40)
       ],
       partnerLocation: rawProfile.partner_location || '',
       profileVisibility: (rawProfile.profile_visibility as ProfileData['profileVisibility']) || 'everyone',
       bio: rawProfile.bio || '',
-      photos: [], // Files are not fetched, only URLs
-      photoPreviews: rawProfile.photos || [],
+      photos: [], // Always empty for existing profiles since these are File objects
+      photoPreviews: rawProfile.photos || [], // URLs from database
     };
   };
 

@@ -44,7 +44,8 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
 
     switch (step) {
       case 1:
-        if (profileData.photoPreviews.length === 0) {
+        // In edit mode, allow proceeding even without new photos if there are existing ones
+        if (profileData.photoPreviews.length === 0 && profileData.photos.length === 0) {
           newErrors.photos = 'Please upload at least one photo';
         }
         break;
@@ -54,6 +55,12 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
         }
         if (!profileData.dob) {
           newErrors.dob = 'Date of birth is required';
+        } else {
+          // Validate age (must be at least 18)
+          const age = new Date().getFullYear() - profileData.dob.getFullYear();
+          if (age < 18) {
+            newErrors.dob = 'You must be at least 18 years old';
+          }
         }
         if (!profileData.gender) {
           newErrors.gender = 'Gender is required';
@@ -89,13 +96,18 @@ export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) =
         if (!profileData.profileVisibility) {
           newErrors.profileVisibility = 'Profile visibility setting is required';
         }
+        // Validate partner age range
+        if (profileData.partnerAgeRange[0] >= profileData.partnerAgeRange[1]) {
+          newErrors.partnerAgeRange = 'Invalid age range: minimum must be less than maximum';
+        }
         break;
       case 5:
         if (!profileData.bio.trim()) {
           newErrors.bio = 'Bio is required';
-        }
-        if (profileData.bio.length < 50) {
+        } else if (profileData.bio.length < 50) {
           newErrors.bio = 'Bio should be at least 50 characters';
+        } else if (profileData.bio.length > 500) {
+          newErrors.bio = 'Bio should not exceed 500 characters';
         }
         break;
     }
