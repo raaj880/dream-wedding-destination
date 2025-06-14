@@ -35,6 +35,7 @@ function App() {
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/profile/:id" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
               <Route path="/edit-profile" element={
                 <ProtectedRoute>
                   <ProfileCompletionCheck>
