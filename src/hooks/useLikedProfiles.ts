@@ -25,44 +25,59 @@ export const useLikedProfiles = () => {
     try {
       console.log('🔍 Fetching liked profiles for user:', user.id);
 
-      const { data, error } = await supabase
+      // First get the user interactions
+      const { data: interactions, error: interactionsError } = await supabase
         .from('user_interactions')
-        .select(`
-          interaction_type,
-          created_at,
-          target_user_id,
-          profiles!user_interactions_target_user_id_fkey (
-            id,
-            full_name,
-            age,
-            location,
-            photos,
-            profession
-          )
-        `)
+        .select('target_user_id, interaction_type, created_at')
         .eq('user_id', user.id)
         .in('interaction_type', ['like', 'superlike'])
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error('❌ Error fetching liked profiles:', error);
-        throw error;
+      if (interactionsError) {
+        console.error('❌ Error fetching interactions:', interactionsError);
+        throw interactionsError;
       }
 
-      console.log('✅ Raw liked profiles data:', data);
+      console.log('✅ Raw interactions data:', interactions);
 
-      const likedProfiles: LikedProfile[] = data
-        .filter(interaction => interaction.profiles)
-        .map(interaction => ({
-          id: interaction.profiles.id,
-          full_name: interaction.profiles.full_name || 'Unknown',
-          age: interaction.profiles.age || 0,
-          location: interaction.profiles.location || 'Location not specified',
-          photos: interaction.profiles.photos || [],
-          profession: interaction.profiles.profession,
-          interaction_type: interaction.interaction_type,
-          created_at: interaction.created_at
-        }));
+      if (!interactions || interactions.length === 0) {
+        return [];
+      }
+
+      // Get the target user IDs
+      const targetUserIds = interactions.map(interaction => interaction.target_user_id);
+
+      // Fetch the profiles for these users
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, full_name, age, location, photos, profession')
+        .in('id', targetUserIds);
+
+      if (profilesError) {
+        console.error('❌ Error fetching profiles:', profilesError);
+        throw profilesError;
+      }
+
+      console.log('✅ Profiles data:', profiles);
+
+      // Combine the interaction data with profile data
+      const likedProfiles: LikedProfile[] = interactions
+        .map(interaction => {
+          const profile = profiles?.find(p => p.id === interaction.target_user_id);
+          if (!profile) return null;
+
+          return {
+            id: profile.id,
+            full_name: profile.full_name || 'Unknown',
+            age: profile.age || 0,
+            location: profile.location || 'Location not specified',
+            photos: profile.photos || [],
+            profession: profile.profession,
+            interaction_type: interaction.interaction_type,
+            created_at: interaction.created_at
+          };
+        })
+        .filter((profile): profile is LikedProfile => profile !== null);
 
       console.log('✅ Processed liked profiles:', likedProfiles);
       return likedProfiles;
