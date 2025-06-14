@@ -1,61 +1,107 @@
 
 import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { ProfileData } from '@/types/profile';
-import { Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
 import ProfileHeader from './ProfileHeader';
+import ProfileGallery from './ProfileGallery';
 import ProfileSummary from './ProfileSummary';
 import ProfileAbout from './ProfileAbout';
 import ProfilePreferences from './ProfilePreferences';
-import ProfileGallery from './ProfileGallery';
-import PhotoLightbox from './PhotoLightbox';
 import ProfileActions from './ProfileActions';
+import PhotoLightbox from './PhotoLightbox';
+import { ProfileData } from '@/types/profile';
 
 interface ProfileScreenProps {
   profileData: ProfileData;
-  onEditProfile: () => void;
-  onSettings: () => void;
-  onPhotoChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onEditProfile?: () => void;
+  onSettings?: () => void;
+  onPhotoChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  isOwnProfile?: boolean;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ profileData, onEditProfile, onSettings, onPhotoChange }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({
+  profileData,
+  onEditProfile,
+  onSettings,
+  onPhotoChange,
+  isOwnProfile = true
+}) => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
+
+  const openLightbox = (index: number) => {
+    setSelectedPhotoIndex(index);
+  };
+
+  const closeLightbox = () => {
+    setSelectedPhotoIndex(null);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <ProfileHeader profileData={profileData} onPhotoChange={onPhotoChange} />
-
-      {/* Scrollable Content */}
-      <ScrollArea className="flex-1 px-6 pb-24">
-        <div className="space-y-6">
-          <ProfileSummary profileData={profileData} />
-          <ProfileAbout bio={profileData.bio} />
-          <ProfilePreferences profileData={profileData} />
-          <ProfileGallery 
-            photoPreviews={profileData.photoPreviews}
-            onPhotoSelect={setSelectedPhotoIndex} 
-          />
-
-          {/* Trust & Privacy */}
-          <Card className="shadow-md border-0 bg-soft-pink/10 dark:bg-deep-blue/10 border-soft-pink/20">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <Lock className="w-4 h-4" />
-                <span>Your data is safe. Only visible to matching profiles.</span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </ScrollArea>
-
-      <ProfileActions onEditProfile={onEditProfile} onSettings={onSettings} />
-
-      <PhotoLightbox 
-        photos={profileData.photoPreviews}
-        selectedIndex={selectedPhotoIndex}
-        onClose={() => setSelectedPhotoIndex(null)}
+      <ProfileHeader 
+        name={profileData.fullName}
+        onEditProfile={isOwnProfile ? onEditProfile : undefined}
+        onSettings={isOwnProfile ? onSettings : undefined}
       />
+
+      <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ProfileGallery 
+            photos={profileData.photoPreviews} 
+            onPhotoClick={openLightbox}
+            onPhotoChange={isOwnProfile ? onPhotoChange : undefined}
+            isOwnProfile={isOwnProfile}
+          />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <ProfileSummary profileData={profileData} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <ProfileAbout profileData={profileData} />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <ProfilePreferences profileData={profileData} />
+        </motion.div>
+
+        {isOwnProfile && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <ProfileActions 
+              onEditProfile={onEditProfile}
+              onSettings={onSettings}
+            />
+          </motion.div>
+        )}
+      </div>
+
+      {selectedPhotoIndex !== null && (
+        <PhotoLightbox
+          photos={profileData.photoPreviews}
+          initialIndex={selectedPhotoIndex}
+          onClose={closeLightbox}
+        />
+      )}
     </div>
   );
 };

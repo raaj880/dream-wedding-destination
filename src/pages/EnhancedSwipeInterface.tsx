@@ -1,145 +1,180 @@
-
-import React from 'react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import DiscoverHeader from '@/components/discover/DiscoverHeader';
-import DiscoverStats from '@/components/discover/DiscoverStats';
-import EmptyState from '@/components/discover/EmptyState';
-import LoadingState from '@/components/discover/LoadingState';
-import FilterSummary from '@/components/swipe/FilterSummary';
-import SwipeFeedback from '@/components/swipe/SwipeFeedback';
-import SwipeTutorial from '@/components/swipe/SwipeTutorial';
-import MatchNotificationManager from '@/components/matches/MatchNotificationManager';
-import KeyboardControls from '@/components/discover/KeyboardControls';
-import QuickGuide from '@/components/discover/QuickGuide';
-import ProfileList from '@/components/discover/ProfileList';
-import LoadMoreIndicator from '@/components/discover/LoadMoreIndicator';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { useSwipeInterface } from '@/hooks/useSwipeInterface';
+import { useSwipeActions } from '@/hooks/useSwipeActions';
+import { useSwipeTutorial } from '@/hooks/useSwipeTutorial';
+import { useProfileViewing } from '@/hooks/useProfileViewing';
+import SwipeHeader from '@/components/swipe/SwipeHeader';
+import ProfileCard from '@/components/swipe/ProfileCard';
+import SwipeControls from '@/components/swipe/SwipeControls';
+import SwipeFeedback from '@/components/swipe/SwipeFeedback';
+import SwipeProgress from '@/components/swipe/SwipeProgress';
+import SwipeStatsBar from '@/components/swipe/SwipeStatsBar';
+import SwipeTutorial from '@/components/swipe/SwipeTutorial';
+import FilterSummary from '@/components/swipe/FilterSummary';
+import LoadingState from '@/components/discover/LoadingState';
+import EmptyState from '@/components/discover/EmptyState';
 
 const EnhancedSwipeInterface: React.FC = () => {
   const {
-    displayProfiles,
+    profiles,
+    currentProfileIndex,
+    stats,
     loading,
     error,
-    isRefreshing,
-    showStats,
-    swipeStats,
-    feedbackAction,
-    filteredCount,
-    totalCount,
-    appliedFilters,
-    isFilterActive,
-    showTutorial,
-    scrollAreaRef,
-    handleSwipeAction,
-    handleFeedbackComplete,
-    resetSwipes,
-    setShowStats,
-    clearFilter,
-    clearAllFilters,
-    completeTutorial
+    hasMoreProfiles,
+    goToNextProfile,
+    loadMoreProfiles,
+    resetProfiles
   } = useSwipeInterface();
+
+  const { recordProfileView } = useProfileViewing();
+  const { handleSwipe, feedback } = useSwipeActions();
+  const { showTutorial, completeTutorial } = useSwipeTutorial();
+  
+  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const currentProfileRef = useRef<string | null>(null);
+
+  const currentProfile = profiles[currentProfileIndex];
+
+  // Record profile view when a new profile is shown
+  useEffect(() => {
+    if (currentProfile && currentProfile.id !== currentProfileRef.current) {
+      console.log('📊 New profile displayed, recording view:', currentProfile.id);
+      recordProfileView(currentProfile.id);
+      currentProfileRef.current = currentProfile.id;
+    }
+  }, [currentProfile, recordProfileView]);
+
+  const onSwipe = useCallback(async (direction: 'left' | 'right') => {
+    if (!currentProfile || isAnimating) return;
+
+    setIsAnimating(true);
+    setSwipeDirection(direction);
+
+    try {
+      const action = direction === 'right' ? 'like' : 'pass';
+      await handleSwipe(currentProfile.id, action);
+      
+      setTimeout(() => {
+        goToNextProfile();
+        setSwipeDirection(null);
+        setIsAnimating(false);
+      }, 300);
+    } catch (error) {
+      console.error('Swipe error:', error);
+      setIsAnimating(false);
+      setSwipeDirection(null);
+    }
+  }, [currentProfile, isAnimating, handleSwipe, goToNextProfile]);
+
+  const onSuperLike = useCallback(async () => {
+    if (!currentProfile || isAnimating) return;
+
+    setIsAnimating(true);
+
+    try {
+      await handleSwipe(currentProfile.id, 'superlike');
+      
+      setTimeout(() => {
+        goToNextProfile();
+        setIsAnimating(false);
+      }, 500);
+    } catch (error) {
+      console.error('Super like error:', error);
+      setIsAnimating(false);
+    }
+  }, [currentProfile, isAnimating, handleSwipe, goToNextProfile]);
+
+  // Load more profiles when nearing the end
+  useEffect(() => {
+    if (profiles.length - currentProfileIndex <= 2 && hasMoreProfiles && !loading) {
+      loadMoreProfiles();
+    }
+  }, [currentProfileIndex, profiles.length, hasMoreProfiles, loading, loadMoreProfiles]);
 
   if (showTutorial) {
     return <SwipeTutorial onComplete={completeTutorial} />;
   }
 
-  if (loading || isRefreshing) {
-    return <LoadingState isRefreshing={isRefreshing} />;
+  if (loading && profiles.length === 0) {
+    return <LoadingState />;
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <DiscoverHeader
-          isFilterActive={isFilterActive}
-          totalProfiles={totalCount}
-          showStats={showStats}
-          onToggleStats={() => setShowStats(!showStats)}
-          onRefresh={resetSwipes}
-          isRefreshing={isRefreshing}
-        />
-        <div className="flex-1 flex items-center justify-center p-8">
-          <div className="text-center max-w-md">
-            <div className="text-6xl mb-6">⚠️</div>
-            <h2 className="text-2xl font-bold text-deep-blue mb-4">
-              Something went wrong
-            </h2>
-            <p className="text-gray-600 mb-6">{error}</p>
-            <button 
-              className="w-full bg-deep-blue text-white px-4 py-2 rounded-lg" 
-              onClick={resetSwipes}
-            >
-              Try Again
-            </button>
-          </div>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <p className="text-red-500 mb-4">{error}</p>
+          <button 
+            onClick={resetProfiles}
+            className="bg-deep-blue text-white px-4 py-2 rounded"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
   }
 
-  if (displayProfiles.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <DiscoverHeader
-          isFilterActive={isFilterActive}
-          totalProfiles={totalCount}
-          showStats={showStats}
-          onToggleStats={() => setShowStats(!showStats)}
-          onRefresh={resetSwipes}
-          isRefreshing={isRefreshing}
-        />
-        <EmptyState
-          isFilterActive={isFilterActive}
-          totalCount={totalCount}
-          onRefresh={resetSwipes}
-        />
-      </div>
-    );
+  if (!currentProfile && !loading) {
+    return <EmptyState onRefresh={resetProfiles} />;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <KeyboardControls
-        displayProfiles={displayProfiles}
-        swipeLoading={false}
-        handleSwipeAction={handleSwipeAction}
-        resetSwipes={resetSwipes}
+    <div className="min-h-screen bg-gray-50">
+      <SwipeHeader />
+      <FilterSummary />
+      <SwipeStatsBar stats={stats} />
+      <SwipeProgress 
+        current={currentProfileIndex + 1} 
+        total={Math.max(profiles.length, currentProfileIndex + 1)} 
       />
 
-      <DiscoverHeader
-        isFilterActive={isFilterActive}
-        totalProfiles={totalCount}
-        showStats={showStats}
-        onToggleStats={() => setShowStats(!showStats)}
-        onRefresh={resetSwipes}
-        isRefreshing={isRefreshing}
-      />
-
-      <DiscoverStats showStats={showStats} stats={swipeStats} />
-
-      {isFilterActive && (
-        <div className="px-4 py-2 max-w-md mx-auto">
-          <FilterSummary 
-            filters={appliedFilters} 
-            onClearFilter={clearFilter}
-            onClearAll={clearAllFilters}
-          />
+      <div className="container mx-auto px-4 py-6 max-w-md">
+        <div className="relative h-[600px]">
+          {currentProfile && (
+            <motion.div
+              key={currentProfile.id}
+              animate={swipeDirection ? { 
+                x: swipeDirection === 'right' ? 300 : -300,
+                opacity: 0,
+                rotate: swipeDirection === 'right' ? 10 : -10
+              } : { x: 0, opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0"
+            >
+              <ProfileCard 
+                profile={currentProfile}
+                onSwipeLeft={() => onSwipe('left')}
+                onSwipeRight={() => onSwipe('right')}
+                onSuperLike={onSuperLike}
+                disabled={isAnimating}
+              />
+            </motion.div>
+          )}
+          
+          {/* Preload next profile */}
+          {profiles[currentProfileIndex + 1] && (
+            <div className="absolute inset-0 -z-10">
+              <ProfileCard 
+                profile={profiles[currentProfileIndex + 1]}
+                disabled={true}
+              />
+            </div>
+          )}
         </div>
-      )}
 
-      <ScrollArea className="h-[calc(100vh-80px)]" ref={scrollAreaRef}>
-        <div className="container mx-auto px-4 py-6 max-w-md">
-          <QuickGuide />
-          <ProfileList 
-            displayProfiles={displayProfiles}
-            handleSwipeAction={handleSwipeAction}
-          />
-          <LoadMoreIndicator hasProfiles={displayProfiles.length > 0} />
-        </div>
-      </ScrollArea>
+        <SwipeControls
+          onPass={() => onSwipe('left')}
+          onLike={() => onSwipe('right')}
+          onSuperLike={onSuperLike}
+          disabled={isAnimating || !currentProfile}
+        />
+      </div>
 
-      <SwipeFeedback action={feedbackAction} onComplete={handleFeedbackComplete} />
-      <MatchNotificationManager />
+      <SwipeFeedback feedback={feedback} />
     </div>
   );
 };

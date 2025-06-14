@@ -1,18 +1,23 @@
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProfileScreen from '@/components/profile/ProfileScreen';
 import { ProfileData } from '@/types/profile';
 import { useProfile } from '@/hooks/useProfile';
 import { useAuth } from '@/contexts/AuthContext';
+import { useProfileViewing } from '@/hooks/useProfileViewing';
 import { Tables } from '@/integrations/supabase/types';
 import { toast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
+  const { id: profileId } = useParams();
   const { user } = useAuth();
   const { getProfile, loading, replaceMainProfilePhoto } = useProfile();
+  const { recordProfileView } = useProfileViewing();
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [isOwnProfile, setIsOwnProfile] = useState(true);
 
   const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
     console.log('🔄 Transforming raw profile:', rawProfile);
@@ -58,13 +63,46 @@ const ProfilePage: React.FC = () => {
     const fetchProfile = async () => {
       if (user) {
         try {
-          console.log('🔍 Fetching profile for user:', user.id);
-          const rawProfile = await getProfile();
+          let rawProfile;
+          
+          if (profileId && profileId !== user.id) {
+            // Viewing someone else's profile
+            console.log('🔍 Fetching profile for user:', profileId);
+            setIsOwnProfile(false);
+            
+            const { data, error } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', profileId)
+              .single();
+              
+            if (error) {
+              console.error('❌ Error fetching other user profile:', error);
+              toast({
+                title: "Profile Not Found",
+                description: "Could not load the requested profile.",
+                variant: "destructive",
+              });
+              navigate('/dashboard');
+              return;
+            }
+            
+            rawProfile = data;
+            
+            // Record the profile view
+            await recordProfileView(profileId);
+          } else {
+            // Viewing own profile
+            console.log('🔍 Fetching own profile for user:', user.id);
+            setIsOwnProfile(true);
+            rawProfile = await getProfile();
+          }
+          
           if (rawProfile) {
             const transformedProfile = transformRawProfile(rawProfile);
             console.log('✅ Profile transformed successfully:', transformedProfile);
             setProfileData(transformedProfile);
-          } else {
+          } else if (isOwnProfile) {
             console.log('❌ No profile found, redirecting to setup');
             // If no profile exists, redirect to setup
             navigate('/profile-setup', { replace: true });
@@ -73,16 +111,18 @@ const ProfilePage: React.FC = () => {
           console.error('❌ Error fetching profile:', error);
           toast({
             title: "Error Loading Profile",
-            description: "Could not load your profile. Please try again.",
+            description: "Could not load the profile. Please try again.",
             variant: "destructive",
           });
         }
       }
     };
     fetchProfile();
-  }, [user, getProfile, navigate]);
+  }, [user, profileId, getProfile, navigate, recordProfileView, isOwnProfile]);
 
   const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isOwnProfile) return; // Only allow photo changes on own profile
+    
     if (event.target.files && event.target.files[0] && profileData) {
       const file = event.target.files[0];
       
@@ -128,6 +168,8 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleEditProfile = () => {
+    if (!isOwnProfile) return; // Only allow editing own profile
+    
     console.log('🔧 Edit profile clicked, current profile data:', profileData);
     
     if (profileData) {
@@ -161,9 +203,10 @@ const ProfilePage: React.FC = () => {
   return (
     <ProfileScreen 
       profileData={profileData}
-      onEditProfile={handleEditProfile}
-      onSettings={handleSettings}
-      onPhotoChange={handlePhotoChange}
+      onEditProfile={isOwnProfile ? handleEditProfile : undefined}
+      onSettings={isOwnProfile ? handleSettings : undefined}
+      onPhotoChange={isOwnProfile ? handlePhotoChange : undefined}
+      isOwnProfile={isOwnProfile}
     />
   );
 };
