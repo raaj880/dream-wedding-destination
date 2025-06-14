@@ -4,15 +4,14 @@ import { motion } from 'framer-motion';
 import { useSwipeInterface } from '@/hooks/useSwipeInterface';
 import { useProfileViewing } from '@/hooks/useProfileViewing';
 import SwipeHeader from '@/components/swipe/SwipeHeader';
-import ProfileCard from '@/components/swipe/ProfileCard';
-import SwipeControls from '@/components/swipe/SwipeControls';
 import SwipeFeedback from '@/components/swipe/SwipeFeedback';
-import SwipeProgress from '@/components/swipe/SwipeProgress';
 import SwipeStatsBar from '@/components/swipe/SwipeStatsBar';
 import SwipeTutorial from '@/components/swipe/SwipeTutorial';
 import FilterSummary from '@/components/swipe/FilterSummary';
 import LoadingState from '@/components/discover/LoadingState';
 import EmptyState from '@/components/discover/EmptyState';
+import ProfileList from '@/components/discover/ProfileList';
+import LoadMoreIndicator from '@/components/discover/LoadMoreIndicator';
 
 const EnhancedSwipeInterface: React.FC = () => {
   const {
@@ -38,56 +37,50 @@ const EnhancedSwipeInterface: React.FC = () => {
 
   const { recordProfileView } = useProfileViewing();
   
-  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
-  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const currentProfileRef = useRef<string | null>(null);
+  const [visibleProfiles, setVisibleProfiles] = useState<Set<string>>(new Set());
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  const currentProfile = displayProfiles[currentProfileIndex];
-  const hasMoreProfiles = currentProfileIndex < displayProfiles.length - 1;
-
-  // Record profile view when a new profile is shown
+  // Set up intersection observer to track which profiles are visible
   useEffect(() => {
-    if (currentProfile && currentProfile.id !== currentProfileRef.current) {
-      console.log('📊 New profile displayed, recording view:', currentProfile.id);
-      recordProfileView(currentProfile.id);
-      currentProfileRef.current = currentProfile.id;
-    }
-  }, [currentProfile, recordProfileView]);
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const profileId = entry.target.getAttribute('data-profile-id');
+          if (profileId) {
+            if (entry.isIntersecting) {
+              setVisibleProfiles(prev => new Set([...prev, profileId]));
+              // Record profile view when it becomes visible
+              recordProfileView(profileId);
+            } else {
+              setVisibleProfiles(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(profileId);
+                return newSet;
+              });
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Profile is considered visible when 50% is in view
+        rootMargin: '0px 0px -100px 0px' // Start tracking 100px before it enters view
+      }
+    );
 
-  const goToNextProfile = useCallback(() => {
-    if (hasMoreProfiles) {
-      setCurrentProfileIndex(prev => prev + 1);
-    }
-  }, [hasMoreProfiles]);
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [recordProfileView]);
 
-  const onSwipe = useCallback(async (action: 'like' | 'pass' | 'superlike') => {
-    if (!currentProfile || isAnimating) return;
-
-    setIsAnimating(true);
-    
-    // Set direction for animation based on action
-    if (action === 'like') {
-      setSwipeDirection('right');
-    } else if (action === 'pass') {
-      setSwipeDirection('left');
-    }
-    // superlike doesn't need direction animation
-
+  const handleSwipeAction = useCallback(async (profileId: string, action: 'like' | 'pass' | 'superlike') => {
     try {
-      await handleSwipe(currentProfile.id, action);
-      
-      setTimeout(() => {
-        goToNextProfile();
-        setSwipeDirection(null);
-        setIsAnimating(false);
-      }, action === 'superlike' ? 500 : 300);
+      await handleSwipe(profileId, action);
     } catch (error) {
       console.error('Swipe error:', error);
-      setIsAnimating(false);
-      setSwipeDirection(null);
     }
-  }, [currentProfile, isAnimating, handleSwipe, goToNextProfile]);
+  }, [handleSwipe]);
 
   if (showTutorial) {
     return <SwipeTutorial onComplete={completeTutorial} />;
@@ -113,7 +106,7 @@ const EnhancedSwipeInterface: React.FC = () => {
     );
   }
 
-  if (!currentProfile && !loading) {
+  if (!displayProfiles.length && !loading) {
     return <EmptyState onRefresh={resetSwipes} isFilterActive={isFilterActive} totalCount={totalCount} />;
   }
 
@@ -126,66 +119,38 @@ const EnhancedSwipeInterface: React.FC = () => {
         onRefresh={resetSwipes}
         isRefreshing={loading}
       />
-      <FilterSummary 
-        filters={appliedFilters}
-        onClearFilter={clearFilter}
-        onClearAll={clearAllFilters}
-      />
+      
+      {isFilterActive && (
+        <FilterSummary 
+          filters={appliedFilters}
+          onClearFilter={clearFilter}
+          onClearAll={clearAllFilters}
+        />
+      )}
+      
       <SwipeStatsBar 
-        remainingProfiles={displayProfiles.length - currentProfileIndex}
+        remainingProfiles={displayProfiles.length}
         isFilterActive={isFilterActive}
         filteredCount={filteredCount}
         totalCount={totalCount}
         swipeStats={swipeStats}
       />
-      <SwipeProgress 
-        currentIndex={currentProfileIndex + 1} 
-        totalProfiles={Math.max(displayProfiles.length, currentProfileIndex + 1)}
-        remainingProfiles={displayProfiles.length - currentProfileIndex}
-        streak={swipeStats.streak}
-      />
 
-      <div className="container mx-auto px-4 py-6 max-w-md">
-        <div className="relative h-[600px]">
-          {currentProfile && (
-            <motion.div
-              key={currentProfile.id}
-              animate={swipeDirection ? { 
-                x: swipeDirection === 'right' ? 300 : -300,
-                opacity: 0,
-                rotate: swipeDirection === 'right' ? 10 : -10
-              } : { x: 0, opacity: 1, rotate: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0"
-            >
-              <ProfileCard 
-                profile={currentProfile}
-                onSwipe={onSwipe}
-                isVisible={true}
-                index={0}
-              />
-            </motion.div>
-          )}
-          
-          {/* Preload next profile */}
-          {displayProfiles[currentProfileIndex + 1] && (
-            <div className="absolute inset-0 -z-10">
-              <ProfileCard 
-                profile={displayProfiles[currentProfileIndex + 1]}
-                onSwipe={() => {}}
-                isVisible={false}
-                index={1}
-              />
-            </div>
-          )}
-        </div>
-
-        <SwipeControls
-          onPass={() => onSwipe('pass')}
-          onLike={() => onSwipe('like')}
-          onSuperLike={() => onSwipe('superlike')}
-          disabled={isAnimating || !currentProfile}
+      {/* Main Feed Container */}
+      <div className="container mx-auto px-4 py-6 max-w-2xl">
+        <ProfileList 
+          displayProfiles={displayProfiles} 
+          handleSwipeAction={handleSwipeAction}
         />
+        
+        <LoadMoreIndicator hasProfiles={displayProfiles.length > 0} />
+        
+        {loading && displayProfiles.length > 0 && (
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-deep-blue mx-auto"></div>
+            <p className="text-gray-600 mt-2">Loading more profiles...</p>
+          </div>
+        )}
       </div>
 
       <SwipeFeedback 
