@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Heart, Shield, Ring } from 'lucide-react'; // Using Ring for WeddingRings for simplicity, can be replaced with WeddingRings if available
+import { Heart, Shield, Gem } from 'lucide-react'; // Changed Ring to Gem
 
 const featuresData = [
   {
@@ -14,7 +14,7 @@ const featuresData = [
     description: 'All profiles go through a multi-layer verification process.',
   },
   {
-    icon: <Ring className="w-12 h-12 text-soft-pink" />, // Using Ring icon, can change to custom if needed
+    icon: <Gem className="w-12 h-12 text-soft-pink" />, // Changed Ring to Gem
     title: 'Built for Marriage, not Dating',
     description: 'No casual flings. Just real people with marriage intent.',
   },
