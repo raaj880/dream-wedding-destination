@@ -61,43 +61,31 @@ const EnhancedSwipeInterface: React.FC = () => {
     }
   }, [hasMoreProfiles]);
 
-  const onSwipe = useCallback(async (direction: 'left' | 'right') => {
+  const onSwipe = useCallback(async (action: 'like' | 'pass' | 'superlike') => {
     if (!currentProfile || isAnimating) return;
 
     setIsAnimating(true);
-    setSwipeDirection(direction);
+    
+    // Set direction for animation based on action
+    if (action === 'like') {
+      setSwipeDirection('right');
+    } else if (action === 'pass') {
+      setSwipeDirection('left');
+    }
+    // superlike doesn't need direction animation
 
     try {
-      const action = direction === 'right' ? 'like' : 'pass';
       await handleSwipe(currentProfile.id, action);
       
       setTimeout(() => {
         goToNextProfile();
         setSwipeDirection(null);
         setIsAnimating(false);
-      }, 300);
+      }, action === 'superlike' ? 500 : 300);
     } catch (error) {
       console.error('Swipe error:', error);
       setIsAnimating(false);
       setSwipeDirection(null);
-    }
-  }, [currentProfile, isAnimating, handleSwipe, goToNextProfile]);
-
-  const onSuperLike = useCallback(async () => {
-    if (!currentProfile || isAnimating) return;
-
-    setIsAnimating(true);
-
-    try {
-      await handleSwipe(currentProfile.id, 'superlike');
-      
-      setTimeout(() => {
-        goToNextProfile();
-        setIsAnimating(false);
-      }, 500);
-    } catch (error) {
-      console.error('Super like error:', error);
-      setIsAnimating(false);
     }
   }, [currentProfile, isAnimating, handleSwipe, goToNextProfile]);
 
@@ -193,9 +181,9 @@ const EnhancedSwipeInterface: React.FC = () => {
         </div>
 
         <SwipeControls
-          onPass={() => onSwipe('left')}
-          onLike={() => onSwipe('right')}
-          onSuperLike={onSuperLike}
+          onPass={() => onSwipe('pass')}
+          onLike={() => onSwipe('like')}
+          onSuperLike={() => onSwipe('superlike')}
           disabled={isAnimating || !currentProfile}
         />
       </div>
