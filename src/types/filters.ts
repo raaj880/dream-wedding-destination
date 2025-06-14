@@ -12,15 +12,15 @@ export interface FilterOptions {
 }
 
 export const initialFilterOptions: FilterOptions = {
-  ageRange: [20, 45],
+  ageRange: [18, 65], // Expanded age range to be more inclusive
   location: '',
   nearbyOnly: false,
-  religions: [],
+  religions: [], // Empty array means no religion filter
   community: '',
   education: '',
   maritalIntent: '',
-  languages: [],
-  verifiedOnly: false,
+  languages: [], // Empty array means no language filter
+  verifiedOnly: false, // Don't require verification by default
 };
 
 export interface FilterState {
