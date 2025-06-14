@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,10 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-// import { Label } from '@/components/ui/label'; // Label from Form is usually sufficient
 import { Eye, EyeOff } from 'lucide-react';
 import SocialAuthButtons from './SocialAuthButtons';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const signupSchema = z.object({
   fullName: z.string().min(2, "Full Name must be at least 2 characters"),
@@ -34,6 +33,7 @@ interface SignupFormProps {
 const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSuccess }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { signup } = useAuth();
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -47,10 +47,21 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
     },
   });
 
-  const onSubmit = (data: SignupFormValues) => {
-    console.log('Signup data:', data);
-    toast({ title: "Signup Submitted", description: "Simulating account creation..." });
-    onSignupSuccess();
+  const onSubmit = async (data: SignupFormValues) => {
+    try {
+      await signup(data);
+      toast({ 
+        title: "Account Created! 🎉", 
+        description: "Welcome to Wedder! Let's set up your profile." 
+      });
+      onSignupSuccess();
+    } catch (error) {
+      toast({
+        title: "Signup Failed",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -165,7 +176,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel htmlFor="profileForSelf" className="font-normal text-sm">
-                  I’m creating this profile for myself
+                  I'm creating this profile for myself
                 </FormLabel>
               </div>
             </FormItem>
@@ -174,8 +185,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
         <Button 
           type="submit" 
           className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
+          disabled={form.formState.isSubmitting}
         >
-          Create Account
+          {form.formState.isSubmitting ? 'Creating Account...' : 'Create Account'}
         </Button>
         <div className="relative my-4 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-300">
           <div className="absolute inset-0 flex items-center">

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,8 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Eye, EyeOff } from 'lucide-react';
 import SocialAuthButtons from './SocialAuthButtons';
-import { toast } from '@/components/ui/use-toast';
-
+import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const loginSchema = z.object({
   emailOrPhone: z.string().min(1, "Email or Phone Number is required"),
@@ -25,6 +24,8 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { login } = useAuth();
+  
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -33,10 +34,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
     },
   });
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log('Login data:', data);
-    toast({ title: "Login Submitted", description: "Simulating login..." });
-    onLoginSuccess();
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      await login(data.emailOrPhone, data.password);
+      toast({ 
+        title: "Welcome back! 👋", 
+        description: "You're successfully logged in." 
+      });
+      onLoginSuccess();
+    } catch (error) {
+      toast({
+        title: "Login Failed",
+        description: "Invalid credentials. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -86,8 +98,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
         <Button 
           type="submit" 
           className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
+          disabled={form.formState.isSubmitting}
         >
-          Login
+          {form.formState.isSubmitting ? 'Logging in...' : 'Login'}
         </Button>
         <div className="text-center animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-100">
           <a href="#" className="text-sm text-soft-pink hover:underline">
@@ -106,7 +119,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
           <SocialAuthButtons actionText="Login" />
         </div>
         <p className="text-center text-sm text-gray-600 animate-in fade-in slide-in-from-bottom-3 duration-300 ease-out delay-250">
-          Don’t have an account?{' '}
+          Don't have an account?{' '}
           <Button variant="link" className="p-0 h-auto text-soft-pink hover:underline" onClick={onSwitchToSignup}>
             Create one now
           </Button>
