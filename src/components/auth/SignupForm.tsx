@@ -49,13 +49,24 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
 
   const onSubmit = async (data: SignupFormValues) => {
     try {
-      await signup(data);
+      const { error } = await signup(data);
+      
+      if (error) {
+        toast({
+          title: "Signup Failed",
+          description: error.message || "Something went wrong. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       toast({ 
         title: "Account Created! 🎉", 
-        description: "Welcome to Wedder! Let's set up your profile." 
+        description: "Welcome to Wedder! Please check your email to verify your account." 
       });
       onSignupSuccess();
     } catch (error) {
+      console.error('Signup error:', error);
       toast({
         title: "Signup Failed",
         description: "Something went wrong. Please try again.",

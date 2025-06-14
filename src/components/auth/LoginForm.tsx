@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,16 +37,27 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
-      await login(data.emailOrPhone, data.password);
+      const { error } = await login(data.emailOrPhone, data.password);
+      
+      if (error) {
+        toast({
+          title: "Login Failed",
+          description: error.message || "Invalid credentials. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       toast({ 
         title: "Welcome back! 👋", 
         description: "You're successfully logged in." 
       });
       onLoginSuccess();
     } catch (error) {
+      console.error('Login error:', error);
       toast({
         title: "Login Failed",
-        description: "Invalid credentials. Please try again.",
+        description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
     }

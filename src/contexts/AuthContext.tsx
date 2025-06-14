@@ -1,108 +1,129 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User } from '@/types/user';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { User, Session } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (userData: any) => Promise<void>;
-  logout: () => void;
-  updateProfile: (updates: Partial<User>) => void;
+  login: (email: string, password: string) => Promise<{ error?: any }>;
+  signup: (userData: any) => Promise<{ error?: any }>;
+  logout: () => Promise<void>;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useLocalStorage<User | null>('currentUser', null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setIsAuthenticated(!!user);
-  }, [user]);
+    console.log('Setting up auth state listener...');
+    
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email);
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }
+    );
+
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session:', session?.user?.email);
+      setSession(session);
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => {
+      console.log('Cleaning up auth subscription');
+      subscription.unsubscribe();
+    };
+  }, []);
 
   const login = async (email: string, password: string) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock user data
-    const mockUser: User = {
-      id: '1',
-      email,
-      fullName: 'Aditi Sharma',
-      age: 28,
-      dateOfBirth: new Date('1995-06-15'),
-      gender: 'female',
-      location: 'Mumbai, Maharashtra',
-      religion: 'Hindu',
-      community: 'Brahmin',
-      languages: ['Hindi', 'English', 'Marathi'],
-      profession: 'Software Engineer',
-      education: 'Masters in Computer Science',
-      height: "5'6\"",
-      marryTimeframe: '1y',
-      bio: 'Looking for a life partner who shares similar values and interests.',
-      photos: ['https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face'],
-      verified: true,
-      isOnline: true,
-      lastSeen: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    
-    setUser(mockUser);
+    console.log('Attempting login for:', email);
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) {
+        console.error('Login error:', error);
+        return { error };
+      }
+      
+      console.log('Login successful:', data.user?.email);
+      return { error: null };
+    } catch (error) {
+      console.error('Login exception:', error);
+      return { error };
+    }
   };
 
   const signup = async (userData: any) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newUser: User = {
-      id: Date.now().toString(),
-      email: userData.email || userData.phoneNumber + '@wedder.com',
-      fullName: userData.fullName,
-      age: 25,
-      dateOfBirth: new Date('1999-01-01'),
-      gender: 'female',
-      location: 'Delhi, India',
-      religion: 'Hindu',
-      community: 'General',
-      languages: ['Hindi', 'English'],
-      profession: 'Professional',
-      education: 'Graduate',
-      height: "5'5\"",
-      marryTimeframe: '1y',
-      bio: '',
-      photos: [],
-      verified: false,
-      isOnline: true,
-      lastSeen: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    
-    setUser(newUser);
-  };
-
-  const logout = () => {
-    setUser(null);
-  };
-
-  const updateProfile = (updates: Partial<User>) => {
-    if (user) {
-      setUser({ ...user, ...updates, updatedAt: new Date() });
+    console.log('Attempting signup for:', userData.email || userData.phoneNumber);
+    try {
+      const email = userData.email || `${userData.phoneNumber}@wedder.app`;
+      const redirectUrl = `${window.location.origin}/`;
+      
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password: userData.password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            full_name: userData.fullName,
+            phone_number: userData.phoneNumber,
+          }
+        }
+      });
+      
+      if (error) {
+        console.error('Signup error:', error);
+        return { error };
+      }
+      
+      console.log('Signup successful:', data.user?.email);
+      return { error: null };
+    } catch (error) {
+      console.error('Signup exception:', error);
+      return { error };
     }
   };
+
+  const logout = async () => {
+    console.log('Logging out user');
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Logout error:', error);
+      } else {
+        console.log('Logout successful');
+      }
+    } catch (error) {
+      console.error('Logout exception:', error);
+    }
+  };
+
+  const isAuthenticated = !!session;
 
   return (
     <AuthContext.Provider value={{
       user,
+      session,
       isAuthenticated,
       login,
       signup,
       logout,
-      updateProfile
+      loading
     }}>
       {children}
     </AuthContext.Provider>

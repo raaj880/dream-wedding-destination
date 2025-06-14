@@ -9,7 +9,75 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          age: number | null
+          bio: string | null
+          community: string | null
+          created_at: string | null
+          date_of_birth: string | null
+          education: string | null
+          full_name: string | null
+          gender: string | null
+          height: string | null
+          id: string
+          is_online: boolean | null
+          languages: string[] | null
+          last_seen: string | null
+          location: string | null
+          marry_timeframe: string | null
+          photos: string[] | null
+          profession: string | null
+          religion: string | null
+          updated_at: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          age?: number | null
+          bio?: string | null
+          community?: string | null
+          created_at?: string | null
+          date_of_birth?: string | null
+          education?: string | null
+          full_name?: string | null
+          gender?: string | null
+          height?: string | null
+          id: string
+          is_online?: boolean | null
+          languages?: string[] | null
+          last_seen?: string | null
+          location?: string | null
+          marry_timeframe?: string | null
+          photos?: string[] | null
+          profession?: string | null
+          religion?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          age?: number | null
+          bio?: string | null
+          community?: string | null
+          created_at?: string | null
+          date_of_birth?: string | null
+          education?: string | null
+          full_name?: string | null
+          gender?: string | null
+          height?: string | null
+          id?: string
+          is_online?: boolean | null
+          languages?: string[] | null
+          last_seen?: string | null
+          location?: string | null
+          marry_timeframe?: string | null
+          photos?: string[] | null
+          profession?: string | null
+          religion?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
