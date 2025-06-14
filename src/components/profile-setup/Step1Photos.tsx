@@ -1,5 +1,4 @@
-
-import React, { useState, useCallback, useEffect } from 'react';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,65 +14,54 @@ interface Step1PhotosProps {
 const MAX_PHOTOS = 3;
 
 const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerValidation }) => {
-  const [previews, setPreviews] = useState<string[]>(data.photoPreviews);
-  const [newFiles, setNewFiles] = useState<File[]>(data.photos);
-
-  useEffect(() => {
-    setPreviews(data.photoPreviews);
-    setNewFiles(data.photos);
-  }, [data.photoPreviews, data.photos]);
+  // Use a ref to keep track of blob URLs for cleanup, avoiding stale closures.
+  const blobUrlsRef = React.useRef<string[]>([]);
+  blobUrlsRef.current = data.photoPreviews.filter(p => p.startsWith('blob:'));
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const filesArray = Array.from(event.target.files);
-      const filesToAdd = filesArray.slice(0, MAX_PHOTOS - previews.length);
+      const filesToAdd = filesArray.slice(0, MAX_PHOTOS - data.photoPreviews.length);
 
       if (filesToAdd.length === 0) return;
 
       const newBlobPreviews = filesToAdd.map(file => URL.createObjectURL(file));
-      const updatedPreviews = [...previews, ...newBlobPreviews];
-      const updatedNewFiles = [...newFiles, ...filesToAdd];
+      const updatedPreviews = [...data.photoPreviews, ...newBlobPreviews];
+      const updatedNewFiles = [...data.photos, ...filesToAdd];
       
-      setPreviews(updatedPreviews);
-      setNewFiles(updatedNewFiles);
       updateData({ photos: updatedNewFiles, photoPreviews: updatedPreviews });
-      triggerValidation();
+      // Use a microtask to allow state to update before validation
+      queueMicrotask(triggerValidation);
     }
   };
 
   const removePhoto = (index: number) => {
-    const urlToRemove = previews[index];
-    const updatedPreviews = previews.filter((_, i) => i !== index);
-    let updatedNewFiles = [...newFiles];
+    const urlToRemove = data.photoPreviews[index];
+    const updatedPreviews = data.photoPreviews.filter((_, i) => i !== index);
+    let updatedPhotos = [...data.photos];
 
     if (urlToRemove.startsWith('blob:')) {
-      const blobPreviews = previews.filter(p => p.startsWith('blob:'));
-      const blobIndexToRemove = blobPreviews.indexOf(urlToRemove);
-      
-      if (blobIndexToRemove > -1) {
-        // Find the corresponding file in newFiles and remove it
-        const fileToRemove = updatedNewFiles[blobIndexToRemove];
-        updatedNewFiles = updatedNewFiles.filter(f => f !== fileToRemove);
+      // Find the index of the blob URL among all blob URLs to safely remove the corresponding file.
+      const allBlobPreviews = data.photoPreviews.filter(p => p.startsWith('blob:'));
+      const indexAmongBlobs = allBlobPreviews.indexOf(urlToRemove);
+
+      if (indexAmongBlobs > -1) {
+        updatedPhotos.splice(indexAmongBlobs, 1);
       }
+      
       URL.revokeObjectURL(urlToRemove);
     }
     
-    setPreviews(updatedPreviews);
-    setNewFiles(updatedNewFiles);
-    updateData({ photos: updatedNewFiles, photoPreviews: updatedPreviews });
-    triggerValidation();
+    updateData({ photos: updatedPhotos, photoPreviews: updatedPreviews });
+    queueMicrotask(triggerValidation);
   };
   
-  // Clean up object URLs on component unmount
+  // Clean up any created object URLs when the component unmounts.
   React.useEffect(() => {
     return () => {
-      previews.forEach(url => {
-        if (url.startsWith('blob:')) {
-          URL.revokeObjectURL(url);
-        }
-      });
+      blobUrlsRef.current.forEach(url => URL.revokeObjectURL(url));
     };
-  }, [previews]);
+  }, []);
 
   return (
     <Card className="w-full animate-in fade-in-50 duration-500">
@@ -100,16 +88,16 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
               accept="image/*"
               className="hidden"
               onChange={handleFileChange}
-              disabled={previews.length >= MAX_PHOTOS}
+              disabled={data.photoPreviews.length >= MAX_PHOTOS}
             />
           </label>
         </div>
 
-        {previews.length > 0 && (
+        {data.photoPreviews.length > 0 && (
           <div>
             <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Uploaded Photos:</h3>
             <div className="flex space-x-3 overflow-x-auto pb-2">
-              {previews.map((previewUrl, index) => (
+              {data.photoPreviews.map((previewUrl, index) => (
                 <div key={index} className="relative flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden shadow">
                   <img src={previewUrl} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
                   <Button
@@ -125,17 +113,17 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
             </div>
           </div>
         )}
-         {previews.length < MAX_PHOTOS && (
+         {data.photoPreviews.length < MAX_PHOTOS && (
           <Button
             variant="outline"
             className="w-full border-soft-pink text-soft-pink hover:bg-soft-pink hover:text-deep-blue dark:border-deep-blue dark:text-deep-blue dark:hover:bg-deep-blue dark:hover:text-soft-pink"
             onClick={() => document.getElementById('photo-upload')?.click()}
-            disabled={previews.length >= MAX_PHOTOS}
+            disabled={data.photoPreviews.length >= MAX_PHOTOS}
           >
-            <ImageIcon className="mr-2 h-4 w-4" /> Add Photo ({previews.length}/{MAX_PHOTOS})
+            <ImageIcon className="mr-2 h-4 w-4" /> Add Photo ({data.photoPreviews.length}/{MAX_PHOTOS})
           </Button>
         )}
-        {data.photos.length === 0 && data.photoPreviews.length === 0 && triggerValidation() && <p className="text-sm text-red-500">Please upload at least one photo.</p>}
+        {data.photoPreviews.length === 0 && triggerValidation() && <p className="text-sm text-red-500">Please upload at least one photo.</p>}
       </CardContent>
     </Card>
   );
