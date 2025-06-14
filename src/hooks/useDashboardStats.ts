@@ -27,37 +27,60 @@ export function useDashboardStats() {
   const { user } = useAuth();
 
   const fetchStats = async () => {
-    if (!user) return;
+    if (!user) {
+      console.log('❌ No user found for dashboard stats');
+      return;
+    }
+
+    console.log('📊 Fetching dashboard stats for user:', user.id);
 
     try {
       setStats(prev => ({ ...prev, loading: true, error: null }));
 
       // Get likes sent by user
+      console.log('💌 Fetching likes sent...');
       const { data: likesSentData, error: likesSentError } = await supabase
         .from('user_interactions')
         .select('id, created_at')
         .eq('user_id', user.id)
         .in('interaction_type', ['like', 'superlike']);
 
-      if (likesSentError) throw likesSentError;
+      if (likesSentError) {
+        console.error('❌ Error fetching likes sent:', likesSentError);
+        throw likesSentError;
+      }
+
+      console.log('✅ Likes sent data:', likesSentData);
 
       // Get likes received by user
+      console.log('💝 Fetching likes received...');
       const { data: likesReceivedData, error: likesReceivedError } = await supabase
         .from('user_interactions')
         .select('id, created_at')
         .eq('target_user_id', user.id)
         .in('interaction_type', ['like', 'superlike']);
 
-      if (likesReceivedError) throw likesReceivedError;
+      if (likesReceivedError) {
+        console.error('❌ Error fetching likes received:', likesReceivedError);
+        throw likesReceivedError;
+      }
+
+      console.log('✅ Likes received data:', likesReceivedData);
 
       // Get total matches
+      console.log('🤝 Fetching matches...');
       const { data: matchesData, error: matchesError } = await supabase
         .from('matches')
         .select('id, matched_at')
         .or(`user1_id.eq.${user.id},user2_id.eq.${user.id}`)
         .eq('status', 'active');
 
-      if (matchesError) throw matchesError;
+      if (matchesError) {
+        console.error('❌ Error fetching matches:', matchesError);
+        throw matchesError;
+      }
+
+      console.log('✅ Matches data:', matchesData);
 
       // Calculate recent activity (last 7 days)
       const weekAgo = new Date();
@@ -71,10 +94,12 @@ export function useDashboardStats() {
         match => new Date(match.matched_at) > weekAgo
       ).length || 0;
 
+      console.log('📈 Recent activity calculation:', { recentLikes, recentMatches });
+
       // Mock profile views for now (would need view tracking table)
       const profileViews = Math.floor(Math.random() * 50) + 20;
 
-      setStats({
+      const newStats = {
         profileViews,
         likesSent: likesSentData?.length || 0,
         totalMatches: matchesData?.length || 0,
@@ -82,10 +107,14 @@ export function useDashboardStats() {
         likesReceived: likesReceivedData?.length || 0,
         loading: false,
         error: null
-      });
+      };
+
+      console.log('📊 Final dashboard stats:', newStats);
+
+      setStats(newStats);
 
     } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
+      console.error('❌ Error fetching dashboard stats:', error);
       setStats(prev => ({
         ...prev,
         loading: false,
