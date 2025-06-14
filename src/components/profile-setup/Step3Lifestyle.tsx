@@ -104,3 +104,4 @@ const Step3Lifestyle: React.FC<Step3LifestyleProps> = ({ data, updateData, error
   );
 };
 export default Step3Lifestyle;
+
