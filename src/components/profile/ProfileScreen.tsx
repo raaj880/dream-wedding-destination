@@ -14,9 +14,10 @@ interface ProfileScreenProps {
   profileData: ProfileData;
   onEditProfile: () => void;
   onSettings: () => void;
+  onPhotoChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ profileData, onEditProfile, onSettings }) => {
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ profileData, onEditProfile, onSettings, onPhotoChange }) => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
   const getAge = (dob?: Date) => {
@@ -62,12 +63,25 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ profileData, onEditProfil
         <div className="relative -mt-16 px-6 pb-6">
           <div className="flex flex-col items-center">
             <div className="relative mb-4">
-              <Avatar className="w-32 h-32 border-4 border-white shadow-xl ring-2 ring-soft-pink/50">
-                <AvatarImage src={profileData.photoPreviews[0]} alt={profileData.fullName} />
-                <AvatarFallback className="bg-gray-200 text-2xl font-semibold text-deep-blue">
-                  <User className="w-16 h-16" />
-                </AvatarFallback>
-              </Avatar>
+               <input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={onPhotoChange}
+              />
+              <label htmlFor="avatar-upload" className="cursor-pointer group relative block">
+                <Avatar className="w-32 h-32 border-4 border-white dark:border-gray-800 shadow-xl ring-2 ring-soft-pink/50">
+                  <AvatarImage src={profileData.photoPreviews[0]} alt={profileData.fullName} />
+                  <AvatarFallback className="bg-gray-200 text-2xl font-semibold text-deep-blue">
+                    <User className="w-16 h-16" />
+                  </AvatarFallback>
+                </Avatar>
+                <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Edit className="w-8 h-8 text-white" />
+                </div>
+              </label>
+
               <div className="absolute -bottom-2 -right-2">
                 <Badge className="bg-green-500 text-white px-2 py-1 text-xs font-medium">
                   ✅ Verified

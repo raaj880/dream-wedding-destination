@@ -11,7 +11,7 @@ import { toast } from '@/components/ui/use-toast';
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { getProfile, loading } = useProfile();
+  const { getProfile, loading, replaceMainProfilePhoto } = useProfile();
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
   const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
@@ -53,6 +53,29 @@ const ProfilePage: React.FC = () => {
     fetchProfile();
   }, [user, getProfile, navigate]);
 
+  const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0] && profileData) {
+        const file = event.target.files[0];
+        try {
+            const updatedRawProfile = await replaceMainProfilePhoto(file, profileData.photoPreviews);
+            if (updatedRawProfile) {
+                const transformedProfile = transformRawProfile(updatedRawProfile);
+                setProfileData(transformedProfile);
+                toast({
+                    title: "Profile Photo Updated!",
+                    description: "Your new photo is now your main profile picture.",
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "Photo Update Failed",
+                description: "Could not update your profile photo. Please try again.",
+                variant: "destructive",
+            });
+        }
+    }
+  };
+
   const handleEditProfile = () => {
     if (profileData) {
       navigate('/profile-setup', { state: { profileData } });
@@ -82,6 +105,7 @@ const ProfilePage: React.FC = () => {
       profileData={profileData}
       onEditProfile={handleEditProfile}
       onSettings={handleSettings}
+      onPhotoChange={handlePhotoChange}
     />
   );
 };

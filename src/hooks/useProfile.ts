@@ -1,4 +1,3 @@
-
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -120,9 +119,66 @@ export const useProfile = () => {
     }
   }, [user?.id]);
 
+  const replaceMainProfilePhoto = useCallback(async (file: File, currentPhotoUrls: string[]) => {
+    if (!user) throw new Error('User not authenticated');
+    setLoading(true);
+    try {
+        // 1. Upload new photo
+        const filePath = `${user.id}/${Date.now()}-${file.name}`;
+        const { error: uploadError } = await supabase.storage
+            .from('profile-photos')
+            .upload(filePath, file, { cacheControl: '3600', upsert: false });
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+            .from('profile-photos')
+            .getPublicUrl(filePath);
+
+        // 2. Prepare new photos array, replacing the old primary photo
+        const oldPrimaryUrl = currentPhotoUrls.length > 0 ? currentPhotoUrls[0] : null;
+        const otherPhotos = currentPhotoUrls.length > 0 ? currentPhotoUrls.slice(1) : [];
+        const newPhotoUrls = [publicUrl, ...otherPhotos];
+
+        // 3. Update profile in the database
+        const { data, error } = await supabase
+            .from('profiles')
+            .update({ photos: newPhotoUrls, updated_at: new Date().toISOString() })
+            .eq('id', user.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        // 4. Delete the old photo from storage.
+        if (oldPrimaryUrl) {
+            try {
+                const bucketName = 'profile-photos';
+                const pathSegments = new URL(oldPrimaryUrl).pathname.split('/');
+                const bucketIndex = pathSegments.indexOf(bucketName);
+                if (bucketIndex > -1 && bucketIndex + 1 < pathSegments.length) {
+                    const oldPhotoPath = pathSegments.slice(bucketIndex + 1).join('/');
+                    if (oldPhotoPath) {
+                      await supabase.storage.from(bucketName).remove([oldPhotoPath]);
+                    }
+                }
+            } catch (e) {
+                console.error("Could not parse old photo URL or delete from storage", e);
+            }
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Error replacing main profile photo:', error);
+        throw error;
+    } finally {
+        setLoading(false);
+    }
+  }, [user?.id]);
+
   return {
     saveProfile,
     getProfile,
     loading,
+    replaceMainProfilePhoto,
   };
 };
