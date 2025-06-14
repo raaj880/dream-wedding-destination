@@ -1,12 +1,12 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Briefcase, MessageCircle, ArrowLeft, Bell, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from '@/components/ui/badge';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { mockUsers } from '@/store/mockData';
 import { useFilters } from '@/hooks/useFilters';
 import { useMatchFiltering } from '@/hooks/useMatchFiltering';
@@ -38,6 +38,7 @@ const mockMatchStatuses = [
 const Matches: React.FC = () => {
   const { appliedFilters, isActive } = useFilters();
   const { filteredMatches, filteredCount } = useMatchFiltering(mockUsers, appliedFilters);
+  const [showPremiumPopup, setShowPremiumPopup] = useState(false);
 
   // Combine filtered users with mock status data
   const matchesWithStatus = filteredMatches.map(user => {
@@ -48,6 +49,28 @@ const Matches: React.FC = () => {
       lastSeen: statusData?.lastSeen || 'Last seen recently'
     };
   });
+
+  // Show popup only when there are few matches and user has been on page for a bit
+  useEffect(() => {
+    if (filteredCount <= 2 && filteredCount > 0) {
+      const showTimer = setTimeout(() => {
+        setShowPremiumPopup(true);
+      }, 3000); // Show after 3 seconds
+
+      return () => clearTimeout(showTimer);
+    }
+  }, [filteredCount]);
+
+  // Auto-dismiss popup after 5 seconds
+  useEffect(() => {
+    if (showPremiumPopup) {
+      const dismissTimer = setTimeout(() => {
+        setShowPremiumPopup(false);
+      }, 5000);
+
+      return () => clearTimeout(dismissTimer);
+    }
+  }, [showPremiumPopup]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -208,26 +231,34 @@ const Matches: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Floating CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="fixed bottom-6 left-4 right-4 max-w-sm mx-auto"
-        >
-          <Card className="bg-gradient-to-r from-soft-pink to-deep-blue/10 border-0 shadow-lg">
-            <CardContent className="p-4">
-              <div className="text-center">
-                <p className="text-sm text-deep-blue mb-2">
-                  3 people liked you – Get Premium to view 🔓
-                </p>
-                <Button size="sm" className="bg-deep-blue text-white hover:bg-deep-blue/90 w-full">
-                  See Who Liked You
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        {/* Conditional Premium Popup */}
+        <AnimatePresence>
+          {showPremiumPopup && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="fixed bottom-6 left-4 right-4 max-w-sm mx-auto z-50"
+            >
+              <Card className="bg-gradient-to-r from-soft-pink to-deep-blue/10 border-0 shadow-lg">
+                <CardContent className="p-4">
+                  <div className="text-center">
+                    <p className="text-sm text-deep-blue mb-2">
+                      3 people liked you – Get Premium to view 🔓
+                    </p>
+                    <Button 
+                      size="sm" 
+                      className="bg-deep-blue text-white hover:bg-deep-blue/90 w-full"
+                      onClick={() => setShowPremiumPopup(false)}
+                    >
+                      See Who Liked You
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
