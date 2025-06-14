@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navLinks = [
     { href: '/', label: 'Home' },
@@ -25,15 +26,20 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleLogoClick = () => {
+    navigate('/');
+    closeMobileMenu();
+  };
+
   return (
     <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 text-deep-blue hover:text-deep-blue/80 transition-colors">
+          <div onClick={handleLogoClick} className="flex items-center space-x-2 text-deep-blue hover:text-deep-blue/80 transition-colors cursor-pointer">
             <Heart className="w-7 h-7 text-soft-pink fill-soft-pink" />
             <span className="text-3xl font-bold">Wedder</span>
-          </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-2">

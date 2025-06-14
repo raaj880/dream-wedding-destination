@@ -249,7 +249,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ profileData, onEditProfil
       </ScrollArea>
 
       {/* Fixed Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 space-y-3">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 space-y-3 z-10">
         <Button 
           onClick={onEditProfile}
           className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full py-3 font-medium"

@@ -1,13 +1,24 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Heart, User, Shield, Bell, Eye, HelpCircle, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Settings: React.FC = () => {
+  const navigate = useNavigate();
+  const { signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    if (signOut) {
+      await signOut();
+    }
+    navigate('/auth', { replace: true });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
       {/* Header */}
@@ -22,10 +33,10 @@ const Settings: React.FC = () => {
               </Button>
               <h1 className="text-xl font-semibold text-deep-blue dark:text-white">Settings</h1>
             </div>
-            <Link to="/" className="flex items-center space-x-2 text-deep-blue hover:text-deep-blue/80 transition-colors">
+            <div onClick={() => navigate('/')} className="flex items-center space-x-2 text-deep-blue hover:text-deep-blue/80 transition-colors cursor-pointer">
               <Heart className="w-6 h-6 text-soft-pink fill-soft-pink" />
               <span className="text-xl font-bold">Wedder</span>
-            </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -50,8 +61,10 @@ const Settings: React.FC = () => {
               <Button variant="outline" className="w-full justify-start">
                 Change Password
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                Manage Photos
+              <Button variant="outline" asChild className="w-full justify-start">
+                <Link to="/profile-setup">
+                  Manage Photos
+                </Link>
               </Button>
             </CardContent>
           </Card>
@@ -157,7 +170,7 @@ const Settings: React.FC = () => {
                 <Button variant="outline" className="w-full justify-start text-orange-600 border-orange-600 hover:bg-orange-50">
                   Deactivate Account
                 </Button>
-                <Button variant="outline" className="w-full justify-start text-red-600 border-red-600 hover:bg-red-50">
+                <Button onClick={handleSignOut} variant="outline" className="w-full justify-start text-red-600 border-red-600 hover:bg-red-50">
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
                 </Button>
