@@ -21,6 +21,9 @@ import ContactPage from "./pages/ContactPage";
 import HelpCenterPage from "./pages/HelpCenterPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
+import FeaturesPage from "./pages/FeaturesPage";
+import TestimonialsPage from "./pages/TestimonialsPage";
+import FAQPage from "./pages/FAQPage";
 import SwipeInterface from "./pages/SwipeInterface";
 import ChatInterface from "./pages/ChatInterface";
 import FilterScreen from "./pages/FilterScreen";
@@ -50,6 +53,9 @@ const App = () => (
                   <Route path="/help" element={<HelpCenterPage />} />
                   <Route path="/privacy" element={<PrivacyPolicyPage />} />
                   <Route path="/terms" element={<TermsOfServicePage />} />
+                  <Route path="/features" element={<FeaturesPage />} />
+                  <Route path="/testimonials" element={<TestimonialsPage />} />
+                  <Route path="/faq" element={<FAQPage />} />
                   
                   {/* Protected Routes with Profile Completion Check */}
                   <Route path="/dashboard" element={

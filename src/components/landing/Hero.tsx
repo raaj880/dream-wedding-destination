@@ -1,8 +1,21 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
+  const handleFindYourMatch = () => {
+    if (isAuthenticated) {
+      navigate('/swipe');
+    } else {
+      navigate('/auth');
+    }
+  };
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-soft-pink via-white to-pink-100 pt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -10,12 +23,12 @@ const Hero = () => {
           Swipe. Match. Marry.
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto mb-10">
-          India’s modern marriage connection app built for Gen Z & Millennials.
+          India's modern marriage connection app built for Gen Z & Millennials.
         </p>
         <Button 
           size="lg"
           className="bg-deep-blue text-white font-bold rounded-2xl px-10 py-7 text-lg hover:bg-blue-900 hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-subtle-pulse"
-          onClick={() => console.log("Find Your Match clicked!")} // Placeholder action
+          onClick={handleFindYourMatch}
         >
           Find Your Match
         </Button>

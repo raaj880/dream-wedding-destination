@@ -11,10 +11,10 @@ const Navbar = () => {
   const { isAuthenticated } = useAuth();
 
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/#features', label: 'Features' },
-    { href: '/#testimonials', label: 'Testimonials' },
-    { href: '/#faq', label: 'FAQ' },
+    { href: '/', label: 'Home', scrollTo: 'home' },
+    { href: '/#features', label: 'Features', scrollTo: 'features' },
+    { href: '/#testimonials', label: 'Testimonials', scrollTo: 'testimonials' },
+    { href: '/#faq', label: 'FAQ', scrollTo: 'faq' },
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/matches', label: 'Matches' },
     { href: '/profile', label: 'Profile' },
@@ -30,6 +30,29 @@ const Navbar = () => {
 
   const handleLogoClick = () => {
     navigate('/');
+    setTimeout(() => {
+      const homeElement = document.getElementById('home');
+      homeElement?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+    closeMobileMenu();
+  };
+
+  const handleNavClick = (link: typeof navLinks[0]) => {
+    if (link.href === '/') {
+      navigate('/');
+      setTimeout(() => {
+        const homeElement = document.getElementById('home');
+        homeElement?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else if (link.href.startsWith('/#')) {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(link.scrollTo!);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      navigate(link.href);
+    }
     closeMobileMenu();
   };
 
@@ -46,14 +69,13 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-2">
             {navLinks.map((link) => (
-              <Link
+              <button
                 key={link.label}
-                to={link.href}
-                onClick={link.href.startsWith('/#') ? undefined : closeMobileMenu}
-                className="px-3 py-2 text-deep-blue hover:text-soft-pink rounded-md text-base font-medium transition-colors"
+                onClick={() => handleNavClick(link)}
+                className="px-3 py-2 text-deep-blue hover:text-soft-pink rounded-md text-base font-medium transition-colors bg-transparent border-none cursor-pointer"
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
             {!isAuthenticated && (
               <Button asChild className="ml-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-6 py-2.5 text-base font-semibold transition-transform hover:scale-105">
@@ -76,23 +98,13 @@ const Navbar = () => {
         <div className="md:hidden absolute top-20 left-0 right-0 bg-white shadow-lg z-40 pb-4">
           <nav className="flex flex-col items-center space-y-3 pt-4">
             {navLinks.map((link) => (
-              <Link
+              <button
                 key={link.label}
-                to={link.href}
-                onClick={() => {
-                  closeMobileMenu();
-                  if (link.href.startsWith('/#')) {
-                    // Handle scroll to section for mobile after navigation
-                    setTimeout(() => {
-                      const element = document.getElementById(link.href.substring(2));
-                      element?.scrollIntoView({ behavior: 'smooth' });
-                    }, 0);
-                  }
-                }}
-                className="block px-4 py-2 text-deep-blue hover:text-soft-pink rounded-md text-lg font-medium transition-colors w-full text-center"
+                onClick={() => handleNavClick(link)}
+                className="block px-4 py-2 text-deep-blue hover:text-soft-pink rounded-md text-lg font-medium transition-colors w-full text-center bg-transparent border-none cursor-pointer"
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
             {!isAuthenticated && (
               <Button asChild className="mt-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-8 py-3 text-lg font-semibold transition-transform hover:scale-105 w-3/4">
