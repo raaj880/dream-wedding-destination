@@ -34,18 +34,32 @@ const EnhancedSwipeInterface: React.FC = () => {
     streak: 0
   });
   const [feedbackAction, setFeedbackAction] = useState<'like' | 'pass' | 'superlike' | null>(null);
-  const [processedProfiles, setProcessedProfiles] = useState<Set<string>>(new Set());
+  const [swipedProfiles, setSwipedProfiles] = useState<Set<string>>(new Set());
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
-  const handleSwipeAction = useCallback(async (profileId: string, action: 'like' | 'pass' | 'superlike') => {
-    if (swipeLoading || processedProfiles.has(profileId)) return;
+  console.log('🔍 EnhancedSwipeInterface Debug:', {
+    totalMatches: matches.length,
+    filteredMatches: filteredMatches.length,
+    swipedProfiles: Array.from(swipedProfiles),
+    loading,
+    error
+  });
 
-    // Mark profile as processed to prevent duplicate actions
-    setProcessedProfiles(prev => new Set(prev).add(profileId));
+  const handleSwipeAction = useCallback(async (profileId: string, action: 'like' | 'pass' | 'superlike') => {
+    if (swipeLoading || swipedProfiles.has(profileId)) {
+      console.log('🚫 Swipe action blocked:', { swipeLoading, alreadySwiped: swipedProfiles.has(profileId) });
+      return;
+    }
+
+    console.log('👆 Handling swipe action:', { profileId, action });
+
+    // Mark profile as swiped immediately to prevent duplicate actions
+    setSwipedProfiles(prev => new Set(prev).add(profileId));
 
     try {
       const result = await recordInteraction(profileId, action);
+      console.log('✅ Swipe recorded:', result);
       
       // Update swipe stats
       setSwipeStats(prev => ({
@@ -81,9 +95,9 @@ const EnhancedSwipeInterface: React.FC = () => {
       }
       
     } catch (error) {
-      console.error('Error handling swipe:', error);
-      // Remove from processed if there was an error
-      setProcessedProfiles(prev => {
+      console.error('❌ Error handling swipe:', error);
+      // Remove from swiped if there was an error
+      setSwipedProfiles(prev => {
         const newSet = new Set(prev);
         newSet.delete(profileId);
         return newSet;
@@ -95,7 +109,7 @@ const EnhancedSwipeInterface: React.FC = () => {
         variant: "destructive"
       });
     }
-  }, [recordInteraction, swipeLoading, filteredMatches, processedProfiles]);
+  }, [recordInteraction, swipeLoading, filteredMatches, swipedProfiles]);
 
   const handleFeedbackComplete = useCallback(() => {
     setFeedbackAction(null);
@@ -104,7 +118,7 @@ const EnhancedSwipeInterface: React.FC = () => {
   const resetSwipes = useCallback(async () => {
     setIsRefreshing(true);
     setSwipeStats({ likes: 0, passes: 0, superlikes: 0, streak: 0 });
-    setProcessedProfiles(new Set());
+    setSwipedProfiles(new Set());
     
     try {
       await refetch();
@@ -128,7 +142,7 @@ const EnhancedSwipeInterface: React.FC = () => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (swipeLoading) return;
       
-      const visibleProfiles = filteredMatches.filter(p => !processedProfiles.has(p.id));
+      const visibleProfiles = filteredMatches.filter(p => !swipedProfiles.has(p.id));
       const firstProfile = visibleProfiles[0];
       
       if (!firstProfile) return;
@@ -158,10 +172,17 @@ const EnhancedSwipeInterface: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [handleSwipeAction, filteredMatches, processedProfiles, swipeLoading, resetSwipes]);
+  }, [handleSwipeAction, filteredMatches, swipedProfiles, swipeLoading, resetSwipes]);
 
-  // Filter out processed profiles for display
-  const displayProfiles = filteredMatches.filter(profile => !processedProfiles.has(profile.id));
+  // Filter out swiped profiles for display
+  const displayProfiles = filteredMatches.filter(profile => !swipedProfiles.has(profile.id));
+
+  console.log('📱 Display profiles:', {
+    filteredCount: filteredMatches.length,
+    swipedCount: swipedProfiles.size,
+    displayCount: displayProfiles.length,
+    profiles: displayProfiles.map(p => ({ id: p.id, name: p.full_name }))
+  });
 
   if (showTutorial) {
     return <SwipeTutorial onComplete={completeTutorial} />;
