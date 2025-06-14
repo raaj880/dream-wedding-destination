@@ -1,11 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ProfileScreen from '@/components/profile/ProfileScreen';
-import { ProfileData, initialProfileData } from '@/types/profile';
+import { ProfileData } from '@/types/profile';
 import { useProfile } from '@/hooks/useProfile';
 import { useAuth } from '@/contexts/AuthContext';
 import { Tables } from '@/integrations/supabase/types';
+import { toast } from '@/components/ui/use-toast';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,7 +17,8 @@ const ProfilePage: React.FC = () => {
   const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
     return {
       fullName: rawProfile.full_name || '',
-      dob: rawProfile.date_of_birth ? new Date(rawProfile.date_of_birth) : undefined,
+      // Fix date parsing to avoid timezone issues
+      dob: rawProfile.date_of_birth ? new Date(`${rawProfile.date_of_birth}T00:00:00`) : undefined,
       gender: (rawProfile.gender as ProfileData['gender']) || '',
       location: rawProfile.location || '',
       religion: rawProfile.religion || '',
@@ -52,7 +54,15 @@ const ProfilePage: React.FC = () => {
   }, [user, getProfile, navigate]);
 
   const handleEditProfile = () => {
-    navigate('/profile-setup', { state: { profileData } });
+    if (profileData) {
+      navigate('/profile-setup', { state: { profileData } });
+    } else {
+      toast({
+        title: "Could Not Edit Profile",
+        description: "Your profile data is not available at the moment. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleSettings = () => {
