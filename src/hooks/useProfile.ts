@@ -16,6 +16,33 @@ export const useProfile = () => {
     console.log('Saving profile data:', profileData);
     
     try {
+      // 1. Handle Photo Uploads
+      const existingPhotoUrls = profileData.photoPreviews.filter(url => url.startsWith('https://'));
+      
+      const uploadPromises = profileData.photos.map(async (file) => {
+        const filePath = `${user.id}/${Date.now()}-${file.name}`;
+        const { error: uploadError } = await supabase.storage
+          .from('profile-photos')
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error('Error uploading photo:', uploadError);
+          throw uploadError;
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('profile-photos')
+          .getPublicUrl(filePath);
+        
+        return publicUrl;
+      });
+
+      const newPhotoUrls = await Promise.all(uploadPromises);
+      const finalPhotoUrls = [...existingPhotoUrls, ...newPhotoUrls];
+
       // Calculate age from date of birth
       const age = profileData.dob ? differenceInYears(new Date(), profileData.dob) : null;
       
@@ -40,8 +67,12 @@ export const useProfile = () => {
         height: profileData.height,
         marry_timeframe: profileData.marryTimeframe,
         bio: profileData.bio,
-        photos: [], // TODO: Handle photo uploads separately
+        photos: finalPhotoUrls,
         updated_at: new Date().toISOString(),
+        partner_age_range_min: profileData.partnerAgeRange[0],
+        partner_age_range_max: profileData.partnerAgeRange[1],
+        partner_location: profileData.partnerLocation,
+        profile_visibility: profileData.profileVisibility,
       };
 
       const { data, error } = await supabase
@@ -62,7 +93,7 @@ export const useProfile = () => {
     } finally {
       setLoading(false);
     }
-  }, [user?.id]); // Only depend on user.id
+  }, [user?.id]);
 
   const getProfile = useCallback(async () => {
     if (!user) return null;
@@ -87,7 +118,7 @@ export const useProfile = () => {
     } finally {
       setLoading(false);
     }
-  }, [user?.id]); // Only depend on user.id
+  }, [user?.id]);
 
   return {
     saveProfile,

@@ -94,8 +94,12 @@ export type Database = {
           last_seen: string | null
           location: string | null
           marry_timeframe: string | null
+          partner_age_range_max: number | null
+          partner_age_range_min: number | null
+          partner_location: string | null
           photos: string[] | null
           profession: string | null
+          profile_visibility: string | null
           religion: string | null
           updated_at: string | null
           verified: boolean | null
@@ -116,8 +120,12 @@ export type Database = {
           last_seen?: string | null
           location?: string | null
           marry_timeframe?: string | null
+          partner_age_range_max?: number | null
+          partner_age_range_min?: number | null
+          partner_location?: string | null
           photos?: string[] | null
           profession?: string | null
+          profile_visibility?: string | null
           religion?: string | null
           updated_at?: string | null
           verified?: boolean | null
@@ -138,8 +146,12 @@ export type Database = {
           last_seen?: string | null
           location?: string | null
           marry_timeframe?: string | null
+          partner_age_range_max?: number | null
+          partner_age_range_min?: number | null
+          partner_location?: string | null
           photos?: string[] | null
           profession?: string | null
+          profile_visibility?: string | null
           religion?: string | null
           updated_at?: string | null
           verified?: boolean | null

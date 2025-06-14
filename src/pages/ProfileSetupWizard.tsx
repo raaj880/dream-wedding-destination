@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
@@ -16,6 +17,9 @@ import TrustNote from '@/components/profile-setup/TrustNote';
 
 const ProfileSetupWizard: React.FC = () => {
   const totalSteps = 5;
+  const location = useLocation();
+  const existingProfileData = location.state?.profileData;
+  
   const {
     currentStep,
     profileData,
@@ -27,7 +31,7 @@ const ProfileSetupWizard: React.FC = () => {
     prevStep,
     handleSubmit,
     triggerValidation,
-  } = useProfileSetup(totalSteps);
+  } = useProfileSetup(totalSteps, existingProfileData);
 
   const renderStep = () => {
     switch (currentStep) {

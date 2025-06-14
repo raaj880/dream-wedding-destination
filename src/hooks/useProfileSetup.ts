@@ -5,9 +5,9 @@ import { ProfileData, initialProfileData } from '@/types/profile';
 import { toast } from '@/hooks/use-toast';
 import { useProfile } from '@/hooks/useProfile';
 
-export const useProfileSetup = (totalSteps: number) => {
+export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [profileData, setProfileData] = useState<ProfileData>(initialProfileData);
+  const [profileData, setProfileData] = useState<ProfileData>(initialData || initialProfileData);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
