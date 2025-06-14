@@ -34,6 +34,8 @@ export const useMatches = () => {
     setError(null);
 
     try {
+      console.log('Fetching matches for user:', user.id);
+      
       const { data, error } = await supabase
         .from('matches')
         .select(`
@@ -48,12 +50,19 @@ export const useMatches = () => {
         .eq('status', 'active')
         .order('matched_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching matches:', error);
+        throw error;
+      }
+
+      console.log('Raw matches data:', data);
 
       // Get the other user's profile for each match
       const matchesWithProfiles = await Promise.all(
         (data || []).map(async (match) => {
           const otherUserId = match.user1_id === user.id ? match.user2_id : match.user1_id;
+          
+          console.log('Fetching profile for user:', otherUserId);
           
           const { data: profile, error: profileError } = await supabase
             .from('profiles')
@@ -65,6 +74,8 @@ export const useMatches = () => {
             console.error('Error fetching profile:', profileError);
             return null;
           }
+
+          console.log('Profile data:', profile);
 
           // Get last message if exists
           const { data: lastMessage } = await supabase
@@ -86,7 +97,9 @@ export const useMatches = () => {
         })
       );
 
-      setMatches(matchesWithProfiles.filter(Boolean) as UserMatch[]);
+      const validMatches = matchesWithProfiles.filter(Boolean) as UserMatch[];
+      console.log('Final matches with profiles:', validMatches);
+      setMatches(validMatches);
     } catch (err) {
       console.error('Error fetching matches:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch matches');
@@ -118,10 +131,12 @@ export const useMatches = () => {
           table: 'matches'
         },
         (payload) => {
+          console.log('New match detected via realtime:', payload);
           const newMatch = payload.new;
           const isUserInvolved = newMatch.user1_id === user.id || newMatch.user2_id === user.id;
           
           if (isUserInvolved) {
+            console.log('User is involved in new match, refetching...');
             // Refetch matches to include the new one
             fetchMatches();
           }
@@ -135,6 +150,7 @@ export const useMatches = () => {
           table: 'matches'
         },
         (payload) => {
+          console.log('Match updated via realtime:', payload);
           const updatedMatch = payload.new;
           const isUserInvolved = updatedMatch.user1_id === user.id || updatedMatch.user2_id === user.id;
           

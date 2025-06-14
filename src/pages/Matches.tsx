@@ -10,10 +10,14 @@ import MatchesList from '@/components/matches/MatchesList';
 import PremiumPopup from '@/components/matches/PremiumPopup';
 
 const Matches: React.FC = () => {
+  // All hooks must be called at the top level, before any conditionals
   const { matches, loading: matchesLoading } = useMatches();
   const { matches: potentialMatches, loading: profilesLoading } = usePotentialMatches();
   const { appliedFilters, isActive } = useFilters();
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
+
+  console.log('Matches data:', matches);
+  console.log('Potential matches data:', potentialMatches);
 
   // Transform data to match PotentialMatch interface for filtering
   const displayProfiles = matches.length > 0 ? matches.map(match => ({
