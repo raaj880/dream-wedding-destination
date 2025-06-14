@@ -8,8 +8,6 @@ import QuickActionsGrid from '@/components/dashboard/QuickActionsGrid';
 import StatsGrid from '@/components/dashboard/StatsGrid';
 import QuickTipsCard from '@/components/dashboard/QuickTipsCard';
 import PremiumCTA from '@/components/dashboard/PremiumCTA';
-import TestDataGenerator from '@/components/admin/TestDataGenerator';
-import ManualTestDataCreator from '@/components/admin/ManualTestDataCreator';
 
 const Dashboard: React.FC = () => {
   const stats = useDashboardStats();
@@ -23,19 +21,6 @@ const Dashboard: React.FC = () => {
         <FilterStatusBanner hasActiveFilters={hasActiveFilters} />
         <QuickActionsGrid totalMatches={stats.totalMatches} />
         <StatsGrid stats={stats} />
-        
-        {/* Test Data Generator - Remove this in production */}
-        <div className="border-2 border-dashed border-orange-200 p-4 rounded-lg bg-orange-50">
-          <h2 className="text-lg font-semibold text-orange-800 mb-4">🧪 Development Tools</h2>
-          <div className="space-y-6">
-            <TestDataGenerator />
-            <div className="border-t border-orange-300 pt-4">
-              <h3 className="text-md font-medium text-orange-700 mb-2">Manual User Creation</h3>
-              <ManualTestDataCreator />
-            </div>
-          </div>
-        </div>
-        
         <QuickTipsCard />
         <PremiumCTA />
       </div>
