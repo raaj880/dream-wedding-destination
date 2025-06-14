@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -113,7 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const checkProfileCompletion = async () => {
+  const checkProfileCompletion = async (): Promise<boolean> => {
     if (!user) return false;
     
     try {
@@ -128,8 +129,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return false;
       }
 
-      // Consider profile complete if user has basic info
-      return data?.full_name && data?.age && data?.bio;
+      // Consider profile complete if user has basic info - return proper boolean
+      return !!(data?.full_name && data?.age && data?.bio);
     } catch (error) {
       console.error('Error checking profile completion:', error);
       return false;
