@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Briefcase } from 'lucide-react';
+import { MapPin, Briefcase, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -90,8 +90,11 @@ const Matches: React.FC = () => {
                   </div>
                   
                   <div className="flex space-x-2 pt-2">
-                    <Button size="sm" className="flex-1 bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-soft-pink dark:text-deep-blue dark:hover:bg-soft-pink/90">
-                      Connect
+                    <Button size="sm" className="flex-1 bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-soft-pink dark:text-deep-blue dark:hover:bg-soft-pink/90" asChild>
+                      <Link to={`/chat/${match.id}`}>
+                        <MessageCircle className="w-4 h-4 mr-1" />
+                        Chat
+                      </Link>
                     </Button>
                     <Button size="sm" variant="outline" className="flex-1 border-deep-blue text-deep-blue hover:bg-deep-blue/10 dark:border-soft-pink dark:text-soft-pink dark:hover:bg-soft-pink/10">
                       View Profile
