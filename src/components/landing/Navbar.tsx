@@ -12,7 +12,8 @@ const Navbar = () => {
     { href: '/#features', label: 'Features' },
     { href: '/#testimonials', label: 'Testimonials' },
     { href: '/#faq', label: 'FAQ' },
-    { href: '/auth', label: 'Login' }, // Changed from #login to /auth
+    { href: '/profile', label: 'Profile' },
+    { href: '/auth', label: 'Login' },
   ];
 
   const toggleMobileMenu = () => {
