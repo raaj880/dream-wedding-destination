@@ -92,7 +92,7 @@ const Step3Lifestyle: React.FC<Step3LifestyleProps> = ({ data, updateData, error
           <Label htmlFor="height" className="text-gray-700 dark:text-gray-300">Height</Label>
           <Input
             id="height"
-            placeholder="E.g. 5' 10\" or 178 cm" // Ensured the quote is correctly escaped
+            placeholder="E.g. 5' 10\" or 178 cm"
             value={data.height}
             onChange={(e) => updateData({ height: e.target.value })}
             className={cn("mt-1", errors.height && "border-red-500")}
@@ -104,4 +104,3 @@ const Step3Lifestyle: React.FC<Step3LifestyleProps> = ({ data, updateData, error
   );
 };
 export default Step3Lifestyle;
-
