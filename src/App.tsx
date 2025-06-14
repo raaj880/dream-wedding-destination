@@ -17,6 +17,7 @@ import ContactPage from "./pages/ContactPage";
 import HelpCenterPage from "./pages/HelpCenterPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
+import SwipeInterface from "./pages/SwipeInterface";
 import { ThemeProvider } from "next-themes";
 import ProfileSetupWizard from "./pages/ProfileSetupWizard";
 import Navbar from "./components/landing/Navbar";
@@ -40,6 +41,7 @@ const App = () => (
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/matches" element={<Matches />} />
+                <Route path="/swipe" element={<SwipeInterface />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/profile-setup" element={<ProfileSetupWizard />} />
                 <Route path="/about" element={<AboutPage />} />
