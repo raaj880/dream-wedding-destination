@@ -38,9 +38,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <ProfileHeader 
-        name={profileData.fullName}
-        onEditProfile={isOwnProfile ? onEditProfile : undefined}
-        onSettings={isOwnProfile ? onSettings : undefined}
+        profileData={profileData}
+        onPhotoChange={isOwnProfile ? onPhotoChange : undefined}
       />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">
@@ -50,10 +49,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
           transition={{ duration: 0.5 }}
         >
           <ProfileGallery 
-            photos={profileData.photoPreviews} 
-            onPhotoClick={openLightbox}
-            onPhotoChange={isOwnProfile ? onPhotoChange : undefined}
-            isOwnProfile={isOwnProfile}
+            photoPreviews={profileData.photoPreviews} 
+            onPhotoSelect={openLightbox}
           />
         </motion.div>
 
@@ -70,7 +67,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <ProfileAbout profileData={profileData} />
+          <ProfileAbout bio={profileData.bio} />
         </motion.div>
 
         <motion.div
@@ -98,7 +95,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
       {selectedPhotoIndex !== null && (
         <PhotoLightbox
           photos={profileData.photoPreviews}
-          initialIndex={selectedPhotoIndex}
+          selectedIndex={selectedPhotoIndex}
           onClose={closeLightbox}
         />
       )}

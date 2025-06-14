@@ -14,6 +14,7 @@ export const useSwipeInterface = () => {
   const { filteredMatches, filteredCount, totalCount } = useMatchFiltering(matches, appliedFilters);
   const { showTutorial, completeTutorial } = useSwipeTutorial();
   
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [swipeStats, setSwipeStats] = useState({
@@ -22,7 +23,7 @@ export const useSwipeInterface = () => {
     superlikes: 0,
     streak: 0
   });
-  const [feedbackAction, setFeedbackAction] = useState<'like' | 'pass' | 'superlike' | null>(null);
+  const [feedback, setFeedback] = useState<'like' | 'pass' | 'superlike' | null>(null);
   const [swipedProfiles, setSwipedProfiles] = useState<Set<string>>(new Set());
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -35,10 +36,25 @@ export const useSwipeInterface = () => {
     error
   });
 
-  const handleSwipeAction = useCallback(async (profileId: string, action: 'like' | 'pass' | 'superlike') => {
+  const currentProfile = filteredMatches[currentProfileIndex];
+  const hasMoreProfiles = currentProfileIndex < filteredMatches.length - 1;
+
+  const goToNextProfile = useCallback(() => {
+    if (hasMoreProfiles) {
+      setCurrentProfileIndex(prev => prev + 1);
+    }
+  }, [hasMoreProfiles]);
+
+  const loadMoreProfiles = useCallback(async () => {
+    // This would typically fetch more profiles from the server
+    // For now, we'll just refetch existing profiles
+    await refetch();
+  }, [refetch]);
+
+  const handleSwipe = useCallback(async (profileId: string, action: 'like' | 'pass' | 'superlike') => {
     if (swipeLoading || swipedProfiles.has(profileId)) {
       console.log('🚫 Swipe action blocked:', { swipeLoading, alreadySwiped: swipedProfiles.has(profileId) });
-      return;
+      return { isMatch: false };
     }
 
     console.log('👆 Handling swipe action:', { profileId, action });
@@ -59,7 +75,7 @@ export const useSwipeInterface = () => {
       }));
 
       // Show feedback animation
-      setFeedbackAction(action);
+      setFeedback(action);
 
       // Find profile for toast
       const profile = filteredMatches.find(p => p.id === profileId);
@@ -83,6 +99,7 @@ export const useSwipeInterface = () => {
         });
       }
       
+      return result;
     } catch (error) {
       console.error('❌ Error handling swipe:', error);
       // Remove from swiped if there was an error
@@ -97,15 +114,14 @@ export const useSwipeInterface = () => {
         description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
+      
+      return { isMatch: false };
     }
   }, [recordInteraction, swipeLoading, filteredMatches, swipedProfiles]);
 
-  const handleFeedbackComplete = useCallback(() => {
-    setFeedbackAction(null);
-  }, []);
-
-  const resetSwipes = useCallback(async () => {
+  const resetProfiles = useCallback(async () => {
     setIsRefreshing(true);
+    setCurrentProfileIndex(0);
     setSwipeStats({ likes: 0, passes: 0, superlikes: 0, streak: 0 });
     setSwipedProfiles(new Set());
     
@@ -137,14 +153,23 @@ export const useSwipeInterface = () => {
   });
 
   return {
-    // Data
-    displayProfiles,
+    // Original data structure
+    profiles: filteredMatches,
+    currentProfileIndex,
+    stats: swipeStats,
     loading,
     error,
+    hasMoreProfiles,
+    goToNextProfile,
+    loadMoreProfiles,
+    resetProfiles,
+    
+    // Enhanced data
+    displayProfiles,
     isRefreshing,
     showStats,
     swipeStats,
-    feedbackAction,
+    feedback,
     swipedProfiles,
     filteredMatches,
     filteredCount,
@@ -155,9 +180,8 @@ export const useSwipeInterface = () => {
     scrollAreaRef,
     
     // Actions
-    handleSwipeAction,
-    handleFeedbackComplete,
-    resetSwipes,
+    handleSwipe,
+    resetSwipes: resetProfiles,
     setShowStats,
     clearFilter,
     clearAllFilters,
