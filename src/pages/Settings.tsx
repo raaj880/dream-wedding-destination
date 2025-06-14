@@ -135,17 +135,17 @@ const Settings: React.FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Button variant="outline" className="w-full justify-start">
-                Help Center
+              <Button variant="outline" asChild className="w-full justify-start">
+                <Link to="/help">Help Center</Link>
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                Contact Support
+              <Button variant="outline" asChild className="w-full justify-start">
+                <Link to="/contact">Contact Support</Link>
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                Privacy Policy
+              <Button variant="outline" asChild className="w-full justify-start">
+                <Link to="/privacy">Privacy Policy</Link>
               </Button>
-              <Button variant="outline" className="w-full justify-start">
-                Terms of Service
+              <Button variant="outline" asChild className="w-full justify-start">
+                <Link to="/terms">Terms of Service</Link>
               </Button>
             </CardContent>
           </Card>

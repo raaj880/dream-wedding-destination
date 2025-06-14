@@ -11,6 +11,12 @@ import Dashboard from "./pages/Dashboard";
 import Matches from "./pages/Matches";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import AboutPage from "./pages/AboutPage";
+import BlogPage from "./pages/BlogPage";
+import ContactPage from "./pages/ContactPage";
+import HelpCenterPage from "./pages/HelpCenterPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
 import { ThemeProvider } from "next-themes";
 import ProfileSetupWizard from "./pages/ProfileSetupWizard";
 import Navbar from "./components/landing/Navbar";
@@ -36,6 +42,12 @@ const App = () => (
                 <Route path="/matches" element={<Matches />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/profile-setup" element={<ProfileSetupWizard />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/help" element={<HelpCenterPage />} />
+                <Route path="/privacy" element={<PrivacyPolicyPage />} />
+                <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
