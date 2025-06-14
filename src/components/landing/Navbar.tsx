@@ -12,8 +12,9 @@ const Navbar = () => {
     { href: '/#features', label: 'Features' },
     { href: '/#testimonials', label: 'Testimonials' },
     { href: '/#faq', label: 'FAQ' },
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/matches', label: 'Matches' },
     { href: '/profile', label: 'Profile' },
-    { href: '/auth', label: 'Login' },
   ];
 
   const toggleMobileMenu = () => {

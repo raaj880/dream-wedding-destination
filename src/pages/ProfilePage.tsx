@@ -37,8 +37,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleSettings = () => {
-    // Navigate to settings page when implemented
-    console.log('Navigate to settings');
+    navigate('/settings');
   };
 
   return (

@@ -5,11 +5,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import AuthPage from "./pages/AuthPage"; // Import the new AuthPage
-import ProfilePage from "./pages/ProfilePage"; // Import the ProfilePage
+import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/ProfilePage";
+import Dashboard from "./pages/Dashboard";
+import Matches from "./pages/Matches";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
-import { ThemeProvider } from "next-themes"; // Import ThemeProvider
-import ProfileSetupWizard from "./pages/ProfileSetupWizard"; // Import the new wizard
+import { ThemeProvider } from "next-themes";
+import ProfileSetupWizard from "./pages/ProfileSetupWizard";
 
 const queryClient = new QueryClient();
 
@@ -22,10 +25,12 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<AuthPage />} /> {/* ADD THE NEW ROUTE */}
-            <Route path="/profile" element={<ProfilePage />} /> {/* ADD THE PROFILE ROUTE */}
-            <Route path="/profile-setup" element={<ProfileSetupWizard />} /> {/* ADD THE NEW WIZARD ROUTE */}
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/matches" element={<Matches />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/profile-setup" element={<ProfileSetupWizard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
