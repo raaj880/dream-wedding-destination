@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { ProfileData } from '@/types/profile';
@@ -9,7 +9,7 @@ export const useProfile = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
-  const saveProfile = async (profileData: ProfileData) => {
+  const saveProfile = useCallback(async (profileData: ProfileData) => {
     if (!user) throw new Error('User not authenticated');
     
     setLoading(true);
@@ -62,9 +62,9 @@ export const useProfile = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]); // Only depend on user.id
 
-  const getProfile = async () => {
+  const getProfile = useCallback(async () => {
     if (!user) return null;
     
     setLoading(true);
@@ -87,7 +87,7 @@ export const useProfile = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]); // Only depend on user.id
 
   return {
     saveProfile,

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,7 +27,7 @@ const ProfileSetupWizard: React.FC = () => {
 
   const totalSteps = 5;
 
-  const updateData = (newData: Partial<ProfileData>) => {
+  const updateData = useCallback((newData: Partial<ProfileData>) => {
     setProfileData(prev => ({ ...prev, ...newData }));
     // Clear errors for updated fields
     const updatedFields = Object.keys(newData);
@@ -36,9 +36,9 @@ const ProfileSetupWizard: React.FC = () => {
       updatedFields.forEach(field => delete newErrors[field]);
       return newErrors;
     });
-  };
+  }, []);
 
-  const validateStep = (step: number): boolean => {
+  const validateStep = useCallback((step: number): boolean => {
     const newErrors: Record<string, string | undefined> = {};
 
     switch (step) {
@@ -101,19 +101,19 @@ const ProfileSetupWizard: React.FC = () => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [profileData]);
 
-  const nextStep = () => {
+  const nextStep = useCallback(() => {
     if (validateStep(currentStep)) {
       setCurrentStep(prev => Math.min(prev + 1, totalSteps));
     }
-  };
+  }, [currentStep, validateStep]);
 
-  const prevStep = () => {
+  const prevStep = useCallback(() => {
     setCurrentStep(prev => Math.max(prev - 1, 1));
-  };
+  }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!validateStep(currentStep)) return;
 
     setIsSubmitting(true);
@@ -125,7 +125,8 @@ const ProfileSetupWizard: React.FC = () => {
         description: "Welcome to Wedder! Your profile is now live.",
       });
 
-      navigate('/dashboard');
+      // Navigate to dashboard after successful save
+      navigate('/dashboard', { replace: true });
     } catch (error) {
       console.error('Error saving profile:', error);
       toast({
@@ -136,9 +137,9 @@ const ProfileSetupWizard: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [currentStep, validateStep, saveProfile, profileData, navigate]);
 
-  const triggerValidation = () => validateStep(currentStep);
+  const triggerValidation = useCallback(() => validateStep(currentStep), [currentStep, validateStep]);
 
   const renderStep = () => {
     switch (currentStep) {
