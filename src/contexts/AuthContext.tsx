@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -11,6 +10,7 @@ interface AuthContextType {
   signup: (userData: any) => Promise<{ error?: any }>;
   logout: () => Promise<void>;
   loading: boolean;
+  checkProfileCompletion: () => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -113,6 +113,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const checkProfileCompletion = async () => {
+    if (!user) return false;
+    
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('full_name, age, bio')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error checking profile:', error);
+        return false;
+      }
+
+      // Consider profile complete if user has basic info
+      return data?.full_name && data?.age && data?.bio;
+    } catch (error) {
+      console.error('Error checking profile completion:', error);
+      return false;
+    }
+  };
+
   const isAuthenticated = !!session;
 
   return (
@@ -123,7 +146,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       login,
       signup,
       logout,
-      loading
+      loading,
+      checkProfileCompletion
     }}>
       {children}
     </AuthContext.Provider>
