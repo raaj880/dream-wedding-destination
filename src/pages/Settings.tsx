@@ -10,11 +10,11 @@ import { useAuth } from '@/contexts/AuthContext';
 
 const Settings: React.FC = () => {
   const navigate = useNavigate();
-  const { signOut } = useAuth();
+  const { logout } = useAuth();
 
   const handleSignOut = async () => {
-    if (signOut) {
-      await signOut();
+    if (logout) {
+      await logout();
     }
     navigate('/auth', { replace: true });
   };
