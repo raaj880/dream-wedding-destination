@@ -14,6 +14,9 @@ import { Toaster } from '@/components/ui/toaster';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import EnhancedSwipeInterface from '@/pages/EnhancedSwipeInterface';
 import ChatInterface from '@/pages/ChatInterface';
+import Index from '@/pages/Index';
+import Navbar from '@/components/landing/Navbar';
+import Footer from '@/components/landing/Footer';
 
 const queryClient = new QueryClient();
 
@@ -23,11 +26,12 @@ function App() {
       <AuthProvider>
         <Router>
           <div className="min-h-screen bg-background font-sans antialiased">
+            <Navbar />
             <Routes>
+              <Route path="/" element={<Index />} />
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/login" element={<AuthPage />} />
               <Route path="/register" element={<AuthPage />} />
-              <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/profile/:id" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
@@ -50,6 +54,7 @@ function App() {
               <Route path="/chat/:matchId" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
               <Route path="/chat" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
             </Routes>
+            <Footer />
             <Toaster />
           </div>
         </Router>
