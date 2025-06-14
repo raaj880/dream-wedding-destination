@@ -9,12 +9,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    headers: {
-      // Add CSP headers that allow eval in development
-      'Content-Security-Policy': mode === 'development' 
-        ? "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'none';" 
-        : "script-src 'self'; object-src 'none';"
-    }
+    // Remove CSP headers in development to avoid eval blocking
+    ...(mode === 'development' && {
+      headers: {}
+    })
   },
   plugins: [
     react(),
@@ -26,11 +24,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Simplified build configuration
   build: {
     minify: mode === 'production' ? 'terser' : false,
   },
-  // Ensure compatibility with development tools
   define: {
     __DEV__: mode === 'development',
   },
