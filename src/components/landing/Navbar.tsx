@@ -1,85 +1,94 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button'; // Using shadcn button for consistency
+import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: '#home', label: 'Home' },
-    { href: '#features', label: 'Features' },
-    { href: '#testimonials', label: 'Testimonials' },
-    { href: '#faq', label: 'FAQ' },
-    { href: '#login', label: 'Login' }, // Assuming login is a section or separate page
+    { href: '/', label: 'Home' },
+    { href: '/#features', label: 'Features' },
+    { href: '/#testimonials', label: 'Testimonials' },
+    { href: '/#faq', label: 'FAQ' },
+    { href: '/auth', label: 'Login' }, // Changed from #login to /auth
   ];
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <nav className="bg-white/80 backdrop-blur-md shadow-sm fixed w-full z-50 top-0">
+    <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="#home" className="flex items-center space-x-2">
-            <span className="font-bold text-3xl text-deep-blue">Wedder</span>
-            <Heart className="text-soft-pink h-7 w-7 fill-soft-pink" />
-          </a>
-          
-          <div className="hidden md:flex items-center space-x-6">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 text-deep-blue hover:text-deep-blue/80 transition-colors">
+            <Heart className="w-7 h-7 text-soft-pink fill-soft-pink" />
+            <span className="text-3xl font-bold">Wedder</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-2">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
-                className="text-gray-700 hover:text-deep-blue px-3 py-2 rounded-md text-base font-medium transition-colors duration-300"
+                to={link.href}
+                onClick={link.href.startsWith('/#') ? undefined : closeMobileMenu}
+                className="px-3 py-2 text-deep-blue hover:text-soft-pink rounded-md text-base font-medium transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <Button 
-              onClick={() => console.log("Join Now clicked!")} // Placeholder action
-              className="bg-soft-pink text-deep-blue hover:bg-pink-200 rounded-full px-6 py-2 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              Join Now
+            <Button asChild className="ml-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-6 py-2.5 text-base font-semibold transition-transform hover:scale-105">
+              <Link to="/auth">Join Now</Link>
             </Button>
-          </div>
+          </nav>
 
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-deep-blue hover:text-deep-blue/80 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-deep-blue"
-              aria-controls="mobile-menu"
-              aria-expanded={isOpen}
-            >
-              <span className="sr-only">Open main menu</span>
-              {isOpen ? <X className="block h-7 w-7" /> : <Menu className="block h-7 w-7" />}
-            </button>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <Button variant="ghost" onClick={toggleMobileMenu} className="text-deep-blue">
+              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white shadow-lg" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-20 left-0 right-0 bg-white shadow-lg z-40 pb-4">
+          <nav className="flex flex-col items-center space-y-3 pt-4">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="text-gray-700 hover:text-deep-blue block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300"
+                to={link.href}
+                onClick={() => {
+                  closeMobileMenu();
+                  if (link.href.startsWith('/#')) {
+                    // Handle scroll to section for mobile after navigation
+                    setTimeout(() => {
+                      const element = document.getElementById(link.href.substring(2));
+                      element?.scrollIntoView({ behavior: 'smooth' });
+                    }, 0);
+                  }
+                }}
+                className="block px-4 py-2 text-deep-blue hover:text-soft-pink rounded-md text-lg font-medium transition-colors w-full text-center"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <Button 
-              onClick={() => { console.log("Join Now clicked!"); setIsOpen(false); }}
-              className="w-full bg-soft-pink text-deep-blue hover:bg-pink-200 rounded-full mt-2 px-6 py-3 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-300"
-            >
-              Join Now
+            <Button asChild className="mt-4 bg-soft-pink text-deep-blue hover:bg-soft-pink/80 rounded-full px-8 py-3 text-lg font-semibold transition-transform hover:scale-105 w-3/4">
+              <Link to="/auth" onClick={closeMobileMenu}>Join Now</Link>
             </Button>
-          </div>
+          </nav>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 
