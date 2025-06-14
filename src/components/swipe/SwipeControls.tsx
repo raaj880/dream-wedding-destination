@@ -1,31 +1,53 @@
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Heart, X, Star } from 'lucide-react';
 
-const SwipeControls: React.FC = () => {
+interface SwipeControlsProps {
+  onPass: () => void;
+  onLike: () => void;
+  onSuperLike: () => void;
+  disabled?: boolean;
+}
+
+const SwipeControls: React.FC<SwipeControlsProps> = ({
+  onPass,
+  onLike,
+  onSuperLike,
+  disabled = false
+}) => {
   return (
-    <Card className="bg-white shadow-sm border">
-      <CardContent className="p-4">
-        <h3 className="text-sm font-medium text-gray-700 mb-3 text-center">Controls</h3>
-        <div className="grid grid-cols-2 gap-3 text-xs text-gray-500">
-          <div className="text-center">
-            <div className="font-medium">Swipe or Keys</div>
-            <div className="mt-1 space-y-1">
-              <div>← X = Pass</div>
-              <div>↑ S = Super Like</div>
-              <div>→ Z = Like</div>
-            </div>
-          </div>
-          <div className="text-center">
-            <div className="font-medium">Quick Actions</div>
-            <div className="mt-1 space-y-1">
-              <div>R = Refresh</div>
-              <div>F = Filters</div>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="flex justify-center items-center gap-4 py-6">
+      <Button
+        onClick={onPass}
+        disabled={disabled}
+        variant="outline"
+        size="lg"
+        className="rounded-full w-16 h-16 border-2 border-gray-300 hover:border-red-400 hover:bg-red-50 transition-colors"
+      >
+        <X className="w-8 h-8 text-gray-600 hover:text-red-500" />
+      </Button>
+      
+      <Button
+        onClick={onSuperLike}
+        disabled={disabled}
+        variant="outline"
+        size="lg"
+        className="rounded-full w-14 h-14 border-2 border-blue-300 hover:border-blue-500 hover:bg-blue-50 transition-colors"
+      >
+        <Star className="w-6 h-6 text-blue-500" />
+      </Button>
+      
+      <Button
+        onClick={onLike}
+        disabled={disabled}
+        variant="outline"
+        size="lg"
+        className="rounded-full w-16 h-16 border-2 border-gray-300 hover:border-green-400 hover:bg-green-50 transition-colors"
+      >
+        <Heart className="w-8 h-8 text-gray-600 hover:text-green-500" />
+      </Button>
+    </div>
   );
 };
 
