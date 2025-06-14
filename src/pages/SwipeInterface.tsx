@@ -211,7 +211,12 @@ const SwipeInterface: React.FC = () => {
 
         {/* Enhanced Instructions */}
         <div className="mt-6 space-y-4">
-          <SwipeControls />
+          <SwipeControls
+            onPass={() => handleSwipeAction('pass')}
+            onLike={() => handleSwipeAction('like')}
+            onSuperLike={() => handleSwipeAction('superlike')}
+            disabled={!currentProfile}
+          />
           <SwipeProgress
             currentIndex={currentIndex}
             totalProfiles={filteredMatches.length}
