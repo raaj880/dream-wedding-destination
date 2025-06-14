@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from '@/pages/Dashboard';
 import AuthPage from '@/pages/AuthPage';
 import ProfilePage from '@/pages/ProfilePage';
+import ProfileSetupWizard from '@/pages/ProfileSetupWizard';
 import Settings from '@/pages/Settings';
 import Matches from '@/pages/Matches';
 import FilterScreen from '@/pages/FilterScreen';
@@ -35,6 +36,13 @@ function App() {
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/profile/:id" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+              <Route path="/profile-setup" element={
+                <ProtectedRoute>
+                  <ProfileCompletionCheck>
+                    <ProfileSetupWizard />
+                  </ProfileCompletionCheck>
+                </ProtectedRoute>
+              } />
               <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
               <Route path="/edit-profile" element={
                 <ProtectedRoute>
