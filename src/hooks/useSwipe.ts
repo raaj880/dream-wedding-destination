@@ -1,46 +1,39 @@
 
 import { useState, useCallback } from 'react';
-import { SwipeAction } from '@/types/match';
-import { useLocalStorage } from './useLocalStorage';
+import { useSwipeActions, SwipeResult } from './useSwipeActions';
 
 export function useSwipe() {
-  const [swipeHistory, setSwipeHistory] = useLocalStorage<SwipeAction[]>('swipeHistory', []);
-  const [matches, setMatches] = useLocalStorage<string[]>('userMatches', []);
+  const { recordInteraction, getSwipedUserIds, loading } = useSwipeActions();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleSwipe = useCallback((targetUserId: string, action: 'like' | 'pass' | 'superlike') => {
-    const newSwipeAction: SwipeAction = {
-      userId: 'current-user', // In real app, get from auth context
-      targetUserId,
-      action,
-      timestamp: new Date()
-    };
-
-    setSwipeHistory(prev => [...prev, newSwipeAction]);
-
-    // Simulate match logic (10% chance for likes, 50% for superlikes)
-    if (action === 'like' || action === 'superlike') {
-      const matchChance = action === 'superlike' ? 0.5 : 0.1;
-      if (Math.random() < matchChance) {
-        setMatches(prev => [...prev, targetUserId]);
-        return true; // Indicates a match
-      }
+  const handleSwipe = useCallback(async (
+    targetUserId: string, 
+    action: 'like' | 'pass' | 'superlike'
+  ): Promise<boolean> => {
+    try {
+      const result = await recordInteraction(targetUserId, action);
+      return result.isMatch;
+    } catch (error) {
+      console.error('Error in handleSwipe:', error);
+      return false;
     }
+  }, [recordInteraction]);
 
-    setCurrentIndex(prev => prev + 1);
-    return false;
-  }, [setSwipeHistory, setMatches]);
-
-  const hasSwipedUser = useCallback((userId: string) => {
-    return swipeHistory.some(swipe => swipe.targetUserId === userId);
-  }, [swipeHistory]);
+  const hasSwipedUser = useCallback(async (userId: string): Promise<boolean> => {
+    try {
+      const swipedIds = await getSwipedUserIds();
+      return swipedIds.includes(userId);
+    } catch (error) {
+      console.error('Error checking if user was swiped:', error);
+      return false;
+    }
+  }, [getSwipedUserIds]);
 
   return {
-    swipeHistory,
-    matches,
     currentIndex,
     handleSwipe,
     hasSwipedUser,
-    setCurrentIndex
+    setCurrentIndex,
+    loading
   };
 }
