@@ -28,13 +28,19 @@ export const useSwipeActions = () => {
     
     setLoading(true);
     try {
+      // Map frontend actions to database interaction types
+      let interactionType = action;
+      if (action === 'superlike') {
+        interactionType = 'like'; // Store superlike as like in the database for now
+      }
+
       // Record the interaction
       const { data: interactionData, error: interactionError } = await supabase
         .from('user_interactions')
         .upsert({
           user_id: user.id,
           target_user_id: targetUserId,
-          interaction_type: action
+          interaction_type: interactionType
         })
         .select()
         .single();
@@ -55,7 +61,7 @@ export const useSwipeActions = () => {
           .select('*')
           .eq('user_id', targetUserId)
           .eq('target_user_id', user.id)
-          .in('interaction_type', ['like', 'superlike'])
+          .eq('interaction_type', 'like')
           .maybeSingle();
 
         if (checkError) {

@@ -16,16 +16,12 @@ import EmptyState from '@/components/discover/EmptyState';
 
 const EnhancedSwipeInterface: React.FC = () => {
   const {
-    profiles,
-    currentProfileIndex,
-    stats,
+    displayProfiles,
     loading,
     error,
-    hasMoreProfiles,
-    goToNextProfile,
-    loadMoreProfiles,
-    resetProfiles,
-    handleSwipe,
+    isRefreshing,
+    showStats,
+    swipeStats,
     feedback,
     isFilterActive,
     filteredCount,
@@ -33,17 +29,22 @@ const EnhancedSwipeInterface: React.FC = () => {
     appliedFilters,
     showTutorial,
     completeTutorial,
-    showStats,
-    setShowStats
+    setShowStats,
+    handleSwipe,
+    clearFilter,
+    clearAllFilters,
+    resetSwipes
   } = useSwipeInterface();
 
   const { recordProfileView } = useProfileViewing();
   
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const currentProfileRef = useRef<string | null>(null);
 
-  const currentProfile = profiles[currentProfileIndex];
+  const currentProfile = displayProfiles[currentProfileIndex];
+  const hasMoreProfiles = currentProfileIndex < displayProfiles.length - 1;
 
   // Record profile view when a new profile is shown
   useEffect(() => {
@@ -53,6 +54,12 @@ const EnhancedSwipeInterface: React.FC = () => {
       currentProfileRef.current = currentProfile.id;
     }
   }, [currentProfile, recordProfileView]);
+
+  const goToNextProfile = useCallback(() => {
+    if (hasMoreProfiles) {
+      setCurrentProfileIndex(prev => prev + 1);
+    }
+  }, [hasMoreProfiles]);
 
   const onSwipe = useCallback(async (direction: 'left' | 'right') => {
     if (!currentProfile || isAnimating) return;
@@ -94,18 +101,11 @@ const EnhancedSwipeInterface: React.FC = () => {
     }
   }, [currentProfile, isAnimating, handleSwipe, goToNextProfile]);
 
-  // Load more profiles when nearing the end
-  useEffect(() => {
-    if (profiles.length - currentProfileIndex <= 2 && hasMoreProfiles && !loading) {
-      loadMoreProfiles();
-    }
-  }, [currentProfileIndex, profiles.length, hasMoreProfiles, loading, loadMoreProfiles]);
-
   if (showTutorial) {
     return <SwipeTutorial onComplete={completeTutorial} />;
   }
 
-  if (loading && profiles.length === 0) {
+  if (loading && displayProfiles.length === 0) {
     return <LoadingState />;
   }
 
@@ -115,7 +115,7 @@ const EnhancedSwipeInterface: React.FC = () => {
         <div className="text-center">
           <p className="text-red-500 mb-4">{error}</p>
           <button 
-            onClick={resetProfiles}
+            onClick={resetSwipes}
             className="bg-deep-blue text-white px-4 py-2 rounded"
           >
             Try Again
@@ -126,7 +126,7 @@ const EnhancedSwipeInterface: React.FC = () => {
   }
 
   if (!currentProfile && !loading) {
-    return <EmptyState onRefresh={resetProfiles} isFilterActive={isFilterActive} totalCount={totalCount} />;
+    return <EmptyState onRefresh={resetSwipes} isFilterActive={isFilterActive} totalCount={totalCount} />;
   }
 
   return (
@@ -135,26 +135,26 @@ const EnhancedSwipeInterface: React.FC = () => {
         isFilterActive={isFilterActive}
         showStats={showStats}
         onToggleStats={() => setShowStats(!showStats)}
-        onRefresh={resetProfiles}
+        onRefresh={resetSwipes}
         isRefreshing={loading}
       />
       <FilterSummary 
         filters={appliedFilters}
-        onClearFilter={() => {}}
-        onClearAll={() => {}}
+        onClearFilter={clearFilter}
+        onClearAll={clearAllFilters}
       />
       <SwipeStatsBar 
-        remainingProfiles={profiles.length - currentProfileIndex}
+        remainingProfiles={displayProfiles.length - currentProfileIndex}
         isFilterActive={isFilterActive}
         filteredCount={filteredCount}
         totalCount={totalCount}
-        swipeStats={stats}
+        swipeStats={swipeStats}
       />
       <SwipeProgress 
         currentIndex={currentProfileIndex + 1} 
-        totalProfiles={Math.max(profiles.length, currentProfileIndex + 1)}
-        remainingProfiles={profiles.length - currentProfileIndex}
-        streak={stats.streak}
+        totalProfiles={Math.max(displayProfiles.length, currentProfileIndex + 1)}
+        remainingProfiles={displayProfiles.length - currentProfileIndex}
+        streak={swipeStats.streak}
       />
 
       <div className="container mx-auto px-4 py-6 max-w-md">
@@ -172,17 +172,21 @@ const EnhancedSwipeInterface: React.FC = () => {
             >
               <ProfileCard 
                 profile={currentProfile}
-                onSwipe={(direction) => onSwipe(direction)}
-                onSuperLike={onSuperLike}
+                onSwipe={onSwipe}
+                isVisible={true}
+                index={0}
               />
             </motion.div>
           )}
           
           {/* Preload next profile */}
-          {profiles[currentProfileIndex + 1] && (
+          {displayProfiles[currentProfileIndex + 1] && (
             <div className="absolute inset-0 -z-10">
               <ProfileCard 
-                profile={profiles[currentProfileIndex + 1]}
+                profile={displayProfiles[currentProfileIndex + 1]}
+                onSwipe={() => {}}
+                isVisible={false}
+                index={1}
               />
             </div>
           )}
