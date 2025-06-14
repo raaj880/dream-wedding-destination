@@ -70,12 +70,14 @@ const SwipeInterface: React.FC = () => {
   const [profiles, setProfiles] = useState(mockProfiles);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [exitDirection, setExitDirection] = useState<'left' | 'right' | 'up'>('right');
   const { toast } = useToast();
 
   const handleSwipe = (direction: 'left' | 'right' | 'up', profile: Profile) => {
     if (isAnimating) return;
     
     setIsAnimating(true);
+    setExitDirection(direction);
     
     let message = '';
     let emoji = '';
@@ -119,6 +121,19 @@ const SwipeInterface: React.FC = () => {
       }
     } else if (offset.y < -threshold || info.velocity.y < -500) {
       handleSwipe('up', profile);
+    }
+  };
+
+  const getExitAnimation = () => {
+    switch (exitDirection) {
+      case 'left':
+        return { x: -300, opacity: 0, scale: 0.8 };
+      case 'right':
+        return { x: 300, opacity: 0, scale: 0.8 };
+      case 'up':
+        return { y: -300, opacity: 0, scale: 0.8 };
+      default:
+        return { x: 300, opacity: 0, scale: 0.8 };
     }
   };
 
@@ -215,10 +230,7 @@ const SwipeInterface: React.FC = () => {
                 whileDrag={{ scale: 1.05, rotate: 0 }}
                 animate={{ scale: 1, rotate: 0 }}
                 exit={{
-                  x: (info: any) => info?.offset?.x > 0 ? 300 : -300,
-                  y: (info: any) => info?.offset?.y < -100 ? -300 : 0,
-                  opacity: 0,
-                  scale: 0.8,
+                  ...getExitAnimation(),
                   transition: { duration: 0.3 }
                 }}
                 style={{ zIndex: 10 }}
