@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,23 @@ import { useProfile } from '@/hooks/useProfile';
 
 const DashboardHeader: React.FC = () => {
   const { user } = useAuth();
-  const { profile, loading } = useProfile();
+  const { getProfile, loading } = useProfile();
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profileData = await getProfile();
+        setProfile(profileData);
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    if (user) {
+      fetchProfile();
+    }
+  }, [user, getProfile]);
 
   const getInitials = (name: string) => {
     return name
