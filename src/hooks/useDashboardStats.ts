@@ -29,6 +29,7 @@ export function useDashboardStats() {
   const fetchStats = async () => {
     if (!user) {
       console.log('❌ No user found for dashboard stats');
+      setStats(prev => ({ ...prev, loading: false }));
       return;
     }
 

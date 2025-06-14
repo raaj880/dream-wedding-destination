@@ -1,10 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Eye, Heart, Users, TrendingUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import StatsCard from './StatsCard';
+import LikedProfilesModal from './LikedProfilesModal';
 import { DashboardStats } from '@/hooks/useDashboardStats';
+import { useLikedProfiles } from '@/hooks/useLikedProfiles';
 
 interface StatsGridProps {
   stats: DashboardStats;
@@ -12,13 +14,19 @@ interface StatsGridProps {
 
 const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
   const navigate = useNavigate();
+  const { getLikedProfiles, loading: likedProfilesLoading } = useLikedProfiles();
+  const [showLikedProfiles, setShowLikedProfiles] = useState(false);
+  const [likedProfiles, setLikedProfiles] = useState<any[]>([]);
 
   const handleProfileViewsClick = () => {
     navigate('/profile');
   };
 
-  const handleLikesSentClick = () => {
-    navigate('/swipe');
+  const handleLikesSentClick = async () => {
+    console.log('📱 Opening liked profiles modal...');
+    setShowLikedProfiles(true);
+    const profiles = await getLikedProfiles();
+    setLikedProfiles(profiles);
   };
 
   const handleMatchesClick = () => {
@@ -101,6 +109,14 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Liked Profiles Modal */}
+      <LikedProfilesModal
+        isOpen={showLikedProfiles}
+        onClose={() => setShowLikedProfiles(false)}
+        profiles={likedProfiles}
+        loading={likedProfilesLoading}
+      />
     </>
   );
 };
