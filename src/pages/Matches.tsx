@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { mockUsers } from '@/store/mockData';
+import { useMatches } from '@/hooks/useMatches';
+import { usePotentialMatches } from '@/hooks/usePotentialMatches';
 import { useFilters } from '@/hooks/useFilters';
 import { useMatchFiltering } from '@/hooks/useMatchFiltering';
 import MatchesHeader from '@/components/matches/MatchesHeader';
@@ -8,27 +9,38 @@ import FilterStatus from '@/components/matches/FilterStatus';
 import MatchesList from '@/components/matches/MatchesList';
 import PremiumPopup from '@/components/matches/PremiumPopup';
 
-// Mock status data for display
-const mockMatchStatuses = [
-  { id: '1', status: 'new', lastSeen: 'Online' },
-  { id: '2', status: 'typing', lastSeen: 'Typing...' },
-  { id: '3', status: 'seen', lastSeen: 'Last seen 2h ago' }
-];
-
 const Matches: React.FC = () => {
+  const { matches, loading: matchesLoading } = useMatches();
+  const { matches: potentialMatches, loading: profilesLoading } = usePotentialMatches();
   const { appliedFilters, isActive } = useFilters();
-  const { filteredMatches, filteredCount } = useMatchFiltering(mockUsers, appliedFilters);
   const [showPremiumPopup, setShowPremiumPopup] = useState(false);
 
-  // Combine filtered users with mock status data
-  const matchesWithStatus = filteredMatches.map(user => {
-    const statusData = mockMatchStatuses.find(s => s.id === user.id);
-    return {
-      ...user,
-      status: statusData?.status || 'seen',
-      lastSeen: statusData?.lastSeen || 'Last seen recently'
-    };
-  });
+  // If no actual matches, show potential matches for demo purposes
+  const displayProfiles = matches.length > 0 ? matches.map(match => ({
+    id: match.user.id,
+    fullName: match.user.full_name,
+    age: match.user.age,
+    location: match.user.location,
+    profession: match.user.profession,
+    religion: match.user.religion,
+    photos: match.user.photos,
+    verified: match.user.verified,
+    status: 'seen',
+    lastSeen: 'Last seen recently'
+  })) : potentialMatches.map(profile => ({
+    id: profile.id,
+    fullName: profile.full_name,
+    age: profile.age,
+    location: profile.location,
+    profession: profile.profession,
+    religion: profile.religion,
+    photos: profile.photos,
+    verified: profile.verified,
+    status: 'seen',
+    lastSeen: 'Available to match'
+  }));
+
+  const { filteredMatches, filteredCount } = useMatchFiltering(displayProfiles, appliedFilters);
 
   // Show popup only when there are few matches and user has been on page for a bit
   useEffect(() => {
@@ -52,6 +64,14 @@ const Matches: React.FC = () => {
     }
   }, [showPremiumPopup]);
 
+  if (matchesLoading || profilesLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-deep-blue"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <MatchesHeader isFilterActive={isActive} />
@@ -62,12 +82,17 @@ const Matches: React.FC = () => {
         {/* Matches Count */}
         <div className="mb-6">
           <p className="text-gray-600">
-            {filteredCount} mutual matches
+            {matches.length > 0 ? `${filteredCount} mutual matches` : `${filteredCount} available profiles`}
           </p>
+          {matches.length === 0 && (
+            <p className="text-sm text-gray-500 mt-1">
+              Start swiping to create matches! These are available profiles you can like.
+            </p>
+          )}
         </div>
 
         <MatchesList 
-          matches={matchesWithStatus}
+          matches={filteredMatches}
           filteredCount={filteredCount}
           isFilterActive={isActive}
         />
