@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -77,6 +76,9 @@ export default {
         '3xl': '1.5rem',
         '4xl': '2rem',
 			},
+      boxShadow: { // Added for dark mode sticky footer
+        'md_dark': '0 -4px 6px -1px rgba(255, 255, 255, 0.05), 0 -2px 4px -1px rgba(255, 255, 255, 0.03)',
+      },
 			keyframes: {
 				'accordion-down': {
 					from: {
