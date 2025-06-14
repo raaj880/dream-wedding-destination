@@ -26,15 +26,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Add build configuration to prevent eval usage in production
+  // Simplified build configuration
   build: {
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    minify: mode === 'production' ? 'terser' : false,
   },
   // Ensure compatibility with development tools
   define: {
