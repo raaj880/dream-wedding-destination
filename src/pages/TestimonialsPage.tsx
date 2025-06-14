@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Star, Heart, MessageCircle } from 'lucide-react';
+import { Star, Heart, MessageCircle, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const TestimonialsPage: React.FC = () => {
