@@ -89,7 +89,7 @@ const ContactPage: React.FC = () => {
                       How do I delete my account?
                     </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                      You can delete your account from Settings > Account Settings > Deactivate Account.
+                      You can delete your account from Settings {'->'} Account Settings {'->'} Deactivate Account.
                     </p>
                   </div>
                   <div>
