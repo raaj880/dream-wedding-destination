@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Heart, User, LayoutDashboard } from 'lucide-react';
+import { Home, LayoutDashboard, Sparkles, MessageCircle, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
@@ -25,9 +25,14 @@ const DesktopNav = () => {
       label: 'Dashboard'
     },
     {
+      href: '/swipe',
+      icon: Sparkles,
+      label: 'Discovery'
+    },
+    {
       href: '/matches',
-      icon: Heart,
-      label: 'Matches'
+      icon: MessageCircle,
+      label: 'Messages'
     },
     {
       href: '/profile',
@@ -64,3 +69,4 @@ const DesktopNav = () => {
 };
 
 export default DesktopNav;
+
