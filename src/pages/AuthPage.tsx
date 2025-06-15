@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import LogoWithTagline from '@/components/auth/LogoWithTagline';
 import LoginForm from '@/components/auth/LoginForm';
 import SignupForm from '@/components/auth/SignupForm';
 import AuthSuccessPlaceholder from '@/components/auth/AuthSuccessPlaceholder';
@@ -31,16 +30,14 @@ const AuthPage: React.FC = () => {
   if (isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black p-4">
-        <LogoWithTagline />
         <AuthSuccessPlaceholder onSetupProfile={handleSetupProfile} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black p-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-black p-4 font-sans">
       <div className="w-full max-w-md">
-        <LogoWithTagline />
         <Card className="shadow-2xl rounded-3xl overflow-hidden border border-card-gold/20 bg-card-dark-gray/90 backdrop-blur-xl">
           <CardContent className="p-6">
             <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'signup')} className="w-full">
