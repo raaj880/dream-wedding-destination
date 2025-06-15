@@ -20,19 +20,19 @@ const CallToAction = () => {
   };
 
   return (
-    <section id="join" className="bg-deep-blue text-white">
+    <section id="join" className="bg-gradient-to-br from-royal-plum to-royal-plum/90 text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">
           Ready to meet your match?
         </h2>
         <Button 
           size="lg"
-          className="bg-soft-pink text-deep-blue font-bold rounded-2xl px-10 py-7 text-lg hover:bg-pink-200 hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-4"
+          className="bg-blush-rose text-royal-plum font-bold rounded-2xl px-10 py-7 text-lg hover:bg-blush-rose/90 hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-4"
           onClick={handleJoinWedder}
         >
           Join Wedder Today
         </Button>
-        <p className="text-sm text-gray-300">
+        <p className="text-sm text-ivory-white/80">
           Free to join. Profiles with verified intent only.
         </p>
       </div>
