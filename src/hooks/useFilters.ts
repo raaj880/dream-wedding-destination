@@ -12,11 +12,11 @@ export function useFilters() {
     return (
       storedFilters.ageRange[0] !== initialFilterOptions.ageRange[0] ||
       storedFilters.ageRange[1] !== initialFilterOptions.ageRange[1] ||
-      storedFilters.location !== initialFilterOptions.location ||
+      (storedFilters.location !== initialFilterOptions.location && storedFilters.location !== 'any-city') ||
       storedFilters.nearbyOnly !== initialFilterOptions.nearbyOnly ||
       storedFilters.religions.length !== initialFilterOptions.religions.length ||
-      storedFilters.community !== initialFilterOptions.community ||
-      storedFilters.education !== initialFilterOptions.education ||
+      (storedFilters.community !== initialFilterOptions.community && storedFilters.community !== 'any-community') ||
+      (storedFilters.education !== initialFilterOptions.education && storedFilters.education !== 'any-education') ||
       storedFilters.maritalIntent !== initialFilterOptions.maritalIntent ||
       storedFilters.languages.length !== initialFilterOptions.languages.length ||
       storedFilters.verifiedOnly !== initialFilterOptions.verifiedOnly
@@ -41,8 +41,16 @@ export function useFilters() {
   }, []);
 
   const applyFilters = useCallback(() => {
-    setStoredFilters(currentFilters);
-    console.log('Filters applied:', currentFilters);
+    // Clean up the filter values before storing
+    const cleanFilters = {
+      ...currentFilters,
+      location: currentFilters.location === 'any-city' ? '' : currentFilters.location,
+      community: currentFilters.community === 'any-community' ? '' : currentFilters.community,
+      education: currentFilters.education === 'any-education' ? '' : currentFilters.education,
+    };
+    
+    setStoredFilters(cleanFilters);
+    console.log('Filters applied:', cleanFilters);
   }, [currentFilters, setStoredFilters]);
 
   const resetFilters = useCallback(() => {

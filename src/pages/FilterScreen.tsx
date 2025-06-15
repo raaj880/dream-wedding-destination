@@ -130,7 +130,7 @@ const FilterScreen: React.FC = () => {
                     <SelectValue placeholder="Any city" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border shadow-lg z-50">
-                    <SelectItem value="">Any city</SelectItem>
+                    <SelectItem value="any-city">Any city</SelectItem>
                     {locationOptions.map((location) => (
                       <SelectItem key={location} value={location}>{location}</SelectItem>
                     ))}
@@ -214,7 +214,7 @@ const FilterScreen: React.FC = () => {
                   <SelectValue placeholder="Any community" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border shadow-lg z-50">
-                  <SelectItem value="">Any community</SelectItem>
+                  <SelectItem value="any-community">Any community</SelectItem>
                   {communityOptions.map((option) => (
                     <SelectItem key={option} value={option.toLowerCase().replace(/\s+/g, '-')}>
                       {option}
@@ -244,7 +244,7 @@ const FilterScreen: React.FC = () => {
                   <SelectValue placeholder="Any education level" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border shadow-lg z-50">
-                  <SelectItem value="">Any education level</SelectItem>
+                  <SelectItem value="any-education">Any education level</SelectItem>
                   {educationOptions.map((option) => (
                     <SelectItem key={option} value={option.toLowerCase()}>
                       {option}
