@@ -42,18 +42,18 @@ const AuthPage: React.FC = () => {
       <div className="w-full max-w-md">
         <LogoWithTagline />
         <Card className="shadow-2xl rounded-3xl overflow-hidden border border-card-gold/20 bg-card-dark-gray/90 backdrop-blur-xl">
-          <CardContent className="p-8">
+          <CardContent className="p-6">
             <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'signup')} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8 bg-card-charcoal rounded-xl p-1 border border-card-gold/20 max-w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6 bg-card-charcoal rounded-lg p-0.5 border border-card-gold/20 max-w-full mx-auto">
                 <TabsTrigger 
                   value="login" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-lg py-2.5 px-4 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg data-[state=active]:shadow-card-gold/20 hover:bg-white/10 data-[state=active]:hover:brightness-110 text-sm"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-md py-2 px-3 transition-all duration-300 font-medium text-gray-300 data-[state=active]:shadow-md data-[state=active]:shadow-card-gold/20 hover:bg-white/10 data-[state=active]:hover:brightness-110 text-xs"
                 >
                   Sign In
                 </TabsTrigger>
                 <TabsTrigger 
                   value="signup" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-lg py-2.5 px-4 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg data-[state=active]:shadow-card-gold/20 hover:bg-white/10 data-[state=active]:hover:brightness-110 text-sm"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-md py-2 px-3 transition-all duration-300 font-medium text-gray-300 data-[state=active]:shadow-md data-[state=active]:shadow-card-gold/20 hover:bg-white/10 data-[state=active]:hover:brightness-110 text-xs"
                 >
                   Sign Up
                 </TabsTrigger>
