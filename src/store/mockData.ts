@@ -1,4 +1,3 @@
-
 import { Match, UserProfile } from '@/types/match';
 import { User } from '@/types/user';
 import { ChatMessage } from '@/types/chat';
@@ -83,7 +82,6 @@ export const mockMessages: ChatMessage[] = [
     id: 'msg1',
     chatId: 'match2',
     senderId: '2',
-    receiverId: 'currentUser',
     content: 'Hi! Nice to match with you 😊',
     type: 'text',
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
@@ -93,7 +91,6 @@ export const mockMessages: ChatMessage[] = [
     id: 'msg2',
     chatId: 'match2',
     senderId: 'currentUser',
-    receiverId: '2',
     content: 'Thank you! I really liked your profile. How has your day been?',
     type: 'text',
     timestamp: new Date(Date.now() - 90 * 60 * 1000),
@@ -103,7 +100,6 @@ export const mockMessages: ChatMessage[] = [
     id: 'msg3',
     chatId: 'match2',
     senderId: '2',
-    receiverId: 'currentUser',
     content: 'It\'s been great! I was just reading about your travels in your bio. I love traveling too. Would love to hear about your favorite destinations!',
     type: 'text',
     timestamp: new Date(Date.now() - 60 * 60 * 1000),
@@ -113,7 +109,6 @@ export const mockMessages: ChatMessage[] = [
     id: 'msg4',
     chatId: 'match2',
     senderId: 'currentUser',
-    receiverId: '2',
     content: 'Oh that\'s wonderful! I recently visited Japan and it was absolutely amazing. The culture, food, and people were incredible. Have you been there?',
     type: 'text',
     timestamp: new Date(Date.now() - 30 * 60 * 1000),
@@ -123,7 +118,6 @@ export const mockMessages: ChatMessage[] = [
     id: 'msg5',
     chatId: 'match2',
     senderId: '2',
-    receiverId: 'currentUser',
     content: 'That sounds great! When would be good for you?',
     type: 'text',
     timestamp: new Date(Date.now() - 10 * 60 * 1000),
