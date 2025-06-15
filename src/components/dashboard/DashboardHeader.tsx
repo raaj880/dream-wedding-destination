@@ -40,32 +40,32 @@ const DashboardHeader: React.FC = () => {
   const profilePhoto = profile?.photos?.[0];
 
   return (
-    <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
+    <div className="bg-card border-b border-border px-4 py-3 sticky top-0 z-10">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           <Link to="/profile" className="flex-shrink-0">
-            <Avatar className="w-9 h-9 cursor-pointer hover:ring-2 hover:ring-soft-pink transition-all">
+            <Avatar className="w-9 h-9 cursor-pointer hover:ring-2 hover:ring-royal-plum transition-all">
               {profilePhoto && <AvatarImage src={profilePhoto} alt={displayName} className="object-cover" />}
-              <AvatarFallback className="bg-soft-pink text-deep-blue text-sm">
+              <AvatarFallback className="bg-blush-rose text-royal-plum text-sm">
                 {loading ? '...' : getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
           </Link>
           <div className="min-w-0 flex-1">
-            <h1 className="text-lg font-bold text-deep-blue truncate">
+            <h1 className="text-lg font-bold text-royal-plum truncate">
               Welcome back!
             </h1>
-            <p className="text-xs text-gray-600">Ready to find your match?</p>
+            <p className="text-xs text-muted-foreground">Ready to find your match?</p>
           </div>
         </div>
         
         <div className="flex items-center space-x-1 flex-shrink-0">
           <Button variant="ghost" size="icon" title="Notifications" className="w-9 h-9">
-            <Bell className="w-4 h-4 text-gray-600" />
+            <Bell className="w-4 h-4 text-muted-foreground" />
           </Button>
           <Button variant="ghost" size="icon" asChild title="Settings" className="w-9 h-9">
             <Link to="/settings">
-              <Settings className="w-4 h-4 text-gray-600" />
+              <Settings className="w-4 h-4 text-muted-foreground" />
             </Link>
           </Button>
         </div>

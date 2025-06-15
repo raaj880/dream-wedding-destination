@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -22,31 +23,42 @@ export default {
         sans: ['Poppins', 'sans-serif'],
       },
 			colors: {
-        'soft-pink': '#FDE2E2',
-        'deep-blue': '#1A1E4B',
+        // New Royal Plum Theme Colors
+        'royal-plum': '#6D2E91',
+        'blush-rose': '#F2C1D1',
+        'regal-gold': '#FFD700',
+        'ivory-white': '#FAF9F6',
+        'charcoal-black': '#1C1C1E',
+        'slate-gray': '#3A3A3C',
+        'vibrant-coral': '#FF6F61',
+        
+        // Legacy colors for backward compatibility (mapped to new theme)
+        'soft-pink': '#F2C1D1', // Now Blush Rose
+        'deep-blue': '#6D2E91', // Now Royal Plum
+        
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))', // Will be deep-blue
-					foreground: 'hsl(var(--primary-foreground))' // Will be white
+					DEFAULT: 'hsl(var(--primary))', // Royal Plum
+					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
+					DEFAULT: 'hsl(var(--secondary))', // Blush Rose
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
+					DEFAULT: 'hsl(var(--destructive))', // Vibrant Coral
 					foreground: 'hsl(var(--destructive-foreground))'
 				},
 				muted: {
-					DEFAULT: 'hsl(var(--muted))',
+					DEFAULT: 'hsl(var(--muted))', // Slate Gray
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))', // Will be soft-pink
+					DEFAULT: 'hsl(var(--accent))', // Regal Gold
 					foreground: 'hsl(var(--accent-foreground))'
 				},
 				popover: {
@@ -72,11 +84,11 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
-        '2xl': '1rem', // As requested
+        '2xl': '1rem',
         '3xl': '1.5rem',
         '4xl': '2rem',
 			},
-      boxShadow: { // Added for dark mode sticky footer
+      boxShadow: {
         'md_dark': '0 -4px 6px -1px rgba(255, 255, 255, 0.05), 0 -2px 4px -1px rgba(255, 255, 255, 0.03)',
       },
 			keyframes: {

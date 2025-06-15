@@ -5,67 +5,65 @@
 
 @layer base {
   :root {
-    --background: 255 100% 100%; /* #FFFFFF */
-    --foreground: 225 53% 19%; /* #1A1E4B */
+    --background: 250 249 246; /* Ivory White #FAF9F6 */
+    --foreground: 28 28 30; /* Charcoal Black #1C1C1E */
 
-    --card: 255 100% 100%;
-    --card-foreground: 225 53% 19%;
+    --card: 250 249 246; /* Ivory White */
+    --card-foreground: 28 28 30; /* Charcoal Black */
 
-    --popover: 255 100% 100%;
-    --popover-foreground: 225 53% 19%;
+    --popover: 250 249 246; /* Ivory White */
+    --popover-foreground: 28 28 30; /* Charcoal Black */
 
-    --primary: 225 53% 19%; /* deep-blue #1A1E4B */
-    --primary-foreground: 0 0% 100%; /* white #FFFFFF */
+    --primary: 109 46 145; /* Royal Plum #6D2E91 */
+    --primary-foreground: 250 249 246; /* Ivory White */
 
-    --secondary: 0 69% 93%; /* soft-pink #FDE2E2 */
-    --secondary-foreground: 225 53% 19%; /* deep-blue #1A1E4B */
+    --secondary: 242 193 209; /* Blush Rose #F2C1D1 */
+    --secondary-foreground: 28 28 30; /* Charcoal Black */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%; /* A standard gray */
+    --muted: 58 58 60; /* Slate Gray #3A3A3C */
+    --muted-foreground: 163 163 169; /* Lighter gray for muted text */
 
-    --accent: 0 69% 93%; /* soft-pink #FDE2E2 */
-    --accent-foreground: 225 53% 19%; /* deep-blue */
+    --accent: 255 215 0; /* Regal Gold #FFD700 */
+    --accent-foreground: 28 28 30; /* Charcoal Black */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 255 111 97; /* Vibrant Coral #FF6F61 */
+    --destructive-foreground: 250 249 246; /* Ivory White */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 225 53% 19%; /* deep-blue for focus rings */
+    --border: 242 193 209; /* Blush Rose for borders */
+    --input: 242 193 209; /* Blush Rose for inputs */
+    --ring: 109 46 145; /* Royal Plum for focus rings */
 
     --radius: 0.5rem;
-    /* ... keep existing sidebar variables if any, or remove if not used by shadcn components in this context ... */
   }
 
   .dark {
-    /* Define dark mode if needed, for now sticking to light mode based on palette */
-    --background: 225 53% 10%; /* Darker blue for background */
-    --foreground: 0 0% 98%; /* Light text */
+    --background: 28 28 30; /* Charcoal Black #1C1C1E */
+    --foreground: 250 249 246; /* Ivory White */
 
-    --card: 225 53% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 58 58 60; /* Slate Gray #3A3A3C */
+    --card-foreground: 250 249 246; /* Ivory White */
 
-    --popover: 225 53% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 28 28 30; /* Charcoal Black */
+    --popover-foreground: 250 249 246; /* Ivory White */
 
-    --primary: 0 69% 88%; /* Lighter soft-pink for primary in dark */
-    --primary-foreground: 225 53% 10%;
+    --primary: 109 46 145; /* Royal Plum */
+    --primary-foreground: 250 249 246; /* Ivory White */
 
-    --secondary: 225 53% 20%; 
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 58 58 60; /* Slate Gray */
+    --secondary-foreground: 250 249 246; /* Ivory White */
 
-    --muted: 225 53% 20%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 58 58 60; /* Slate Gray */
+    --muted-foreground: 163 163 169; /* Lighter gray */
 
-    --accent: 225 53% 20%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 255 215 0; /* Regal Gold */
+    --accent-foreground: 28 28 30; /* Charcoal Black */
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 255 111 97; /* Vibrant Coral */
+    --destructive-foreground: 250 249 246; /* Ivory White */
 
-    --border: 225 53% 25%;
-    --input: 225 53% 25%;
-    --ring: 0 69% 88%;
+    --border: 58 58 60; /* Slate Gray */
+    --input: 58 58 60; /* Slate Gray */
+    --ring: 109 46 145; /* Royal Plum */
   }
 }
 
@@ -75,14 +73,13 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    /* Smooth scrolling */
     scroll-behavior: smooth;
   }
   section {
     @apply py-16 md:py-24 px-4;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply text-deep-blue;
+    @apply text-foreground;
   }
 }
 
