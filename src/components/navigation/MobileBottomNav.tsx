@@ -61,7 +61,7 @@ const MobileBottomNav = () => {
   };
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-pb">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-ivory-white border-t border-blush-rose z-50 safe-area-pb">
       <div className="flex items-center justify-around py-2 px-4">
         {visibleItems.map((item) => {
           const Icon = item.icon;
@@ -73,21 +73,21 @@ const MobileBottomNav = () => {
               onClick={() => handleNavClick(item.href)}
               className={cn(
                 "flex flex-col items-center justify-center py-2 px-3 rounded-lg transition-all duration-200 min-w-0 flex-1",
-                "hover:bg-gray-50 active:scale-95",
+                "hover:bg-blush-rose/20 active:scale-95",
                 isActive 
-                  ? "text-deep-blue bg-deep-blue/10" 
-                  : "text-gray-600 hover:text-deep-blue"
+                  ? "text-royal-plum bg-blush-rose/30" 
+                  : "text-slate-gray hover:text-royal-plum"
               )}
             >
               <Icon 
                 className={cn(
                   "w-5 h-5 mb-1 transition-colors",
-                  isActive ? "text-deep-blue" : "text-gray-600"
+                  isActive ? "text-royal-plum" : "text-slate-gray"
                 )} 
               />
               <span className={cn(
                 "text-xs font-medium truncate transition-colors",
-                isActive ? "text-deep-blue" : "text-gray-600"
+                isActive ? "text-royal-plum" : "text-slate-gray"
               )}>
                 {item.label}
               </span>

@@ -20,7 +20,7 @@ const CallToAction = () => {
   };
 
   return (
-    <section id="join" className="bg-gradient-to-br from-royal-plum to-royal-plum/90 text-white">
+    <section id="join" className="bg-gradient-to-br from-royal-plum via-royal-plum/95 to-slate-gray/40 text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-6">
           Ready to meet your match?
