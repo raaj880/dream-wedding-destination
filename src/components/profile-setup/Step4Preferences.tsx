@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -66,7 +65,7 @@ const Step4Preferences: React.FC<Step4PreferencesProps> = ({ data, updateData, e
             step={1}
             value={data.partnerAgeRange}
             onValueChange={(value) => updateData({ partnerAgeRange: value as [number, number] })}
-            className="mt-3 [&>span]:bg-card-gold [&>span>span]:bg-card-black [&>span>span]:border [&>span>span]:border-card-gold"
+            className="mt-3"
           />
            {/* No specific error message for slider, visual validation is usually enough */}
         </div>

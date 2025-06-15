@@ -34,14 +34,14 @@ const LocationSelect: React.FC<LocationSelectProps> = ({
 }) => {
   return (
     <div>
-      <Label className="text-gray-700 dark:text-gray-300">{label}</Label>
+      <Label className="text-gray-300">{label}</Label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className={cn("w-full mt-1", error && "border-red-500")}>
+        <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", error && "border-red-500")}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white">
           {locationOptions.map((city) => (
-            <SelectItem key={city} value={city}>
+            <SelectItem key={city} value={city} className="focus:bg-card-gold/20">
               {city}
             </SelectItem>
           ))}

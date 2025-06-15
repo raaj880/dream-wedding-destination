@@ -68,10 +68,14 @@ const Step2BasicDetails: React.FC<Step2BasicDetailsProps> = ({ data, updateData,
                 classNames={{
                   caption_label: "text-card-gold",
                   day: "text-white hover:bg-card-gold hover:text-card-black rounded-md",
-                  day_selected: "bg-card-gold text-card-black",
-                  day_today: "text-card-gold",
+                  day_selected: "bg-card-gold text-card-black focus:bg-card-gold focus:text-card-black",
+                  day_today: "text-card-gold border border-card-gold/50 rounded-md",
                   head_cell: "text-gray-400",
-                  nav_button: "text-card-gold hover:text-white"
+                  nav_button: "text-card-gold hover:text-white",
+                  caption_dropdowns: "flex gap-2",
+                  dropdown: "bg-card-dark-gray border-card-gold/30 text-white focus:border-card-gold rounded-md px-2 py-1 text-sm cursor-pointer",
+                  dropdown_month: "",
+                  dropdown_year: "",
                 }}
               />
             </PopoverContent>
