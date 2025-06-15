@@ -5,8 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ProfileData } from '@/types/profile';
-import { User } from 'lucide-react';
-import { formatDistanceToNowStrict, differenceInYears } from 'date-fns';
+import { User, MapPin, Briefcase } from 'lucide-react';
+import { differenceInYears } from 'date-fns';
 import { cn } from '@/lib/utils';
 
 interface Step5BioPreviewProps {
@@ -20,6 +20,8 @@ const Step5BioPreview: React.FC<Step5BioPreviewProps> = ({ data, updateData, err
     if (!dob) return 'N/A';
     return differenceInYears(new Date(), dob);
   };
+
+  const capitalizedGender = data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : '';
 
   return (
     <div className="w-full animate-in fade-in-50 duration-500 space-y-6">
@@ -50,31 +52,47 @@ const Step5BioPreview: React.FC<Step5BioPreviewProps> = ({ data, updateData, err
           <CardDescription className="text-gray-400">This is how your basic profile will look to others.</CardDescription>
         </CardHeader>
         <CardContent className="px-0">
-          <div className="border border-card-gold/20 rounded-2xl p-4 space-y-3 shadow-premium bg-card-dark-gray">
+          <div className="border border-card-gold/20 rounded-2xl p-5 space-y-5 shadow-premium bg-card-dark-gray/80 backdrop-blur-sm">
             <div className="flex items-center space-x-4">
-              <Avatar className="w-20 h-20 border-2 border-card-gold">
+              <Avatar className="w-24 h-24 border-2 border-card-gold">
                 <AvatarImage src={data.photoPreviews[0]} alt={data.fullName} />
                 <AvatarFallback className="bg-card-charcoal">
-                  <User className="w-10 h-10 text-gray-500" />
+                  <User className="w-12 h-12 text-gray-500" />
                 </AvatarFallback>
               </Avatar>
-              <div>
-                <h3 className="text-lg font-semibold text-card-gold">{data.fullName || "Your Name"}</h3>
-                <p className="text-sm text-gray-400">
-                  {getAge(data.dob)} yrs old {data.gender ? `· ${data.gender}` : ''}
+              <div className="space-y-1">
+                <h3 className="text-2xl font-bold text-white">{data.fullName || "Your Name"}</h3>
+                <p className="text-base text-gray-300">
+                  {getAge(data.dob)} yrs old {capitalizedGender ? `· ${capitalizedGender}` : ''}
                 </p>
-                 <p className="text-sm text-gray-400">{data.location || "Your Location"}</p>
+                 <p className="text-base text-gray-400 flex items-center pt-1">
+                    <MapPin className="w-4 h-4 mr-2 text-card-gold/70" />
+                    {data.location || "Your Location"}
+                 </p>
               </div>
             </div>
-            {data.profession && <p className="text-sm text-gray-300">Profession: {data.profession}</p>}
-            {data.bio && (
-              <div>
-                <h4 className="text-sm font-medium text-card-gold mb-1">About Me:</h4>
-                <p className="text-sm text-gray-300 whitespace-pre-line leading-relaxed max-h-24 overflow-y-auto">
-                  {data.bio}
-                </p>
-              </div>
-            )}
+            
+            <div className="border-t border-card-gold/10"></div>
+
+            <div className="space-y-4">
+                {data.profession && (
+                    <div className="flex items-start space-x-3">
+                        <Briefcase className="w-5 h-5 mt-1 text-card-gold/80 flex-shrink-0" />
+                        <div>
+                            <p className="text-sm text-gray-400">Profession</p>
+                            <p className="text-base text-gray-200 font-medium">{data.profession}</p>
+                        </div>
+                    </div>
+                )}
+                {data.bio && (
+                  <div>
+                    <h4 className="text-base font-semibold text-card-gold mb-2">About Me</h4>
+                    <p className="text-sm text-gray-300 whitespace-pre-line leading-relaxed max-h-24 overflow-y-auto border-l-2 border-card-gold/20 pl-4">
+                      {data.bio}
+                    </p>
+                  </div>
+                )}
+            </div>
           </div>
         </CardContent>
       </Card>
