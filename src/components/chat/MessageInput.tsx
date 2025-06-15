@@ -35,11 +35,11 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => 
   };
 
   return (
-    <div className="bg-white/90 backdrop-blur-md border-t border-gray-200 px-4 py-3 sticky bottom-0">
+    <div className="bg-background/80 backdrop-blur-md border-t border-border px-4 py-3 sticky bottom-0">
       <div className="flex items-center space-x-3 max-w-2xl mx-auto">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-gray-500 hover:text-deep-blue">
+            <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
               <Smile className="w-6 h-6" />
             </Button>
           </PopoverTrigger>
@@ -55,7 +55,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => 
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type a message..."
-            className="pr-12 border-gray-300 focus:border-deep-blue focus:ring-deep-blue rounded-full"
+            className="pr-12 bg-muted border-border focus:border-primary focus:ring-primary rounded-full"
           />
         </div>
         
@@ -65,7 +65,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => 
           <Button
             onClick={handleSendMessage}
             disabled={!newMessage.trim()}
-            className="bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full w-10 h-10 p-0"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full w-10 h-10 p-0"
           >
             <Send className="w-4 h-4" />
           </Button>

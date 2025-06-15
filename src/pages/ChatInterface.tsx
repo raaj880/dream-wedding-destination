@@ -39,7 +39,7 @@ const ChatInterface: React.FC = () => {
   }
 
   return (
-    <div className="h-screen bg-gradient-to-br from-soft-pink/20 via-white to-deep-blue/10 flex flex-col">
+    <div className="h-screen bg-background flex flex-col">
       <ChatHeader participant={participant} />
 
       <MessageList 
@@ -50,7 +50,7 @@ const ChatInterface: React.FC = () => {
 
       {/* Privacy Note */}
       <div className="px-4 py-2 text-center">
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-muted-foreground">
           🔒 Private & Secure. Be respectful.
         </p>
       </div>

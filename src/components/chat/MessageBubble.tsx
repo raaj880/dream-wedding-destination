@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 import { type ChatMessage } from '@/types/chat';
 
@@ -24,7 +23,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isUser })
         transition={{ duration: 0.3 }}
         className="flex justify-center"
       >
-        <div className="bg-gray-100 text-gray-700 px-4 py-3 rounded-2xl max-w-xs text-center text-sm">
+        <div className="bg-muted text-muted-foreground px-4 py-3 rounded-2xl max-w-xs text-center text-sm">
           {message.content}
         </div>
       </motion.div>
@@ -42,14 +41,14 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isUser })
         <div
           className={`px-4 py-2 rounded-2xl shadow-sm ${
             isUser
-              ? 'bg-deep-blue text-white rounded-br-lg'
-              : 'bg-white text-deep-blue rounded-bl-lg border border-gray-200'
+              ? 'bg-primary text-primary-foreground rounded-br-lg'
+              : 'bg-card text-foreground rounded-bl-lg border border-border'
           }`}
         >
           <p className="text-sm leading-relaxed">{message.content}</p>
         </div>
         <div className={`mt-1.5 px-2 ${isUser ? 'text-right' : 'text-left'}`}>
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-muted-foreground">
             {formatTime(new Date(message.timestamp))}
             {isUser && message.status && (
               <span className="ml-1.5">

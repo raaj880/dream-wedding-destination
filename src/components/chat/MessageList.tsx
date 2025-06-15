@@ -41,7 +41,7 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, currentUser,
             <div key={message.id}>
               {showDate && (
                 <div className="text-center my-6">
-                  <span className="bg-gray-100 text-gray-500 text-xs font-medium px-3 py-1.5 rounded-full">
+                  <span className="bg-muted text-muted-foreground text-xs font-medium px-3 py-1.5 rounded-full">
                     {formatDate(new Date(message.timestamp))}
                   </span>
                 </div>

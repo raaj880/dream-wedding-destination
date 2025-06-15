@@ -34,11 +34,11 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ participant }) => {
   }
   
   return (
-    <div className="bg-white/90 backdrop-blur-md border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-20">
+    <div className="bg-background/80 backdrop-blur-md border-b border-border px-4 py-3 flex items-center justify-between sticky top-0 z-20">
       <div className="flex items-center space-x-3">
         <Button variant="ghost" size="icon" asChild>
           <Link to="/matches">
-            <ArrowLeft className="w-6 h-6 text-deep-blue" />
+            <ArrowLeft className="w-6 h-6 text-primary" />
           </Link>
         </Button>
         
@@ -49,15 +49,15 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ participant }) => {
               <AvatarFallback>{participant.fullName?.charAt(0)}</AvatarFallback>
             </Avatar>
             {participant.isOnline && (
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success border-2 border-background rounded-full"></div>
             )}
           </div>
           
           <div>
-            <h3 className="font-semibold text-deep-blue">
+            <h3 className="font-semibold text-foreground">
               {participant.fullName}, {participant.age}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               {participant.isOnline ? 'Online' : `Last seen ${formatDate(participant.lastSeen)}`}
             </p>
           </div>
@@ -65,7 +65,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ participant }) => {
       </div>
       
       <Button variant="ghost" size="icon">
-        <MoreVertical className="w-6 h-6 text-deep-blue" />
+        <MoreVertical className="w-6 h-6 text-primary" />
       </Button>
     </div>
   );
