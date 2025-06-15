@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -142,6 +142,56 @@ export function useDashboardStats() {
 
   useEffect(() => {
     fetchStats();
+
+    // Set up real-time subscription for stats updates
+    if (!user) return;
+
+    const channel = supabase
+      .channel(`dashboard-stats-${user.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'user_interactions',
+          filter: `user_id=eq.${user.id}`
+        },
+        () => {
+          console.log('User interaction detected, refreshing stats...');
+          fetchStats();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'matches',
+          filter: `user1_id=eq.${user.id}`
+        },
+        () => {
+          console.log('Match detected, refreshing stats...');
+          fetchStats();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'matches',
+          filter: `user2_id=eq.${user.id}`
+        },
+        () => {
+          console.log('Match detected, refreshing stats...');
+          fetchStats();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [user]);
 
   return {

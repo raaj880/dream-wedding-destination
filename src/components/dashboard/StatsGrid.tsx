@@ -1,15 +1,16 @@
 
 import React, { useState } from 'react';
-import { Eye, Heart, Users, TrendingUp } from 'lucide-react';
+import { Eye, Heart, Users, TrendingUp, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import StatsCard from './StatsCard';
 import LikedProfilesModal from './LikedProfilesModal';
 import { DashboardStats } from '@/hooks/useDashboardStats';
 import { useLikedProfiles } from '@/hooks/useLikedProfiles';
 
 interface StatsGridProps {
-  stats: DashboardStats;
+  stats: DashboardStats & { refetch: () => void };
 }
 
 const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
@@ -25,8 +26,13 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
   const handleLikesSentClick = async () => {
     console.log('📱 Opening liked profiles modal...');
     setShowLikedProfiles(true);
-    const profiles = await getLikedProfiles();
-    setLikedProfiles(profiles);
+    try {
+      const profiles = await getLikedProfiles();
+      setLikedProfiles(profiles);
+    } catch (error) {
+      console.error('Error fetching liked profiles:', error);
+      setLikedProfiles([]);
+    }
   };
 
   const handleMatchesClick = () => {
@@ -36,6 +42,27 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
   const handleActivityClick = () => {
     navigate('/swipe');
   };
+
+  const handleRefreshStats = () => {
+    stats.refetch();
+  };
+
+  // Show error state if there's an error
+  if (stats.error) {
+    return (
+      <div className="space-y-4">
+        <Card className="bg-red-50 border-red-200">
+          <CardContent className="p-4 text-center">
+            <p className="text-red-600 mb-4">Failed to load dashboard stats</p>
+            <Button onClick={handleRefreshStats} variant="outline" size="sm">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -89,6 +116,7 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
                 <div className="text-2xl font-bold text-deep-blue">
                   {stats.loading ? '...' : stats.likesReceived}
                 </div>
+                <div className="text-xs text-gray-500">From other users</div>
               </div>
               <Heart className="w-8 h-8 text-soft-pink" />
             </div>
@@ -103,11 +131,25 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
                 <div className="text-2xl font-bold text-deep-blue">
                   {stats.loading ? '...' : stats.likesSent > 0 ? Math.round((stats.totalMatches / stats.likesSent) * 100) : 0}%
                 </div>
+                <div className="text-xs text-gray-500">Success ratio</div>
               </div>
               <TrendingUp className="w-8 h-8 text-green-500" />
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Refresh Button */}
+      <div className="flex justify-center">
+        <Button 
+          onClick={handleRefreshStats} 
+          variant="outline" 
+          size="sm"
+          disabled={stats.loading}
+        >
+          <RefreshCw className={`w-4 h-4 mr-2 ${stats.loading ? 'animate-spin' : ''}`} />
+          Refresh Stats
+        </Button>
       </div>
 
       {/* Liked Profiles Modal */}
