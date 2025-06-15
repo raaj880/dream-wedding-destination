@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils';
 interface NavItem {
   href: string;
   icon: React.ElementType;
-  label: string;
   requiresAuth?: boolean;
 }
 
@@ -21,24 +20,20 @@ const MobileBottomNav = () => {
     {
       href: '/',
       icon: Home,
-      label: 'Home',
     },
     {
       href: '/dashboard',
       icon: LayoutDashboard,
-      label: 'Dashboard',
       requiresAuth: true,
     },
     {
       href: '/matches',
       icon: Heart,
-      label: 'Matches',
       requiresAuth: true,
     },
     {
       href: '/profile',
       icon: User,
-      label: 'Profile',
       requiresAuth: true,
     },
   ];
@@ -54,15 +49,13 @@ const MobileBottomNav = () => {
   }
 
   const handleNavClick = (href: string) => {
-    // Navigate immediately without any delay
     navigate(href);
-    // Scroll to top instantly without smooth behavior to prevent visual disturbance
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gradient-to-r from-ivory-white via-ivory-white to-blush-rose/10 border-t border-blush-rose/40 z-50 safe-area-pb backdrop-blur-sm shadow-lg">
-      <div className="flex items-center justify-around py-3 px-2">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-pb backdrop-blur-sm tinder-shadow">
+      <div className="flex items-center justify-around py-2 px-2">
         {visibleItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.href;
@@ -72,17 +65,17 @@ const MobileBottomNav = () => {
               key={item.href}
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "flex items-center justify-center p-3 rounded-2xl transition-all duration-300 min-w-0 flex-1 mx-1",
-                "hover:bg-blush-rose/30 active:scale-95 hover:shadow-md",
+                "flex items-center justify-center p-4 rounded-full transition-all duration-300 min-w-0 flex-1 mx-1",
+                "hover:bg-gray-100 active:scale-95",
                 isActive 
-                  ? "text-ivory-white bg-gradient-to-br from-royal-plum to-royal-plum/80 shadow-lg scale-110" 
-                  : "text-slate-gray hover:text-royal-plum bg-transparent"
+                  ? "text-white tinder-gradient shadow-lg scale-110" 
+                  : "text-tinder-gray hover:text-tinder-primary bg-transparent"
               )}
             >
               <Icon 
                 className={cn(
-                  "w-6 h-6 transition-all duration-300",
-                  isActive ? "text-ivory-white drop-shadow-sm" : "text-slate-gray"
+                  "w-7 h-7 transition-all duration-300",
+                  isActive ? "text-white drop-shadow-sm" : "text-tinder-gray"
                 )} 
                 strokeWidth={isActive ? 2.5 : 2}
               />

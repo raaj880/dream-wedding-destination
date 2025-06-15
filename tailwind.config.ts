@@ -20,21 +20,28 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        sans: ['Proxima Nova', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
       },
 			colors: {
-        // New Royal Plum Theme Colors
-        'royal-plum': '#6D2E91',
-        'blush-rose': '#F2C1D1',
-        'regal-gold': '#FFD700',
-        'ivory-white': '#FAF9F6',
-        'charcoal-black': '#1C1C1E',
-        'slate-gray': '#3A3A3C',
-        'vibrant-coral': '#FF6F61',
+        // Tinder Brand Colors
+        'tinder-primary': '#FD4F6D', // Main Tinder pink
+        'tinder-orange': '#FF7D3F', // Tinder orange
+        'tinder-gold': '#FFC300', // Tinder gold
+        'tinder-green': '#42DA5F', // Tinder green (like)
+        'tinder-gray': '#424242', // Tinder dark gray
+        'tinder-light-gray': '#9E9E9E', // Light gray
+        'tinder-bg': '#FAFAFA', // Background
         
-        // Legacy colors for backward compatibility (mapped to new theme)
-        'soft-pink': '#F2C1D1', // Now Blush Rose
-        'deep-blue': '#6D2E91', // Now Royal Plum
+        // Legacy colors mapped to Tinder theme
+        'royal-plum': '#FD4F6D', // Now Tinder Pink
+        'blush-rose': '#FF7D3F', // Now Tinder Orange
+        'regal-gold': '#FFC300', // Now Tinder Gold
+        'ivory-white': '#FFFFFF', // White
+        'charcoal-black': '#424242', // Tinder Gray
+        'slate-gray': '#9E9E9E', // Light Gray
+        'vibrant-coral': '#FD4F6D', // Tinder Pink
+        'soft-pink': '#FF7D3F', // Tinder Orange
+        'deep-blue': '#FD4F6D', // Tinder Pink
         
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -42,23 +49,23 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))', // Royal Plum
+					DEFAULT: 'hsl(var(--primary))', // Tinder Pink
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))', // Blush Rose
+					DEFAULT: 'hsl(var(--secondary))', // Tinder Orange
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				destructive: {
-					DEFAULT: 'hsl(var(--destructive))', // Vibrant Coral
+					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
 				},
 				muted: {
-					DEFAULT: 'hsl(var(--muted))', // Slate Gray
+					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))', // Regal Gold
+					DEFAULT: 'hsl(var(--accent))', // Tinder Gold
 					foreground: 'hsl(var(--accent-foreground))'
 				},
 				popover: {
@@ -89,6 +96,8 @@ export default {
         '4xl': '2rem',
 			},
       boxShadow: {
+        'tinder': '0 8px 25px rgba(253, 79, 109, 0.15)',
+        'tinder-card': '0 4px 12px rgba(0, 0, 0, 0.08)',
         'md_dark': '0 -4px 6px -1px rgba(255, 255, 255, 0.05), 0 -2px 4px -1px rgba(255, 255, 255, 0.03)',
       },
 			keyframes: {
