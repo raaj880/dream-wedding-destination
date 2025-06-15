@@ -70,17 +70,18 @@ const MobileBottomNav = () => {
               key={item.href}
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "flex items-center justify-center p-2 rounded-2xl transition-all duration-300 min-w-0 flex-1 mx-1",
-                "hover:bg-card-gold/10 active:scale-95",
+                "group flex items-center justify-center p-2 rounded-2xl transition-all duration-300 min-w-0 flex-1 mx-1 active:scale-95",
                 isActive 
                   ? "text-primary-foreground gold-gradient shadow-lg scale-105" 
-                  : "text-card-gold hover:text-white bg-card/20 hover:bg-card-gold/20"
+                  : "hover:bg-muted"
               )}
             >
               <Icon 
                 className={cn(
                   "w-6 h-6 transition-all duration-300",
-                  isActive ? "text-primary-foreground drop-shadow-sm" : "text-card-gold"
+                  isActive 
+                    ? "text-primary-foreground drop-shadow-sm" 
+                    : "text-muted-foreground group-hover:text-foreground"
                 )} 
                 strokeWidth={isActive ? 2.25 : 1.75}
               />
