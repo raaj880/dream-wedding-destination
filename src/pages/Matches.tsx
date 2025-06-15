@@ -6,7 +6,6 @@ import { useFilters } from '@/hooks/useFilters';
 import { useMatchFiltering } from '@/hooks/useMatchFiltering';
 import { useRealTimeMatches } from '@/hooks/useRealTimeMatches';
 import MatchesHeader from '@/components/matches/MatchesHeader';
-import FilterStatus from '@/components/matches/FilterStatus';
 import MatchesList from '@/components/matches/MatchesList';
 import PremiumPopup from '@/components/matches/PremiumPopup';
 import { Card, CardContent } from '@/components/ui/card';
@@ -96,8 +95,6 @@ const Matches: React.FC = () => {
       <MatchesHeader isFilterActive={isActive} />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl">
-        <FilterStatus isActive={isActive} filteredCount={filteredCount} />
-
         {/* Enhanced Stats Section */}
         <div className="mb-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
