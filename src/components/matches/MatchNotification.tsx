@@ -23,17 +23,17 @@ const MatchNotification: React.FC<MatchNotificationProps> = ({
       initial={{ opacity: 0, scale: 0.8, y: 50 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: 50 }}
-      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+      className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
-        className="bg-white rounded-2xl p-8 text-center max-w-sm w-full relative overflow-hidden"
+        className="bg-card/80 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 text-center max-w-sm w-full relative overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Background decoration */}
-        <div className="absolute inset-0 bg-gradient-to-br from-soft-pink/20 to-deep-blue/10" />
+        <div className="absolute inset-0 pink-gold-gradient opacity-10" />
         
         {/* Close button */}
         <Button
@@ -42,7 +42,7 @@ const MatchNotification: React.FC<MatchNotificationProps> = ({
           className="absolute top-4 right-4 z-10"
           onClick={onClose}
         >
-          <X className="w-4 h-4" />
+          <X className="w-4 h-4 text-subtle" />
         </Button>
 
         {/* Hearts animation */}
@@ -71,28 +71,28 @@ const MatchNotification: React.FC<MatchNotificationProps> = ({
             }}
             className="absolute -top-2 -right-2"
           >
-            <Heart className="w-6 h-6 text-soft-pink fill-current" />
+            <Heart className="w-6 h-6 text-secondary fill-current" />
           </motion.div>
         </div>
 
-        <h2 className="text-2xl font-bold text-deep-blue mb-2">It's a Match!</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">It's a Match!</h2>
         
         <div className="flex justify-center mb-4">
-          <Avatar className="w-20 h-20 border-4 border-soft-pink">
+          <Avatar className="w-20 h-20 border-4 border-secondary">
             <AvatarImage src={match.matchedUserPhoto} alt={match.matchedUserName} />
-            <AvatarFallback className="text-xl bg-soft-pink text-deep-blue">
+            <AvatarFallback className="text-xl bg-secondary text-secondary-foreground">
               {match.matchedUserName.charAt(0)}
             </AvatarFallback>
           </Avatar>
         </div>
 
-        <p className="text-gray-600 mb-6">
-          You and <span className="font-semibold text-deep-blue">{match.matchedUserName}</span> liked each other!
+        <p className="text-subtle mb-6">
+          You and <span className="font-semibold text-foreground">{match.matchedUserName}</span> liked each other!
         </p>
 
         <div className="space-y-3">
           <Button 
-            className="w-full bg-deep-blue text-white hover:bg-deep-blue/90"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
             onClick={onMessage}
           >
             <MessageCircle className="w-4 h-4 mr-2" />

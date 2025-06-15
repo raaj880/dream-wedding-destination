@@ -19,7 +19,7 @@ const PremiumPopup: React.FC<PremiumPopupProps> = ({ isVisible, onClose }) => {
           exit={{ opacity: 0, y: 50 }}
           className="fixed bottom-6 left-4 right-4 max-w-sm mx-auto z-50"
         >
-          <Card className="bg-gradient-to-r from-champagne-gold/20 to-coral-pink/20 border-0 shadow-lg">
+          <Card className="bg-card/60 backdrop-blur-lg border border-white/10 shadow-lg rounded-2xl">
             <CardContent className="p-4">
               <div className="text-center">
                 <p className="text-sm text-foreground mb-2">
@@ -27,8 +27,7 @@ const PremiumPopup: React.FC<PremiumPopupProps> = ({ isVisible, onClose }) => {
                 </p>
                 <Button 
                   size="sm" 
-                  variant="secondary"
-                  className="text-white w-full"
+                  className="bg-highlight text-black hover:bg-highlight/90 w-full"
                   onClick={onClose}
                 >
                   See Who Liked You

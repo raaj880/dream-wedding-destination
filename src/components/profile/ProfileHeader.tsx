@@ -30,7 +30,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
             variant="ghost"
             size="icon"
             title="Settings"
-            className="w-10 h-10 hover:bg-card-gold/20 rounded-full text-card-gold border border-card-gold/30"
+            className="w-10 h-10 hover:bg-white/10 rounded-full text-foreground border border-border"
           >
             <Settings className="w-5 h-5" />
           </Button>
@@ -38,14 +38,14 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
       )}
 
       {/* Background Banner */}
-      <div className="h-48 bg-gradient-to-b from-card-dark-gray to-card-charcoal relative overflow-hidden">
+      <div className="h-48 bg-gradient-to-b from-card to-background relative overflow-hidden">
         {profileData.photoPreviews[0] && (
           <div 
-            className="absolute inset-0 bg-cover bg-center opacity-20 blur-sm"
+            className="absolute inset-0 bg-cover bg-center opacity-30 blur-md"
             style={{ backgroundImage: `url(${profileData.photoPreviews[0]})` }}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
       </div>
 
       {/* Profile Picture & Basic Info */}
@@ -69,13 +69,13 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
               </Avatar>
               {isOwnProfile && (
                 <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Edit className="w-8 h-8 text-foreground" />
+                  <Edit className="w-8 h-8 text-white" />
                 </div>
               )}
             </label>
 
             <div className="absolute -bottom-2 -right-2">
-              <Badge className="bg-green-500 text-white px-2 py-1 text-xs font-medium">
+              <Badge className="bg-success text-white px-2 py-1 text-xs font-medium">
                 ✅ Verified
               </Badge>
             </div>
@@ -85,10 +85,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
             <h1 className="text-2xl font-bold text-foreground mb-1">
               {profileData.fullName}
             </h1>
-            <p className="text-muted-foreground mb-2">
+            <p className="text-subtle mb-2">
               {getAge(profileData.dob)} years old
             </p>
-            <div className="flex items-center justify-center text-muted-foreground">
+            <div className="flex items-center justify-center text-subtle">
               <MapPin className="w-4 h-4 mr-1" />
               <span className="text-sm">{profileData.location}</span>
             </div>
@@ -98,7 +98,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
             <div className="mt-6 w-full max-w-xs">
               <Button
                 onClick={onEditProfile}
-                className="w-full gold-gradient text-background rounded-full py-3 font-medium text-base"
+                className="w-full bg-primary text-primary-foreground rounded-full py-3 font-medium text-base"
               >
                 <Edit className="w-4 h-4 mr-2" />
                 Edit My Profile

@@ -5,43 +5,47 @@
 
 @layer base {
   :root {
-    --background: 48 33% 97%; /* Ivory Cream - #FAF9F6 */
-    --foreground: 221 39% 11%; /* Dark Navy - #121A2C */
+    --background: 0 0% 7%; /* #121212 */
+    --foreground: 240 8% 97%; /* #F5F5F7 */
 
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 221 39% 11%; /* Dark Navy */
+    --card: 240 20% 12%; /* #1E1E2F */
+    --card-foreground: 240 8% 97%; /* #F5F5F7 */
 
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 221 39% 11%; /* Dark Navy */
+    --popover: 240 20% 12%; /* #1E1E2F */
+    --popover-foreground: 240 8% 97%; /* #F5F5F7 */
 
-    --primary: 45 74% 50%; /* Champagne Gold - #E1B021 */
-    --primary-foreground: 221 39% 11%; /* Dark Navy on gold */
+    --primary: 199 94% 67%; /* #5AC8FA */
+    --primary-foreground: 0 0% 7%; /* #121212 */
 
-    --secondary: 0 100% 71%; /* Coral Pink - #FF6B6B */
-    --secondary-foreground: 0 0% 100%; /* White on coral */
+    --secondary: 348 100% 59%; /* #FF2D55 */
+    --secondary-foreground: 240 8% 97%; /* #F5F5F7 */
 
-    --muted: 220 13% 91%; /* Light Gray - #E5E7EB */
-    --muted-foreground: 220 9% 46%; /* Medium Gray - #6B7280 */
+    --muted: 240 10% 17%; /* #2C2C3A */
+    --muted-foreground: 240 4% 65%; /* #A1A1AA */
 
-    --accent: 45 74% 50%; /* Champagne Gold */
-    --accent-foreground: 221 39% 11%; /* Dark Navy */
+    --accent: 199 94% 67%; /* #5AC8FA */
+    --accent-foreground: 0 0% 7%; /* #121212 */
 
-    --destructive: 0 84% 60%; /* Red */
-    --destructive-foreground: 0 0% 100%; /* White */
+    --destructive: 3 100% 62%; /* #FF453A */
+    --destructive-foreground: 240 8% 97%; /* #F5F5F7 */
 
-    --border: 220 13% 88%; /* Gray border */
-    --input: 220 13% 91%; /* Light Gray inputs */
-    --ring: 45 74% 50%; /* Champagne Gold for focus rings */
+    --border: 240 10% 17%; /* #2C2C3A */
+    --input: 240 10% 17%; /* #2C2C3A */
+    --ring: 199 94% 67%; /* #5AC8FA */
 
     --radius: 0.75rem;
 
     /* Custom colors for new theme */
-    --header-background: 222 79% 15%; /* Royal Navy Blue - #0A2342 */
-    --header-foreground: 0 0% 100%; /* White */
-    --champagne-gold: 45 74% 50%; /* #E1B021 */
-    --coral-pink: 0 100% 71%; /* #FF6B6B */
-    --dusky-rose: 0 13% 62%; /* #B08D8D */
-    --ivory-cream: 48 33% 97%; /* #FAF9F6 */
+    --header-background: 240 20% 12%; /* #1E1E2F - For gradients */
+    --header-foreground: 240 8% 97%; /* #F5F5F7 */
+    --highlight: 48 100% 52%; /* #FFD60A */
+    --success: 145 63% 49%; /* #30D158 */
+    
+    /* Legacy color compatibility */
+    --champagne-gold: 48 100% 52%;
+    --coral-pink: 348 100% 59%;
+    --dusky-rose: 348 100% 59%;
+    --ivory-cream: 0 0% 7%;
   }
 }
 
@@ -70,11 +74,15 @@
   }
   
   .gold-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    background: linear-gradient(135deg, hsl(var(--highlight)) 0%, hsl(var(--primary)) 100%);
   }
   
+  .pink-gold-gradient {
+    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--highlight)) 100%);
+  }
+
   .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    background: linear-gradient(135deg, hsl(var(--highlight)) 0%, hsl(var(--primary)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

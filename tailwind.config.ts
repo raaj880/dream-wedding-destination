@@ -25,11 +25,16 @@ export default {
       },
 			colors: {
         // New Theme Colors
+        highlight: 'hsl(var(--highlight))',
+        success: 'hsl(var(--success))',
+        subtle: 'hsl(var(--muted-foreground))',
+
+        // Legacy Theme Colors
         'royal-navy': 'hsl(var(--header-background))',
-        'champagne-gold': 'hsl(var(--champagne-gold))',
-        'coral-pink': 'hsl(var(--coral-pink))',
-        'ivory-cream': 'hsl(var(--ivory-cream))',
-        'dusky-rose': 'hsl(var(--dusky-rose))',
+        'champagne-gold': 'hsl(var(--highlight))',
+        'coral-pink': 'hsl(var(--secondary))',
+        'ivory-cream': 'hsl(var(--background))',
+        'dusky-rose': 'hsl(var(--secondary))',
 
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -79,12 +84,12 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
         // Legacy color mapping for compatibility
-        'card-gold': 'hsl(var(--champagne-gold))',
-        'soft-pink': 'hsl(var(--coral-pink))',
-        'deep-blue': 'hsl(var(--header-background))',
-        'blush-rose': 'hsl(var(--dusky-rose))',
-        'regal-gold': 'hsl(var(--champagne-gold))',
-        'vibrant-coral': 'hsl(var(--coral-pink))',
+        'card-gold': 'hsl(var(--highlight))',
+        'soft-pink': 'hsl(var(--secondary))',
+        'deep-blue': 'hsl(var(--primary))',
+        'blush-rose': 'hsl(var(--secondary))',
+        'regal-gold': 'hsl(var(--highlight))',
+        'vibrant-coral': 'hsl(var(--secondary))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -97,8 +102,8 @@ export default {
       boxShadow: {
         'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
         'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-        'premium': '0 8px 16px rgba(225, 176, 33, 0.2)',
-        'md_dark': '0 -4px 6px -1px rgba(0, 0, 0, 0.05), 0 -2px 4px -1px rgba(0, 0, 0, 0.03)',
+        'premium': '0 8px 24px hsla(var(--highlight) / 0.3)',
+        'md_dark': '0 -4px 12px -1px rgba(0, 0, 0, 0.1), 0 -2px 8px -1px rgba(0, 0, 0, 0.06)',
       },
 			keyframes: {
 				'accordion-down': {
