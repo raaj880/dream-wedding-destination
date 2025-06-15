@@ -18,7 +18,7 @@ const PremiumCTA: React.FC = () => {
               <h3 className="font-semibold text-foreground mb-1">Get Premium</h3>
               <p className="text-sm text-muted-foreground">See who liked you, unlimited swipes & more!</p>
             </div>
-            <Button variant="secondary" className="text-white">
+            <Button variant="secondary">
               Upgrade
             </Button>
           </div>

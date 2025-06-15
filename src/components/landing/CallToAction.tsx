@@ -28,7 +28,7 @@ const CallToAction = () => {
         <Button 
           size="lg"
           variant="secondary"
-          className="text-white font-bold rounded-2xl px-10 py-7 text-lg hover:bg-secondary/90 hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-4"
+          className="font-bold rounded-2xl px-10 py-7 text-lg hover:bg-secondary/90 hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-4"
           onClick={handleJoinWedder}
         >
           Join Wedder Today

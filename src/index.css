@@ -17,8 +17,8 @@
     --primary: 199 94% 67%; /* #5AC8FA */
     --primary-foreground: 0 0% 7%; /* #121212 */
 
-    --secondary: 350 95% 58%; /* #F93155 */
-    --secondary-foreground: 240 8% 97%; /* #F5F5F7 */
+    --secondary: 340 82% 76%; /* #F4A9C4 */
+    --secondary-foreground: 0 0% 7%; /* #121212 */
 
     --muted: 240 10% 17%; /* #2C2C3A */
     --muted-foreground: 240 4% 65%; /* #A1A1AA */
@@ -43,8 +43,8 @@
     
     /* Legacy color compatibility */
     --champagne-gold: 48 100% 52%;
-    --coral-pink: 350 95% 58%;
-    --dusky-rose: 350 95% 58%;
+    --coral-pink: 340 82% 76%;
+    --dusky-rose: 340 82% 76%;
     --ivory-cream: 0 0% 7%;
   }
 }
