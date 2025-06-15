@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -29,7 +30,7 @@ const AuthPage: React.FC = () => {
 
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-soft-pink/20 via-white to-white p-4 dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black p-4">
         <LogoWithTagline />
         <AuthSuccessPlaceholder onSetupProfile={handleSetupProfile} />
       </div>
@@ -37,22 +38,22 @@ const AuthPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-soft-pink/20 via-white to-white p-4 font-sans dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-black p-4 font-sans">
       <div className="w-full max-w-md">
         <LogoWithTagline />
-        <Card className="shadow-xl rounded-2xl overflow-hidden dark:bg-gray-800"> {/* Added overflow-hidden for animations */}
-          <CardContent className="p-6 md:p-8">
+        <Card className="shadow-2xl rounded-3xl overflow-hidden border border-card-gold/20 bg-card-dark-gray/90 backdrop-blur-xl">
+          <CardContent className="p-8">
             <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'signup')} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted/30 dark:bg-muted/50 rounded-xl p-1">
+              <TabsList className="grid w-full grid-cols-2 mb-8 bg-card-charcoal/50 rounded-2xl p-1.5 border border-card-gold/20">
                 <TabsTrigger 
                   value="login" 
-                  className="data-[state=active]:bg-deep-blue data-[state=active]:text-white rounded-lg py-2.5 transition-all duration-300 dark:data-[state=active]:bg-soft-pink dark:data-[state=active]:text-deep-blue"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-xl py-3 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg"
                 >
-                  Login
+                  Sign In
                 </TabsTrigger>
                 <TabsTrigger 
                   value="signup" 
-                  className="data-[state=active]:bg-deep-blue data-[state=active]:text-white rounded-lg py-2.5 transition-all duration-300 dark:data-[state=active]:bg-soft-pink dark:data-[state=active]:text-deep-blue"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-xl py-3 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg"
                 >
                   Sign Up
                 </TabsTrigger>
