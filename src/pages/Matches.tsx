@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useMatches } from '@/hooks/useMatches';
 import { usePotentialMatches } from '@/hooks/usePotentialMatches';
@@ -7,9 +8,7 @@ import { useRealTimeMatches } from '@/hooks/useRealTimeMatches';
 import MatchesHeader from '@/components/matches/MatchesHeader';
 import MatchesList from '@/components/matches/MatchesList';
 import PremiumPopup from '@/components/matches/PremiumPopup';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Users, Heart, Star, TrendingUp } from 'lucide-react';
 
 const Matches: React.FC = () => {
   const { matches, loading: matchesLoading } = useMatches();
@@ -21,21 +20,6 @@ const Matches: React.FC = () => {
   console.log('Matches data:', matches);
   console.log('Potential matches data:', potentialMatches);
   console.log('New real-time matches:', newMatches);
-
-  // Calculate stats
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const matchesToday = matches.filter(
-    (match) => new Date(match.matchedAt) >= today
-  ).length;
-
-  const weekAgo = new Date();
-  weekAgo.setDate(weekAgo.getDate() - 7);
-
-  const matchesThisWeek = matches.filter(
-    (match) => new Date(match.matchedAt) >= weekAgo
-  ).length;
 
   // Transform data to match PotentialMatch interface for filtering
   const displayProfiles = matches.length > 0 ? matches.map(match => ({
@@ -109,50 +93,7 @@ const Matches: React.FC = () => {
       <MatchesHeader isFilterActive={isActive} />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl">
-        {/* Enhanced Stats Section */}
         <div className="mb-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-4 text-center">
-                <div className="w-8 h-8 bg-soft-pink/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Heart className="w-4 h-4 text-soft-pink" />
-                </div>
-                <p className="text-2xl font-bold text-deep-blue">{matches.length}</p>
-                <p className="text-xs text-gray-600">Mutual Matches</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-4 text-center">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Users className="w-4 h-4 text-blue-600" />
-                </div>
-                <p className="text-2xl font-bold text-deep-blue">{filteredCount}</p>
-                <p className="text-xs text-gray-600">Available</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-4 text-center">
-                <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Star className="w-4 h-4 text-yellow-600" />
-                </div>
-                <p className="text-2xl font-bold text-deep-blue">{matchesToday}</p>
-                <p className="text-xs text-gray-600">New Today</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-white shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-4 text-center">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <TrendingUp className="w-4 h-4 text-green-600" />
-                </div>
-                <p className="text-2xl font-bold text-deep-blue">+{matchesThisWeek}</p>
-                <p className="text-xs text-gray-600">This Week</p>
-              </CardContent>
-            </Card>
-          </div>
-
           {/* Enhanced Match Count with better messaging */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
