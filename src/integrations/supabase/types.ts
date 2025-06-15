@@ -174,21 +174,21 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          interaction_type: string
+          interaction_type: Database["public"]["Enums"]["interaction_enum"]
           target_user_id: string
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
-          interaction_type: string
+          interaction_type: Database["public"]["Enums"]["interaction_enum"]
           target_user_id: string
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
-          interaction_type?: string
+          interaction_type?: Database["public"]["Enums"]["interaction_enum"]
           target_user_id?: string
           user_id?: string
         }
@@ -202,7 +202,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      interaction_enum: "like" | "pass" | "superlike" | "block" | "view"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -317,6 +317,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      interaction_enum: ["like", "pass", "superlike", "block", "view"],
+    },
   },
 } as const
