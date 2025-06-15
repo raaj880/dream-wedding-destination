@@ -17,14 +17,14 @@ const FilterStatusBanner: React.FC<FilterStatusBannerProps> = ({ hasActiveFilter
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: 'auto' }}
     >
-      <Card className="bg-soft-pink/10 border-soft-pink/20">
+      <Card className="bg-dusky-rose/10 border-dusky-rose/20">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-deep-blue">🎯 Search filters are active</span>
+              <span className="text-sm text-foreground">🎯 Search filters are active</span>
             </div>
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/filter" className="text-deep-blue text-xs">
+              <Link to="/filter" className="text-foreground text-xs">
                 Manage Filters
               </Link>
             </Button>

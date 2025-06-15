@@ -55,13 +55,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-black/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-card-gold/20">
+    <header className="bg-header backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-champagne-gold/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div onClick={handleLogoClick} className="flex items-center space-x-2 text-card-gold hover:text-white transition-colors cursor-pointer">
-            <Heart className="w-7 h-7 text-card-gold fill-card-gold" />
-            <span className="text-3xl font-bold">Wedder</span>
+          <div onClick={handleLogoClick} className="flex items-center space-x-2 text-champagne-gold hover:text-white transition-colors cursor-pointer">
+            <Heart className="w-7 h-7 text-champagne-gold fill-champagne-gold" />
+            <span className="text-3xl font-bold text-white">Wedder</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -73,7 +73,7 @@ const Navbar = () => {
                   <button
                     key={link.label}
                     onClick={() => handleNavClick(link)}
-                    className="px-3 py-2 text-card-gold hover:text-white rounded-md text-base font-medium transition-colors bg-transparent border-none cursor-pointer"
+                    className="px-3 py-2 text-header-foreground/80 hover:text-header-foreground rounded-md text-base font-medium transition-colors bg-transparent border-none cursor-pointer"
                   >
                     {link.label}
                   </button>
@@ -85,7 +85,7 @@ const Navbar = () => {
             <DesktopNav />
             
             {!isAuthenticated && (
-              <Button asChild className="ml-4 gold-gradient text-black hover:opacity-90 rounded-full px-6 py-2.5 text-base font-semibold transition-all hover:scale-105">
+              <Button asChild className="ml-4 gold-gradient text-primary-foreground hover:opacity-90 rounded-full px-6 py-2.5 text-base font-semibold transition-all hover:scale-105">
                 <Link to="/auth">Join Now</Link>
               </Button>
             )}
@@ -93,7 +93,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <Button variant="ghost" onClick={toggleMobileMenu} className="text-card-gold hover:bg-card-gold/20">
+            <Button variant="ghost" onClick={toggleMobileMenu} className="text-header-foreground hover:bg-white/10">
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </Button>
           </div>
@@ -102,19 +102,19 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 right-0 bg-black/95 backdrop-blur-md shadow-lg z-40 pb-4 border-b border-card-gold/20">
+        <div className="md:hidden absolute top-20 left-0 right-0 bg-header/95 backdrop-blur-md shadow-lg z-40 pb-4 border-b border-champagne-gold/20">
           <nav className="flex flex-col items-center space-y-3 pt-4">
             {navLinks.map((link) => (
               <button
                 key={link.label}
                 onClick={() => handleNavClick(link)}
-                className="block px-4 py-2 text-card-gold hover:text-white rounded-md text-lg font-medium transition-colors w-full text-center bg-transparent border-none cursor-pointer"
+                className="block px-4 py-2 text-header-foreground/80 hover:text-header-foreground rounded-md text-lg font-medium transition-colors w-full text-center bg-transparent border-none cursor-pointer"
               >
                 {link.label}
               </button>
             ))}
             {!isAuthenticated && (
-              <Button asChild className="mt-4 gold-gradient text-black hover:opacity-90 rounded-full px-8 py-3 text-lg font-semibold transition-all hover:scale-105 w-3/4">
+              <Button asChild variant="secondary" className="mt-4 rounded-full px-8 py-3 text-lg font-semibold transition-all hover:scale-105 w-3/4">
                 <Link to="/auth" onClick={closeMobileMenu}>Join Now</Link>
               </Button>
             )}

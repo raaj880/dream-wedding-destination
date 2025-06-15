@@ -19,15 +19,16 @@ const PremiumPopup: React.FC<PremiumPopupProps> = ({ isVisible, onClose }) => {
           exit={{ opacity: 0, y: 50 }}
           className="fixed bottom-6 left-4 right-4 max-w-sm mx-auto z-50"
         >
-          <Card className="bg-gradient-to-r from-soft-pink to-deep-blue/10 border-0 shadow-lg">
+          <Card className="bg-gradient-to-r from-champagne-gold/20 to-coral-pink/20 border-0 shadow-lg">
             <CardContent className="p-4">
               <div className="text-center">
-                <p className="text-sm text-deep-blue mb-2">
+                <p className="text-sm text-foreground mb-2">
                   3 people liked you – Get Premium to view 🔓
                 </p>
                 <Button 
                   size="sm" 
-                  className="bg-deep-blue text-white hover:bg-deep-blue/90 w-full"
+                  variant="secondary"
+                  className="text-white w-full"
                   onClick={onClose}
                 >
                   See Who Liked You

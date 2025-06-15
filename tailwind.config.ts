@@ -24,37 +24,24 @@ export default {
         display: ['SF Pro Display', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
 			colors: {
-        // Premium Card Colors - Rose Gold Theme
-        'card-black': 'hsl(var(--background))', // Very Dark Blue
-        'card-gold': '#EFA8B8', // Soft Rose Gold
-        'card-platinum': '#E5E4E2', // Platinum silver
-        'card-dark-gray': 'hsl(var(--card))', // Dark Blue
-        'card-charcoal': 'hsl(var(--card-charcoal))', // Even Darker Blue
-        'card-accent': '#EFA8B8', // Soft Rose Gold accent
-        
-        // Legacy colors mapped to theme
-        'royal-plum': 'hsl(var(--background))',
-        'blush-rose': '#EFA8B8', // Soft Rose Gold
-        'regal-gold': '#EFA8B8', // Soft Rose Gold
-        'ivory-white': '#FFFFFF', // White
-        'charcoal-black': 'hsl(var(--background))',
-        'slate-gray': 'hsl(var(--muted))', // Dark Muted Blue
-        'vibrant-coral': '#3B82F6', // Blue
-        'soft-pink': '#EFA8B8', // Mapped to Soft Rose Gold
-        'deep-blue': 'hsl(var(--card))', // Dark Blue
-        'tinder-bg': 'hsl(var(--background))', // Background color
-        
+        // New Theme Colors
+        'royal-navy': 'hsl(var(--header-background))',
+        'champagne-gold': 'hsl(var(--champagne-gold))',
+        'coral-pink': 'hsl(var(--coral-pink))',
+        'ivory-cream': 'hsl(var(--ivory-cream))',
+        'dusky-rose': 'hsl(var(--dusky-rose))',
+
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))', // Blue
+					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))', // Light Blue
+					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				destructive: {
@@ -66,7 +53,7 @@ export default {
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))', // Blue
+					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
 				popover: {
@@ -77,6 +64,10 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+        header: {
+          DEFAULT: 'hsl(var(--header-background))',
+          foreground: 'hsl(var(--header-foreground))'
+        },
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -86,7 +77,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+        // Legacy color mapping for compatibility
+        'card-gold': 'hsl(var(--champagne-gold))',
+        'soft-pink': 'hsl(var(--coral-pink))',
+        'deep-blue': 'hsl(var(--header-background))',
+        'blush-rose': 'hsl(var(--dusky-rose))',
+        'regal-gold': 'hsl(var(--champagne-gold))',
+        'vibrant-coral': 'hsl(var(--coral-pink))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -97,10 +95,10 @@ export default {
         '4xl': '2rem',
 			},
       boxShadow: {
-        'card': '0 25px 50px rgba(239, 168, 184, 0.3), 0 0 0 1px rgba(239, 168, 184, 0.1)',
-        'card-hover': '0 35px 60px rgba(239, 168, 184, 0.4), 0 0 0 1px rgba(239, 168, 184, 0.2)',
-        'premium': '0 8px 32px rgba(239, 168, 184, 0.2)',
-        'md_dark': '0 -4px 6px -1px rgba(255, 255, 255, 0.05), 0 -2px 4px -1px rgba(255, 255, 255, 0.03)',
+        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'premium': '0 8px 16px rgba(225, 176, 33, 0.2)',
+        'md_dark': '0 -4px 6px -1px rgba(0, 0, 0, 0.05), 0 -2px 4px -1px rgba(0, 0, 0, 0.03)',
       },
 			keyframes: {
 				'accordion-down': {

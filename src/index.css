@@ -5,72 +5,43 @@
 
 @layer base {
   :root {
-    --background: 224 71% 4%; /* Very Dark Blue */
-    --foreground: 210 40% 98%; /* Almost White */
+    --background: 48 33% 97%; /* Ivory Cream - #FAF9F6 */
+    --foreground: 221 39% 11%; /* Dark Navy - #121A2C */
 
-    --card: 222 47% 11%; /* Dark Blue */
-    --card-foreground: 210 40% 98%; /* Almost White text on blue cards */
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 221 39% 11%; /* Dark Navy */
 
-    --popover: 224 71% 4%; /* Very Dark Blue popover */
-    --popover-foreground: 210 40% 98%; /* Almost White text */
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 221 39% 11%; /* Dark Navy */
 
-    --primary: 217 91% 60%; /* Blue primary */
-    --primary-foreground: 210 40% 98%; /* Almost White text on blue */
+    --primary: 45 74% 50%; /* Champagne Gold - #E1B021 */
+    --primary-foreground: 221 39% 11%; /* Dark Navy on gold */
 
-    --secondary: 348 68% 80%; /* Soft Rose Gold */
-    --secondary-foreground: 224 71% 4%; /* Very Dark Blue text on secondary */
+    --secondary: 0 100% 71%; /* Coral Pink - #FF6B6B */
+    --secondary-foreground: 0 0% 100%; /* White on coral */
 
-    --muted: 223 47% 11%; /* Dark Muted Blue */
-    --muted-foreground: 215 20% 65%; /* Light gray-blue for muted text */
+    --muted: 220 13% 91%; /* Light Gray - #E5E7EB */
+    --muted-foreground: 220 9% 46%; /* Medium Gray - #6B7280 */
 
-    --accent: 217 91% 60%; /* Blue accent */
-    --accent-foreground: 210 40% 98%; /* Almost White text on accent */
+    --accent: 45 74% 50%; /* Champagne Gold */
+    --accent-foreground: 221 39% 11%; /* Dark Navy */
 
     --destructive: 0 84% 60%; /* Red */
-    --destructive-foreground: 210 40% 98%; /* Almost White text */
+    --destructive-foreground: 0 0% 100%; /* White */
 
-    --border: 217 91% 20%; /* Darker Blue borders */
-    --input: 222 47% 11%; /* Dark Blue inputs */
-    --ring: 217 91% 60%; /* Blue for focus rings */
+    --border: 220 13% 88%; /* Gray border */
+    --input: 220 13% 91%; /* Light Gray inputs */
+    --ring: 45 74% 50%; /* Champagne Gold for focus rings */
 
     --radius: 0.75rem;
 
-    /* Premium card colors */
-    --card-black: 224 71% 4%; /* Very Dark Blue */
-    --card-gold: 348 68% 80%; /* Soft Rose Gold */
-    --card-platinum: 229 228 226; /* Platinum silver */
-    --card-dark-gray: 222 47% 11%; /* Dark Blue */
-    --card-charcoal: 225 50% 8%; /* Even Darker Blue */
-  }
-
-  .dark {
-    --background: 224 71% 4%; /* Very Dark Blue */
-    --foreground: 210 40% 98%; /* Almost White */
-
-    --card: 222 47% 11%; /* Dark Blue */
-    --card-foreground: 210 40% 98%; /* Almost White text on blue cards */
-
-    --popover: 224 71% 4%; /* Very Dark Blue popover */
-    --popover-foreground: 210 40% 98%; /* Almost White text */
-
-    --primary: 217 91% 60%; /* Blue */
-    --primary-foreground: 210 40% 98%; /* Almost White text */
-
-    --secondary: 348 68% 80%; /* Soft Rose Gold */
-    --secondary-foreground: 224 71% 4%; /* Very Dark Blue text */
-
-    --muted: 223 47% 11%; /* Dark Muted Blue */
-    --muted-foreground: 215 20% 65%; /* Light gray-blue */
-
-    --accent: 217 91% 60%; /* Blue */
-    --accent-foreground: 210 40% 98%; /* Almost White text */
-
-    --destructive: 0 84% 60%; /* Red */
-    --destructive-foreground: 210 40% 98%; /* Almost White text */
-
-    --border: 217 91% 20%; /* Darker Blue borders */
-    --input: 222 47% 11%; /* Dark Blue inputs */
-    --ring: 217 91% 60%; /* Blue */
+    /* Custom colors for new theme */
+    --header-background: 222 79% 15%; /* Royal Navy Blue - #0A2342 */
+    --header-foreground: 0 0% 100%; /* White */
+    --champagne-gold: 45 74% 50%; /* #E1B021 */
+    --coral-pink: 0 100% 71%; /* #FF6B6B */
+    --dusky-rose: 0 13% 62%; /* #B08D8D */
+    --ivory-cream: 48 33% 97%; /* #FAF9F6 */
   }
 }
 
@@ -87,7 +58,7 @@
     @apply py-16 md:py-24 px-4;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply text-white font-semibold;
+    @apply text-foreground font-semibold;
     font-weight: 600;
     letter-spacing: -0.025em;
   }
@@ -98,28 +69,12 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
   
-  /* Premium card utility classes */
-  .card-gradient {
-    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
-  }
-  
-  .card-shadow {
-    box-shadow: 0 25px 50px rgba(239, 168, 184, 0.3), 0 0 0 1px rgba(239, 168, 184, 0.1);
-  }
-  
-  .premium-card {
-    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
-    border: 1px solid rgba(239, 168, 184, 0.3);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(239, 168, 184, 0.2);
-  }
-  
   .gold-gradient {
-    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
   }
   
   .text-gradient {
-    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
