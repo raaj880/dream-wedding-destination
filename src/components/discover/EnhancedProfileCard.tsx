@@ -47,7 +47,7 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
       transition={{ duration: 0.3 }}
       className="w-full max-w-md mx-auto mb-6"
     >
-      <Card className="overflow-hidden bg-white shadow-xl border-0 rounded-2xl">
+      <Card className="overflow-hidden bg-black shadow-xl border border-card-gold/30 rounded-2xl">
         {/* Photo Section */}
         <div className="relative h-96">
           {profile.photos && profile.photos.length > 0 ? (
@@ -66,7 +66,7 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
                       key={idx}
                       onClick={() => setCurrentPhotoIndex(idx)}
                       className={`h-1 rounded-full transition-all ${
-                        idx === currentPhotoIndex ? 'bg-white w-8' : 'bg-white/50 w-4'
+                        idx === currentPhotoIndex ? 'bg-card-gold w-8' : 'bg-white/50 w-4'
                       }`}
                     />
                   ))}
@@ -89,16 +89,16 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
               
               {/* Photo Counter */}
               {profile.photos.length > 1 && (
-                <div className="absolute top-4 right-4 bg-black/50 text-white text-xs px-2 py-1 rounded-full flex items-center">
+                <div className="absolute top-4 right-4 bg-black/70 text-card-gold text-xs px-2 py-1 rounded-full flex items-center border border-card-gold/30">
                   <Camera className="w-3 h-3 mr-1" />
                   {currentPhotoIndex + 1}/{profile.photos.length}
                 </div>
               )}
             </>
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-soft-pink to-deep-blue flex items-center justify-center">
+            <div className="w-full h-full bg-gradient-to-br from-black to-gray-900 flex items-center justify-center border-b border-card-gold/30">
               <Avatar className="w-32 h-32">
-                <AvatarFallback className="text-4xl bg-white text-deep-blue">
+                <AvatarFallback className="text-4xl bg-card-gold text-black">
                   {profile.full_name?.charAt(0) || '?'}
                 </AvatarFallback>
               </Avatar>
@@ -108,7 +108,7 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
           {/* Status Badges */}
           <div className="absolute top-4 left-4 flex flex-col space-y-2">
             {profile.verified && (
-              <Badge className="bg-blue-500 text-white flex items-center">
+              <Badge className="bg-card-gold text-black flex items-center font-medium">
                 <Shield className="w-3 h-3 mr-1" />
                 Verified
               </Badge>
@@ -116,47 +116,47 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
           </div>
 
           {/* Gradient Overlay for Text Readability */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent h-24" />
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent h-24" />
           
           {/* Basic Info Overlay */}
           <div className="absolute bottom-4 left-4 right-4 text-white">
-            <h2 className="text-2xl font-bold mb-1">
+            <h2 className="text-2xl font-bold mb-1 text-card-gold">
               {profile.full_name}, {getAge()}
             </h2>
             <div className="flex items-center text-white/90">
-              <MapPin className="w-4 h-4 mr-1" />
+              <MapPin className="w-4 h-4 mr-1 text-card-gold" />
               <span className="text-sm">{profile.location}</span>
             </div>
           </div>
         </div>
 
         {/* Profile Details */}
-        <CardContent className="p-6">
+        <CardContent className="p-6 bg-black">
           {!showDetails ? (
             <div className="space-y-4">
               {/* Quick Info Grid */}
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {profile.profession && (
-                  <div className="flex items-center text-gray-600">
-                    <Briefcase className="w-4 h-4 mr-2 text-deep-blue" />
+                  <div className="flex items-center text-gray-300">
+                    <Briefcase className="w-4 h-4 mr-2 text-card-gold" />
                     <span className="truncate">{profile.profession}</span>
                   </div>
                 )}
                 {profile.religion && (
-                  <div className="flex items-center text-gray-600">
-                    <Church className="w-4 h-4 mr-2 text-deep-blue" />
+                  <div className="flex items-center text-gray-300">
+                    <Church className="w-4 h-4 mr-2 text-card-gold" />
                     <span className="truncate">{profile.religion}</span>
                   </div>
                 )}
                 {profile.education && (
-                  <div className="flex items-center text-gray-600">
-                    <GraduationCap className="w-4 h-4 mr-2 text-deep-blue" />
+                  <div className="flex items-center text-gray-300">
+                    <GraduationCap className="w-4 h-4 mr-2 text-card-gold" />
                     <span className="truncate">{profile.education}</span>
                   </div>
                 )}
                 {profile.height && (
-                  <div className="flex items-center text-gray-600">
-                    <Ruler className="w-4 h-4 mr-2 text-deep-blue" />
+                  <div className="flex items-center text-gray-300">
+                    <Ruler className="w-4 h-4 mr-2 text-card-gold" />
                     <span className="truncate">{profile.height}</span>
                   </div>
                 )}
@@ -164,8 +164,8 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
 
               {/* Bio Preview */}
               {profile.bio && (
-                <div className="bg-gray-50 rounded-lg p-3">
-                  <p className="text-sm text-gray-700 line-clamp-3 leading-relaxed">
+                <div className="bg-gray-900/50 rounded-lg p-3 border border-card-gold/20">
+                  <p className="text-sm text-gray-200 line-clamp-3 leading-relaxed">
                     {profile.bio}
                   </p>
                 </div>
@@ -176,17 +176,17 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
                 {profile.languages && profile.languages.length > 0 && (
                   <div>
                     <div className="flex items-center mb-2">
-                      <Languages className="w-4 h-4 mr-2 text-deep-blue" />
-                      <span className="text-sm font-medium text-gray-700">Languages</span>
+                      <Languages className="w-4 h-4 mr-2 text-card-gold" />
+                      <span className="text-sm font-medium text-gray-200">Languages</span>
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {profile.languages.slice(0, 4).map((language) => (
-                        <Badge key={language} variant="secondary" className="text-xs bg-soft-pink/20 text-deep-blue">
+                        <Badge key={language} variant="secondary" className="text-xs bg-card-gold/20 text-card-gold border border-card-gold/30">
                           {language}
                         </Badge>
                       ))}
                       {profile.languages.length > 4 && (
-                        <Badge variant="secondary" className="text-xs bg-soft-pink/20 text-deep-blue">
+                        <Badge variant="secondary" className="text-xs bg-card-gold/20 text-card-gold border border-card-gold/30">
                           +{profile.languages.length - 4}
                         </Badge>
                       )}
@@ -196,15 +196,15 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
 
                 {profile.community && (
                   <div className="flex items-center">
-                    <Users className="w-4 h-4 mr-2 text-deep-blue" />
-                    <span className="text-sm text-gray-600">{profile.community}</span>
+                    <Users className="w-4 h-4 mr-2 text-card-gold" />
+                    <span className="text-sm text-gray-300">{profile.community}</span>
                   </div>
                 )}
 
                 {profile.marry_timeframe && (
                   <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-2 text-deep-blue" />
-                    <span className="text-sm text-gray-600">
+                    <Calendar className="w-4 h-4 mr-2 text-card-gold" />
+                    <span className="text-sm text-gray-300">
                       Looking to marry: {formatTimeframe(profile.marry_timeframe)}
                     </span>
                   </div>
@@ -215,7 +215,7 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
               <Button
                 variant="ghost"
                 onClick={() => setShowDetails(true)}
-                className="w-full text-deep-blue hover:bg-soft-pink/20"
+                className="w-full text-card-gold hover:bg-card-gold/20 border border-card-gold/30 hover:border-card-gold/50"
               >
                 See More Details
               </Button>
@@ -223,13 +223,13 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
           ) : (
             <div className="space-y-4 max-h-64 overflow-y-auto">
               {/* Header */}
-              <div className="flex items-center justify-between sticky top-0 bg-white pb-2">
-                <h3 className="text-lg font-semibold text-deep-blue">Complete Profile</h3>
+              <div className="flex items-center justify-between sticky top-0 bg-black pb-2">
+                <h3 className="text-lg font-semibold text-card-gold">Complete Profile</h3>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowDetails(false)}
-                  className="text-gray-500 hover:bg-gray-100"
+                  className="text-gray-400 hover:bg-gray-800 hover:text-card-gold"
                 >
                   ✕
                 </Button>
@@ -239,57 +239,57 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
               <div className="space-y-4 text-sm">
                 {/* About Section */}
                 {profile.bio && (
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-medium text-deep-blue mb-2 flex items-center">
+                  <div className="bg-gray-900/50 rounded-lg p-4 border border-card-gold/20">
+                    <h4 className="font-medium text-card-gold mb-2 flex items-center">
                       <MessageCircle className="w-4 h-4 mr-2" />
                       About Me
                     </h4>
-                    <p className="text-gray-700 leading-relaxed">{profile.bio}</p>
+                    <p className="text-gray-200 leading-relaxed">{profile.bio}</p>
                   </div>
                 )}
 
                 {/* Professional Info */}
                 <div className="space-y-3">
-                  <h4 className="font-medium text-deep-blue border-b border-gray-200 pb-1">Professional</h4>
+                  <h4 className="font-medium text-card-gold border-b border-card-gold/30 pb-1">Professional</h4>
                   {profile.profession && (
                     <div className="flex items-center">
-                      <Briefcase className="w-4 h-4 mr-3 text-gray-500" />
-                      <span>{profile.profession}</span>
+                      <Briefcase className="w-4 h-4 mr-3 text-card-gold" />
+                      <span className="text-gray-200">{profile.profession}</span>
                     </div>
                   )}
                   {profile.education && (
                     <div className="flex items-center">
-                      <GraduationCap className="w-4 h-4 mr-3 text-gray-500" />
-                      <span>{profile.education}</span>
+                      <GraduationCap className="w-4 h-4 mr-3 text-card-gold" />
+                      <span className="text-gray-200">{profile.education}</span>
                     </div>
                   )}
                 </div>
 
                 {/* Personal Info */}
                 <div className="space-y-3">
-                  <h4 className="font-medium text-deep-blue border-b border-gray-200 pb-1">Personal</h4>
+                  <h4 className="font-medium text-card-gold border-b border-card-gold/30 pb-1">Personal</h4>
                   {profile.religion && (
                     <div className="flex items-center">
-                      <Church className="w-4 h-4 mr-3 text-gray-500" />
-                      <span>{profile.religion}</span>
+                      <Church className="w-4 h-4 mr-3 text-card-gold" />
+                      <span className="text-gray-200">{profile.religion}</span>
                     </div>
                   )}
                   {profile.community && (
                     <div className="flex items-center">
-                      <Users className="w-4 h-4 mr-3 text-gray-500" />
-                      <span>{profile.community}</span>
+                      <Users className="w-4 h-4 mr-3 text-card-gold" />
+                      <span className="text-gray-200">{profile.community}</span>
                     </div>
                   )}
                   {profile.height && (
                     <div className="flex items-center">
-                      <Ruler className="w-4 h-4 mr-3 text-gray-500" />
-                      <span>{profile.height}</span>
+                      <Ruler className="w-4 h-4 mr-3 text-card-gold" />
+                      <span className="text-gray-200">{profile.height}</span>
                     </div>
                   )}
                   {profile.marry_timeframe && (
                     <div className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-3 text-gray-500" />
-                      <span>Looking to marry: {formatTimeframe(profile.marry_timeframe)}</span>
+                      <Calendar className="w-4 h-4 mr-3 text-card-gold" />
+                      <span className="text-gray-200">Looking to marry: {formatTimeframe(profile.marry_timeframe)}</span>
                     </div>
                   )}
                 </div>
@@ -297,13 +297,13 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
                 {/* Languages */}
                 {profile.languages && profile.languages.length > 0 && (
                   <div>
-                    <h4 className="font-medium text-deep-blue mb-2 flex items-center border-b border-gray-200 pb-1">
+                    <h4 className="font-medium text-card-gold mb-2 flex items-center border-b border-card-gold/30 pb-1">
                       <Languages className="w-4 h-4 mr-2" />
                       Languages Spoken
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {profile.languages.map((language) => (
-                        <Badge key={language} variant="secondary" className="bg-soft-pink/20 text-deep-blue">
+                        <Badge key={language} variant="secondary" className="bg-card-gold/20 text-card-gold border border-card-gold/30">
                           {language}
                         </Badge>
                       ))}
@@ -315,21 +315,21 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
           )}
 
           {/* Enhanced Action Buttons */}
-          <div className="flex justify-center space-x-6 mt-6 pt-4 border-t border-gray-100">
+          <div className="flex justify-center space-x-6 mt-6 pt-4 border-t border-card-gold/30">
             <Button
               variant="outline"
               size="lg"
               onClick={() => onSwipe('pass')}
-              className="w-16 h-16 rounded-full border-2 border-gray-300 hover:border-red-400 hover:bg-red-50 transition-all duration-200 shadow-md hover:shadow-lg"
+              className="w-16 h-16 rounded-full border-2 border-red-500/70 hover:border-red-400 hover:bg-red-500/10 transition-all duration-200 shadow-md hover:shadow-lg bg-black"
             >
-              <X className="w-7 h-7 text-gray-600 hover:text-red-500" />
+              <X className="w-7 h-7 text-red-500" />
             </Button>
             
             <Button
               variant="outline"
               size="lg"
               onClick={() => onSwipe('superlike')}
-              className="w-16 h-16 rounded-full border-2 border-blue-300 hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 shadow-md hover:shadow-lg"
+              className="w-16 h-16 rounded-full border-2 border-blue-500/70 hover:border-blue-400 hover:bg-blue-500/10 transition-all duration-200 shadow-md hover:shadow-lg bg-black"
             >
               <Star className="w-7 h-7 text-blue-500" fill="currentColor" />
             </Button>
@@ -338,7 +338,7 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
               variant="outline"
               size="lg"
               onClick={() => onSwipe('like')}
-              className="w-16 h-16 rounded-full border-2 border-green-300 hover:border-green-500 hover:bg-green-50 transition-all duration-200 shadow-md hover:shadow-lg"
+              className="w-16 h-16 rounded-full border-2 border-green-500/70 hover:border-green-400 hover:bg-green-500/10 transition-all duration-200 shadow-md hover:shadow-lg bg-black"
             >
               <Heart className="w-7 h-7 text-green-500" fill="currentColor" />
             </Button>
