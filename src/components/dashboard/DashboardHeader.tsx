@@ -40,13 +40,13 @@ const DashboardHeader: React.FC = () => {
   const profilePhoto = profile?.photos?.[0];
 
   return (
-    <div className="card-gradient border-b border-card-gold/20 px-4 py-4 sticky top-0 z-10 card-shadow">
+    <div className="bg-black border-b border-card-gold/30 px-4 py-4 sticky top-0 z-10">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         <div className="flex items-center space-x-4 flex-1 min-w-0">
           <Link to="/profile" className="flex-shrink-0">
-            <Avatar className="w-12 h-12 cursor-pointer hover:ring-2 hover:ring-card-gold/50 transition-all border-2 border-card-gold/30 premium-card">
+            <Avatar className="w-12 h-12 cursor-pointer hover:ring-2 hover:ring-card-gold/50 transition-all border-2 border-card-gold premium-card">
               {profilePhoto && <AvatarImage src={profilePhoto} alt={displayName} className="object-cover" />}
-              <AvatarFallback className="bg-card-charcoal text-card-gold text-sm font-semibold">
+              <AvatarFallback className="bg-card-gold text-black text-sm font-semibold">
                 {loading ? '...' : getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
@@ -63,10 +63,10 @@ const DashboardHeader: React.FC = () => {
         </div>
         
         <div className="flex items-center space-x-2 flex-shrink-0">
-          <Button variant="ghost" size="icon" title="Notifications" className="w-10 h-10 hover:bg-card-gold/20 rounded-full text-white border border-card-gold/30">
+          <Button variant="ghost" size="icon" title="Notifications" className="w-10 h-10 hover:bg-card-gold/20 rounded-full text-card-gold border border-card-gold/30">
             <Bell className="w-5 h-5" />
           </Button>
-          <Button variant="ghost" size="icon" asChild title="Settings" className="w-10 h-10 hover:bg-card-gold/20 rounded-full text-white border border-card-gold/30">
+          <Button variant="ghost" size="icon" asChild title="Settings" className="w-10 h-10 hover:bg-card-gold/20 rounded-full text-card-gold border border-card-gold/30">
             <Link to="/settings">
               <Settings className="w-5 h-5" />
             </Link>

@@ -55,7 +55,7 @@ const SwipeMainInterface: React.FC<SwipeMainInterfaceProps> = ({
   onClearAllFilters
 }) => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black">
       <SwipeHeader
         isFilterActive={isFilterActive}
         showStats={showStats}

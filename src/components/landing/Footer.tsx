@@ -11,7 +11,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-card-black via-card-charcoal to-card-black text-white py-12 border-t border-card-gold/20">
+    <footer className="bg-black text-white py-12 border-t border-card-gold/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
@@ -41,11 +41,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-card-gold/20 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-card-gold/30 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-400 mb-4 md:mb-0">&copy; {new Date().getFullYear()} Wedder. All rights reserved.</p>
           <div className="flex space-x-4">
             {socialLinks.map((link, index) => (
-              <a key={index} href={link.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-75 transition-opacity p-2 rounded-full hover:bg-card-gold/10 border border-card-gold/20">
+              <a key={index} href={link.href} target="_blank" rel="noopener noreferrer" className="hover:opacity-75 transition-opacity p-2 rounded-full hover:bg-card-gold/10 border border-card-gold/30">
                 {link.icon}
               </a>
             ))}

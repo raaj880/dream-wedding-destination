@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { motion, PanInfo, useMotionValue, useTransform } from 'framer-motion';
 import { Heart, X, Star, MapPin, Briefcase, GraduationCap, Calendar, Languages, Church, Users, Info, Camera, Shield, Clock, Ruler, MessageCircle } from 'lucide-react';
@@ -109,7 +108,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, onSwipe, isVisible, 
       exit={{ scale: 0.95, opacity: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className="w-full h-full overflow-hidden bg-white shadow-2xl relative">
+      <Card className="w-full h-full overflow-hidden premium-card shadow-2xl relative">
+        {/* Photo Section */}
         <div className="relative h-full flex flex-col">
           {/* Photo Section */}
           <div className="relative flex-1 min-h-[400px]">
@@ -227,208 +227,208 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, onSwipe, isVisible, 
               </div>
             )}
           </div>
-
-          {/* Profile Information */}
-          <CardContent className="p-4 bg-white">
-            {!showDetails ? (
-              <div className="space-y-3">
-                {/* Basic Info */}
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-deep-blue">
-                      {profile.full_name}, {getAge()}
-                    </h2>
-                    <div className="flex items-center text-gray-600 mt-1">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      <span className="text-sm">{profile.location}</span>
-                    </div>
+        </div>
+        
+        {/* Profile Information */}
+        <CardContent className="p-4 bg-card-gold">
+          {!showDetails ? (
+            <div className="space-y-3">
+              {/* Basic Info */}
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h2 className="text-2xl font-bold text-black">
+                    {profile.full_name}, {profile.age || 'N/A'}
+                  </h2>
+                  <div className="flex items-center text-black/70 mt-1">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    <span className="text-sm">{profile.location}</span>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowDetails(true)}
-                    className="text-deep-blue"
-                  >
-                    <Info className="w-4 h-4" />
-                  </Button>
                 </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowDetails(true)}
+                  className="text-black hover:bg-black/10"
+                >
+                  <Info className="w-4 h-4" />
+                </Button>
+              </div>
 
-                {/* Quick Info Grid */}
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  {profile.profession && (
-                    <div className="flex items-center text-gray-600">
-                      <Briefcase className="w-3 h-3 mr-1 flex-shrink-0" />
-                      <span className="truncate">{profile.profession}</span>
-                    </div>
+              {/* Quick Info Grid */}
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                {profile.profession && (
+                  <div className="flex items-center text-black/70">
+                    <Briefcase className="w-3 h-3 mr-1 flex-shrink-0" />
+                    <span className="truncate">{profile.profession}</span>
+                  </div>
+                )}
+                {profile.religion && (
+                  <div className="flex items-center text-black/70">
+                    <Church className="w-3 h-3 mr-1 flex-shrink-0" />
+                    <span className="truncate">{profile.religion}</span>
+                  </div>
+                )}
+                {profile.education && (
+                  <div className="flex items-center text-black/70">
+                    <GraduationCap className="w-3 h-3 mr-1 flex-shrink-0" />
+                    <span className="truncate">{profile.education}</span>
+                  </div>
+                )}
+                {profile.height && (
+                  <div className="flex items-center text-black/70">
+                    <Ruler className="w-3 h-3 mr-1 flex-shrink-0" />
+                    <span className="truncate">{profile.height}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Bio Preview */}
+              {profile.bio && (
+                <p className="text-sm text-black/80 line-clamp-2 leading-relaxed">
+                  {profile.bio}
+                </p>
+              )}
+
+              {/* Languages Tags */}
+              {profile.languages && profile.languages.length > 0 && (
+                <div className="flex flex-wrap gap-1">
+                  {profile.languages.slice(0, 3).map((language) => (
+                    <Badge key={language} variant="secondary" className="text-xs bg-black text-card-gold">
+                      {language}
+                    </Badge>
+                  ))}
+                  {profile.languages.length > 3 && (
+                    <Badge variant="secondary" className="text-xs bg-black text-card-gold">
+                      +{profile.languages.length - 3}
+                    </Badge>
                   )}
-                  {profile.religion && (
-                    <div className="flex items-center text-gray-600">
-                      <Church className="w-3 h-3 mr-1 flex-shrink-0" />
-                      <span className="truncate">{profile.religion}</span>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="space-y-4 max-h-64 overflow-y-auto">
+              {/* Header */}
+              <div className="flex items-center justify-between sticky top-0 bg-card-gold pb-2">
+                <h3 className="text-lg font-semibold text-black">Profile Details</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowDetails(false)}
+                  className="text-black/70 hover:bg-black/10"
+                >
+                  ✕
+                </Button>
+              </div>
+
+              {/* Detailed Info */}
+              <div className="space-y-4 text-sm">
+                {/* About Section */}
+                {profile.bio && (
+                  <div>
+                    <h4 className="font-medium text-black mb-2 flex items-center">
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      About
+                    </h4>
+                    <p className="text-black/80 leading-relaxed">{profile.bio}</p>
+                  </div>
+                )}
+
+                {/* Professional Info */}
+                <div className="space-y-3">
+                  <h4 className="font-medium text-black">Professional</h4>
+                  {profile.profession && (
+                    <div className="flex items-center">
+                      <Briefcase className="w-4 h-4 mr-2 text-black/60" />
+                      <span>{profile.profession}</span>
                     </div>
                   )}
                   {profile.education && (
-                    <div className="flex items-center text-gray-600">
-                      <GraduationCap className="w-3 h-3 mr-1 flex-shrink-0" />
-                      <span className="truncate">{profile.education}</span>
+                    <div className="flex items-center">
+                      <GraduationCap className="w-4 h-4 mr-2 text-black/60" />
+                      <span>{profile.education}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Personal Info */}
+                <div className="space-y-3">
+                  <h4 className="font-medium text-black">Personal</h4>
+                  {profile.religion && (
+                    <div className="flex items-center">
+                      <Church className="w-4 h-4 mr-2 text-black/60" />
+                      <span>{profile.religion}</span>
+                    </div>
+                  )}
+                  {profile.community && (
+                    <div className="flex items-center">
+                      <Users className="w-4 h-4 mr-2 text-black/60" />
+                      <span>{profile.community}</span>
                     </div>
                   )}
                   {profile.height && (
-                    <div className="flex items-center text-gray-600">
-                      <Ruler className="w-3 h-3 mr-1 flex-shrink-0" />
-                      <span className="truncate">{profile.height}</span>
+                    <div className="flex items-center">
+                      <Ruler className="w-4 h-4 mr-2 text-black/60" />
+                      <span>{profile.height}</span>
+                    </div>
+                  )}
+                  {profile.marry_timeframe && (
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-2 text-black/60" />
+                      <span>Looking to marry: {formatTimeframe(profile.marry_timeframe)}</span>
                     </div>
                   )}
                 </div>
 
-                {/* Bio Preview */}
-                {profile.bio && (
-                  <p className="text-sm text-gray-700 line-clamp-2 leading-relaxed">
-                    {profile.bio}
-                  </p>
-                )}
-
-                {/* Languages Tags */}
+                {/* Languages */}
                 {profile.languages && profile.languages.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {profile.languages.slice(0, 3).map((language) => (
-                      <Badge key={language} variant="secondary" className="text-xs">
-                        {language}
-                      </Badge>
-                    ))}
-                    {profile.languages.length > 3 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{profile.languages.length - 3}
-                      </Badge>
-                    )}
+                  <div>
+                    <h4 className="font-medium text-black mb-2 flex items-center">
+                      <Languages className="w-4 h-4 mr-2" />
+                      Languages
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {profile.languages.map((language) => (
+                        <Badge key={language} variant="secondary" className="bg-black text-card-gold">
+                          {language}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
-            ) : (
-              <div className="space-y-4 max-h-64 overflow-y-auto">
-                {/* Header */}
-                <div className="flex items-center justify-between sticky top-0 bg-white pb-2">
-                  <h3 className="text-lg font-semibold text-deep-blue">Profile Details</h3>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowDetails(false)}
-                    className="text-gray-500"
-                  >
-                    ✕
-                  </Button>
-                </div>
-
-                {/* Detailed Info */}
-                <div className="space-y-4 text-sm">
-                  {/* About Section */}
-                  {profile.bio && (
-                    <div>
-                      <h4 className="font-medium text-deep-blue mb-2 flex items-center">
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        About
-                      </h4>
-                      <p className="text-gray-700 leading-relaxed">{profile.bio}</p>
-                    </div>
-                  )}
-
-                  {/* Professional Info */}
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-deep-blue">Professional</h4>
-                    {profile.profession && (
-                      <div className="flex items-center">
-                        <Briefcase className="w-4 h-4 mr-2 text-gray-500" />
-                        <span>{profile.profession}</span>
-                      </div>
-                    )}
-                    {profile.education && (
-                      <div className="flex items-center">
-                        <GraduationCap className="w-4 h-4 mr-2 text-gray-500" />
-                        <span>{profile.education}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Personal Info */}
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-deep-blue">Personal</h4>
-                    {profile.religion && (
-                      <div className="flex items-center">
-                        <Church className="w-4 h-4 mr-2 text-gray-500" />
-                        <span>{profile.religion}</span>
-                      </div>
-                    )}
-                    {profile.community && (
-                      <div className="flex items-center">
-                        <Users className="w-4 h-4 mr-2 text-gray-500" />
-                        <span>{profile.community}</span>
-                      </div>
-                    )}
-                    {profile.height && (
-                      <div className="flex items-center">
-                        <Ruler className="w-4 h-4 mr-2 text-gray-500" />
-                        <span>{profile.height}</span>
-                      </div>
-                    )}
-                    {profile.marry_timeframe && (
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-2 text-gray-500" />
-                        <span>Looking to marry: {formatTimeframe(profile.marry_timeframe)}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Languages */}
-                  {profile.languages && profile.languages.length > 0 && (
-                    <div>
-                      <h4 className="font-medium text-deep-blue mb-2 flex items-center">
-                        <Languages className="w-4 h-4 mr-2" />
-                        Languages
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {profile.languages.map((language) => (
-                          <Badge key={language} variant="secondary">
-                            {language}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex justify-center space-x-4 mt-4">
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => handleAction('pass')}
-                className="w-14 h-14 rounded-full border-2 border-gray-300 hover:border-red-500 hover:bg-red-50 transition-all duration-200"
-              >
-                <X className="w-6 h-6 text-gray-600 hover:text-red-500" />
-              </Button>
-              
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => handleAction('superlike')}
-                className="w-14 h-14 rounded-full border-2 border-blue-300 hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
-              >
-                <Star className="w-6 h-6 text-blue-500" />
-              </Button>
-              
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => handleAction('like')}
-                className="w-14 h-14 rounded-full border-2 border-green-300 hover:border-green-500 hover:bg-green-50 transition-all duration-200"
-              >
-                <Heart className="w-6 h-6 text-green-500" />
-              </Button>
             </div>
-          </CardContent>
-        </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex justify-center space-x-4 mt-4">
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => handleAction('pass')}
+              className="w-14 h-14 rounded-full border-2 border-red-500 hover:border-red-400 hover:bg-red-50 transition-all duration-200 bg-black"
+            >
+              <X className="w-6 h-6 text-red-500" />
+            </Button>
+            
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => handleAction('superlike')}
+              className="w-14 h-14 rounded-full border-2 border-blue-500 hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 bg-black"
+            >
+              <Star className="w-6 h-6 text-blue-500" />
+            </Button>
+            
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => handleAction('like')}
+              className="w-14 h-14 rounded-full border-2 border-green-500 hover:border-green-400 hover:bg-green-50 transition-all duration-200 bg-black"
+            >
+              <Heart className="w-6 h-6 text-green-500" />
+            </Button>
+          </div>
+        </CardContent>
       </Card>
     </motion.div>
   );
