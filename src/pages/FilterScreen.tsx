@@ -40,6 +40,7 @@ const FilterScreen: React.FC = () => {
   const communityOptions = ['Lingayat', 'Brahmin', 'Kuruba', 'SC/ST', 'Others', 'Prefer not to say'];
   const educationOptions = ['10th', '12th', 'Diploma', 'UG', 'PG', 'PhD', 'Other'];
   const languageOptions = ['Kannada', 'English', 'Hindi', 'Telugu', 'Tamil', 'Marathi'];
+  const locationOptions = ['Bengaluru', 'Mysuru', 'Hyderabad', 'Chennai', 'Mumbai', 'Delhi', 'Pune', 'Kolkata', 'Ahmedabad', 'Jaipur'];
 
   return (
     <div className="min-h-screen bg-gray-50 pb-24">
@@ -79,14 +80,14 @@ const FilterScreen: React.FC = () => {
               <Slider
                 value={filters.ageRange}
                 onValueChange={(value) => updateFilter('ageRange', value as [number, number])}
-                max={45}
-                min={20}
+                max={65}
+                min={18}
                 step={1}
                 className="w-full"
               />
               <div className="flex justify-between text-sm text-gray-500 mt-2">
-                <span>20</span>
-                <span>45</span>
+                <span>18</span>
+                <span>65</span>
               </div>
             </CardContent>
           </Card>
@@ -106,10 +107,9 @@ const FilterScreen: React.FC = () => {
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="bengaluru">Bengaluru</SelectItem>
-                  <SelectItem value="mysuru">Mysuru</SelectItem>
-                  <SelectItem value="hyderabad">Hyderabad</SelectItem>
-                  <SelectItem value="remote">Remote</SelectItem>
+                  {locationOptions.map((location) => (
+                    <SelectItem key={location} value={location}>{location}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               

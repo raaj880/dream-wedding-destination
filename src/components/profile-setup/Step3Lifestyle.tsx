@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProfileData } from '@/types/profile';
 import { cn } from '@/lib/utils';
+import LanguageSelect from './LanguageSelect';
+import CommunitySelect from './CommunitySelect';
 
 interface Step3LifestyleProps {
   data: ProfileData;
@@ -13,9 +15,9 @@ interface Step3LifestyleProps {
   errors: Record<string, string | undefined>;
 }
 
-// Example options, these can be expanded or fetched from an API
+// Updated to match filter options exactly
 const religionOptions = ["Hindu", "Muslim", "Christian", "Sikh", "Buddhist", "Jain", "Jewish", "Atheist", "Agnostic", "Spiritual but not religious", "Other", "Prefer not to say"];
-const educationOptions = ["High School", "Associate's Degree", "Bachelor's Degree", "Master's Degree", "Doctorate", "Professional Degree", "Other"];
+const educationOptions = ["10th", "12th", "Diploma", "UG", "PG", "PhD", "Other"];
 
 const Step3Lifestyle: React.FC<Step3LifestyleProps> = ({ data, updateData, errors }) => {
   return (
@@ -39,29 +41,16 @@ const Step3Lifestyle: React.FC<Step3LifestyleProps> = ({ data, updateData, error
           {errors.religion && <p className="text-sm text-red-500 mt-1">{errors.religion}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="community" className="text-gray-700 dark:text-gray-300">Community/Caste (Optional)</Label>
-          <Input
-            id="community"
-            placeholder="E.g. Brahmin, Punjabi, etc."
-            value={data.community}
-            onChange={(e) => updateData({ community: e.target.value })}
-            className="mt-1"
-          />
-        </div>
+        <CommunitySelect
+          value={data.community}
+          onChange={(value) => updateData({ community: value })}
+        />
 
-        <div>
-          <Label htmlFor="languages" className="text-gray-700 dark:text-gray-300">Language(s) Spoken</Label>
-          <Input
-            id="languages"
-            placeholder="E.g. English, Hindi, Spanish"
-            value={data.languages}
-            onChange={(e) => updateData({ languages: e.target.value })}
-            className={cn("mt-1", errors.languages && "border-red-500")}
-          />
-          {errors.languages && <p className="text-sm text-red-500 mt-1">{errors.languages}</p>}
-          <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Enter comma-separated languages. Multi-select chips can be added later.</p>
-        </div>
+        <LanguageSelect
+          value={data.languages}
+          onChange={(value) => updateData({ languages: value })}
+          error={errors.languages}
+        />
         
         <div>
           <Label htmlFor="profession" className="text-gray-700 dark:text-gray-300">Profession</Label>

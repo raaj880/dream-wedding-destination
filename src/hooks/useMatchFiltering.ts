@@ -24,9 +24,9 @@ export function useMatchFiltering(matches: PotentialMatch[], filters: FilterOpti
       console.log(`  ✅ Age check (${match.age}): ${ageInRange} (range: ${filters.ageRange[0]}-${filters.ageRange[1]})`);
       if (!ageInRange) return false;
 
-      // Location filter - only apply if location filter is set and not empty
+      // Location filter - exact match for consistency
       if (filters.location && filters.location.trim() !== '') {
-        const locationMatch = match.location && match.location.toLowerCase().includes(filters.location.toLowerCase());
+        const locationMatch = match.location === filters.location;
         console.log(`  🌍 Location check: ${locationMatch} (filter: "${filters.location}", profile: "${match.location}")`);
         if (!locationMatch) return false;
       }
@@ -38,25 +38,59 @@ export function useMatchFiltering(matches: PotentialMatch[], filters: FilterOpti
         if (!religionMatch) return false;
       }
 
-      // Community filter - only apply if community filter is set and not empty
+      // Community filter - handle the format conversion
       if (filters.community && filters.community.trim() !== '') {
-        const communityMatch = match.community && match.community === filters.community;
+        // Convert filter format back to display format
+        const communityDisplayValue = filters.community.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        let communityMatch = false;
+        
+        if (match.community) {
+          // Handle both original format and converted format
+          communityMatch = match.community === filters.community || 
+                          match.community === communityDisplayValue ||
+                          match.community.toLowerCase().replace(/\s+/g, '-') === filters.community;
+        }
+        
         console.log(`  🏘️ Community check: ${communityMatch} (filter: "${filters.community}", profile: "${match.community}")`);
         if (!communityMatch) return false;
       }
 
-      // Education filter - only apply if education filter is set and not empty
+      // Education filter - handle case differences
       if (filters.education && filters.education.trim() !== '') {
-        const educationMatch = match.education && match.education === filters.education;
+        let educationMatch = false;
+        
+        if (match.education) {
+          // Handle different education formats
+          const profileEdu = match.education.toLowerCase();
+          const filterEdu = filters.education.toLowerCase();
+          
+          // Direct match or partial match for degree types
+          educationMatch = profileEdu === filterEdu ||
+                          profileEdu.includes(filterEdu) ||
+                          (filterEdu === 'ug' && (profileEdu.includes('bachelor') || profileEdu.includes('degree'))) ||
+                          (filterEdu === 'pg' && (profileEdu.includes('master') || profileEdu.includes('post'))) ||
+                          (filterEdu === 'phd' && profileEdu.includes('doctor'));
+        }
+        
         console.log(`  🎓 Education check: ${educationMatch} (filter: "${filters.education}", profile: "${match.education}")`);
         if (!educationMatch) return false;
       }
 
-      // Languages filter - only apply if languages are specifically selected (not empty array)
+      // Languages filter - handle comma-separated string vs array
       if (filters.languages.length > 0) {
-        const hasMatchingLanguage = match.languages && match.languages.some(lang => 
-          filters.languages.includes(lang)
-        );
+        let hasMatchingLanguage = false;
+        
+        if (match.languages) {
+          // Handle both array format and comma-separated string format
+          const profileLanguages = Array.isArray(match.languages) 
+            ? match.languages 
+            : match.languages.split(',').map(lang => lang.trim());
+            
+          hasMatchingLanguage = profileLanguages.some(lang => 
+            filters.languages.includes(lang)
+          );
+        }
+        
         console.log(`  🗣️ Languages check: ${hasMatchingLanguage} (filter: ${filters.languages}, profile: ${match.languages})`);
         if (!hasMatchingLanguage) return false;
       }

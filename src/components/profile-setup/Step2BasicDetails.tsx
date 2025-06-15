@@ -11,6 +11,7 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { ProfileData } from '@/types/profile';
 import { cn } from '@/lib/utils';
+import LocationSelect from './LocationSelect';
 
 interface Step2BasicDetailsProps {
   data: ProfileData;
@@ -89,18 +90,11 @@ const Step2BasicDetails: React.FC<Step2BasicDetailsProps> = ({ data, updateData,
           {errors.gender && <p className="text-sm text-red-500 mt-1">{errors.gender}</p>}
         </div>
 
-        <div>
-          <Label htmlFor="location" className="text-gray-700 dark:text-gray-300">Location (City, Country)</Label>
-          <Input
-            id="location"
-            placeholder="E.g. New York, USA"
-            value={data.location}
-            onChange={(e) => updateData({ location: e.target.value })}
-            className={cn("mt-1", errors.location && "border-red-500")}
-          />
-          {errors.location && <p className="text-sm text-red-500 mt-1">{errors.location}</p>}
-          <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Auto-suggest city search can be added later.</p>
-        </div>
+        <LocationSelect
+          value={data.location}
+          onChange={(value) => updateData({ location: value })}
+          error={errors.location}
+        />
       </CardContent>
     </Card>
   );
