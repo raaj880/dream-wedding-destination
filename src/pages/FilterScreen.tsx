@@ -43,30 +43,30 @@ const FilterScreen: React.FC = () => {
   const locationOptions = ['Bengaluru', 'Mysuru', 'Hyderabad', 'Chennai', 'Mumbai', 'Delhi', 'Pune', 'Kolkata', 'Ahmedabad', 'Jaipur'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Enhanced Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-20 shadow-sm">
+      <div className="bg-card border-b border-border px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <div className="flex items-center space-x-3 flex-1">
-            <Button variant="ghost" size="icon" asChild className="hover:bg-gray-100 flex-shrink-0">
+            <Button variant="ghost" size="icon" asChild className="hover:bg-accent flex-shrink-0">
               <Link to="/matches">
-                <ArrowLeft className="w-5 h-5 text-deep-blue" />
+                <ArrowLeft className="w-5 h-5 text-foreground" />
               </Link>
             </Button>
             <div className="flex-1">
-              <h1 className="text-lg font-bold text-deep-blue">Filter Preferences</h1>
-              <p className="text-xs text-gray-500">Customize your match criteria</p>
+              <h1 className="text-lg font-bold text-foreground">Filter Preferences</h1>
+              <p className="text-xs text-muted-foreground">Customize your match criteria</p>
             </div>
           </div>
           
           <div className="flex items-center space-x-2 flex-shrink-0">
             {isActive && (
-              <div className="flex items-center text-xs text-soft-pink font-medium">
+              <div className="flex items-center text-xs text-primary font-medium">
                 <Check className="w-3 h-3 mr-1" />
                 Active
               </div>
             )}
-            <Button variant="ghost" onClick={handleReset} className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 text-sm px-3">
+            <Button variant="ghost" onClick={handleReset} className="text-muted-foreground hover:text-foreground hover:bg-accent text-sm px-3">
               <X className="w-4 h-4 mr-1" />
               Reset
             </Button>
@@ -81,18 +81,18 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-blue flex items-center">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center">
                 🎂 Age Range
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <div className="text-center mb-6">
-                <span className="text-3xl font-bold text-deep-blue">
+                <span className="text-3xl font-bold text-foreground">
                   {filters.ageRange[0]} – {filters.ageRange[1]}
                 </span>
-                <span className="text-gray-500 ml-2">years old</span>
+                <span className="text-muted-foreground ml-2">years old</span>
               </div>
               <Slider
                 value={filters.ageRange}
@@ -102,7 +102,7 @@ const FilterScreen: React.FC = () => {
                 step={1}
                 className="w-full"
               />
-              <div className="flex justify-between text-sm text-gray-500 mt-3">
+              <div className="flex justify-between text-sm text-muted-foreground mt-3">
                 <span>18 years</span>
                 <span>65 years</span>
               </div>
@@ -116,20 +116,20 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-blue flex items-center">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center">
                 📍 Location Preferences
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0 space-y-4">
               <div>
-                <Label className="text-sm font-medium text-gray-700 mb-2 block">Preferred City</Label>
+                <Label className="text-sm font-medium text-muted-foreground mb-2 block">Preferred City</Label>
                 <Select value={filters.location} onValueChange={(value) => updateFilter('location', value)}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Any city" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border shadow-lg z-50">
+                  <SelectContent className="bg-popover border shadow-lg z-50">
                     <SelectItem value="any-city">Any city</SelectItem>
                     {locationOptions.map((location) => (
                       <SelectItem key={location} value={location}>{location}</SelectItem>
@@ -138,12 +138,12 @@ const FilterScreen: React.FC = () => {
                 </Select>
               </div>
               
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-accent/50 rounded-lg">
                 <div className="flex items-center space-x-3">
-                  <MapPin className="w-5 h-5 text-soft-pink" />
+                  <MapPin className="w-5 h-5 text-primary" />
                   <div>
-                    <Label className="text-sm font-medium text-gray-800">Nearby Only</Label>
-                    <p className="text-xs text-gray-600">Show profiles within 50km</p>
+                    <Label className="text-sm font-medium text-foreground">Nearby Only</Label>
+                    <p className="text-xs text-muted-foreground">Show profiles within 50km</p>
                   </div>
                 </div>
                 <Switch
@@ -161,9 +161,9 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.2 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-blue flex items-center">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center">
                 🕉️ Religion
               </CardTitle>
             </CardHeader>
@@ -179,7 +179,7 @@ const FilterScreen: React.FC = () => {
                     <ToggleGroupItem
                       key={religion}
                       value={religion}
-                      className="data-[state=on]:bg-soft-pink data-[state=on]:text-deep-blue data-[state=on]:border-soft-pink border-2 hover:border-soft-pink/50 transition-colors"
+                      className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground border-2 border-border hover:border-primary/50 transition-colors"
                       size="sm"
                     >
                       {religion}
@@ -188,7 +188,7 @@ const FilterScreen: React.FC = () => {
                 </div>
               </ToggleGroup>
               {filters.religions.length > 0 && (
-                <p className="text-xs text-gray-600 mt-3">
+                <p className="text-xs text-muted-foreground mt-3">
                   {filters.religions.length} religion{filters.religions.length > 1 ? 's' : ''} selected
                 </p>
               )}
@@ -202,9 +202,9 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.3 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-blue flex items-center">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center">
                 👥 Community / Caste
               </CardTitle>
             </CardHeader>
@@ -213,7 +213,7 @@ const FilterScreen: React.FC = () => {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Any community" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border shadow-lg z-50">
+                <SelectContent className="bg-popover border shadow-lg z-50">
                   <SelectItem value="any-community">Any community</SelectItem>
                   {communityOptions.map((option) => (
                     <SelectItem key={option} value={option.toLowerCase().replace(/\s+/g, '-')}>
@@ -232,9 +232,9 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.4 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-blue flex items-center">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center">
                 🎓 Education Level
               </CardTitle>
             </CardHeader>
@@ -243,7 +243,7 @@ const FilterScreen: React.FC = () => {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Any education level" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border shadow-lg z-50">
+                <SelectContent className="bg-popover border shadow-lg z-50">
                   <SelectItem value="any-education">Any education level</SelectItem>
                   {educationOptions.map((option) => (
                     <SelectItem key={option} value={option.toLowerCase()}>
@@ -262,30 +262,30 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.5 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-blue flex items-center">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center">
                 💍 Marriage Timeline
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-0">
               <RadioGroup value={filters.maritalIntent} onValueChange={(value) => updateFilter('maritalIntent', value)}>
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
                     <RadioGroupItem value="6months" id="6months" />
-                    <Label htmlFor="6months" className="text-sm font-medium cursor-pointer">
+                    <Label htmlFor="6months" className="text-sm font-medium cursor-pointer text-foreground">
                       Within 6 months
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
                     <RadioGroupItem value="1year" id="1year" />
-                    <Label htmlFor="1year" className="text-sm font-medium cursor-pointer">
+                    <Label htmlFor="1year" className="text-sm font-medium cursor-pointer text-foreground">
                       Within 1 year
                     </Label>
                   </div>
-                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent/50 transition-colors">
                     <RadioGroupItem value="no-timeline" id="no-timeline" />
-                    <Label htmlFor="no-timeline" className="text-sm font-medium cursor-pointer">
+                    <Label htmlFor="no-timeline" className="text-sm font-medium cursor-pointer text-foreground">
                       No specific timeline
                     </Label>
                   </div>
@@ -301,9 +301,9 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.6 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-blue flex items-center">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center">
                 🗣️ Languages Spoken
               </CardTitle>
             </CardHeader>
@@ -319,7 +319,7 @@ const FilterScreen: React.FC = () => {
                     <ToggleGroupItem
                       key={language}
                       value={language}
-                      className="data-[state=on]:bg-soft-pink data-[state=on]:text-deep-blue data-[state=on]:border-soft-pink border-2 hover:border-soft-pink/50 transition-colors"
+                      className="data-[state=on]:bg-primary data-[state=on]:text-primary-foreground border-2 border-border hover:border-primary/50 transition-colors"
                       size="sm"
                     >
                       {language}
@@ -328,7 +328,7 @@ const FilterScreen: React.FC = () => {
                 </div>
               </ToggleGroup>
               {filters.languages.length > 0 && (
-                <p className="text-xs text-gray-600 mt-3">
+                <p className="text-xs text-muted-foreground mt-3">
                   {filters.languages.length} language{filters.languages.length > 1 ? 's' : ''} selected
                 </p>
               )}
@@ -342,16 +342,16 @@ const FilterScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.7 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-shadow">
+          <Card className="bg-card border border-border shadow-sm hover:shadow-md transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <span className="text-2xl">🛡️</span>
                   <div>
-                    <Label className="text-lg font-semibold text-deep-blue">
+                    <Label className="text-lg font-semibold text-foreground">
                       Verified Profiles Only
                     </Label>
-                    <p className="text-sm text-gray-600">Show only identity-verified profiles</p>
+                    <p className="text-sm text-muted-foreground">Show only identity-verified profiles</p>
                   </div>
                 </div>
                 <Switch
@@ -365,7 +365,7 @@ const FilterScreen: React.FC = () => {
       </div>
 
       {/* Enhanced Apply Button */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 p-4 z-10">
+      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-4 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -374,7 +374,7 @@ const FilterScreen: React.FC = () => {
         >
           <Button
             onClick={handleApplyFilters}
-            className="w-full bg-gradient-to-r from-deep-blue to-soft-pink text-white hover:from-deep-blue/90 hover:to-soft-pink/90 h-12 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
           >
             Apply Filters & Find Matches
           </Button>
