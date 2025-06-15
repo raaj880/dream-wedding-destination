@@ -79,17 +79,17 @@ const Matches: React.FC = () => {
 
   if (matchesLoading || profilesLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-deep-blue border-t-transparent mx-auto mb-4"></div>
-          <p className="text-gray-600 font-medium">Finding your perfect matches...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
+          <p className="text-muted-foreground font-medium">Finding your perfect matches...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-black">
       <MatchesHeader isFilterActive={isActive} />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl">
@@ -97,7 +97,7 @@ const Matches: React.FC = () => {
           {/* Enhanced Match Count with better messaging */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <h2 className="text-lg font-semibold text-deep-blue">
+              <h2 className="text-lg font-semibold text-foreground">
                 {matches.length > 0 ? 'Your Mutual Matches' : 'Available Profiles'}
               </h2>
               {newMatches.length > 0 && (
@@ -106,13 +106,13 @@ const Matches: React.FC = () => {
                 </Badge>
               )}
             </div>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               {filteredCount} {filteredCount === 1 ? 'profile' : 'profiles'}
             </p>
           </div>
           
           {matches.length === 0 && (
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               Start exploring profiles to create your first match! Like someone who also likes you back to create a connection.
             </p>
           )}

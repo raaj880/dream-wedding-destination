@@ -108,30 +108,30 @@ const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
 
       {/* Additional Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="bg-white border-0 shadow-sm">
+        <Card className="shadow-sm">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Likes Received</div>
-                <div className="text-2xl font-bold text-deep-blue">
+                <div className="text-sm font-medium text-muted-foreground">Likes Received</div>
+                <div className="text-2xl font-bold text-foreground">
                   {stats.loading ? '...' : stats.likesReceived}
                 </div>
-                <div className="text-xs text-gray-500">From other users</div>
+                <div className="text-xs text-muted-foreground">From other users</div>
               </div>
               <Heart className="w-8 h-8 text-soft-pink" />
             </div>
           </CardContent>
         </Card>
         
-        <Card className="bg-white border-0 shadow-sm">
+        <Card className="shadow-sm">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-medium text-gray-600">Match Rate</div>
-                <div className="text-2xl font-bold text-deep-blue">
+                <div className="text-sm font-medium text-muted-foreground">Match Rate</div>
+                <div className="text-2xl font-bold text-foreground">
                   {stats.loading ? '...' : stats.likesSent > 0 ? Math.round((stats.totalMatches / stats.likesSent) * 100) : 0}%
                 </div>
-                <div className="text-xs text-gray-500">Success ratio</div>
+                <div className="text-xs text-muted-foreground">Success ratio</div>
               </div>
               <TrendingUp className="w-8 h-8 text-green-500" />
             </div>

@@ -17,7 +17,7 @@ const QuickActionsGrid: React.FC<QuickActionsGridProps> = ({ totalMatches }) => 
       icon: Heart,
       href: '/swipe',
       color: 'bg-soft-pink',
-      iconColor: 'text-deep-blue'
+      iconColor: 'text-white'
     },
     {
       title: 'View Matches',
@@ -54,7 +54,7 @@ const QuickActionsGrid: React.FC<QuickActionsGridProps> = ({ totalMatches }) => 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
         >
-          <Card className="bg-white border-0 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group">
+          <Card className="shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group">
             <CardContent className="p-0">
               <Link to={action.href} className="block p-4">
                 <div className="flex flex-col items-center text-center space-y-2">
@@ -62,8 +62,8 @@ const QuickActionsGrid: React.FC<QuickActionsGridProps> = ({ totalMatches }) => 
                     <action.icon className={`w-6 h-6 ${action.iconColor}`} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-deep-blue text-sm">{action.title}</h3>
-                    <p className="text-xs text-gray-600">{action.description}</p>
+                    <h3 className="font-semibold text-foreground text-sm">{action.title}</h3>
+                    <p className="text-xs text-muted-foreground">{action.description}</p>
                   </div>
                 </div>
               </Link>

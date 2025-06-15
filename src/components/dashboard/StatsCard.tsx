@@ -32,7 +32,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className={`bg-white border-0 shadow-sm ${onClick ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}>
+      <Card className={`shadow-sm ${onClick ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}>
         <CardContent className="p-4 text-center">
           {onClick ? (
             <Button 
@@ -41,20 +41,20 @@ const StatsCard: React.FC<StatsCardProps> = ({
               onClick={onClick}
             >
               <Icon className={`w-8 h-8 ${color}`} />
-              <div className="text-2xl font-bold text-deep-blue">
+              <div className="text-2xl font-bold text-foreground">
                 {loading ? '...' : value}
               </div>
-              <div className="text-xs font-medium text-gray-900">{title}</div>
-              <div className="text-xs text-gray-500">{description}</div>
+              <div className="text-xs font-medium text-muted-foreground">{title}</div>
+              <div className="text-xs text-muted-foreground">{description}</div>
             </Button>
           ) : (
             <>
               <Icon className={`w-8 h-8 ${color} mx-auto mb-2`} />
-              <div className="text-2xl font-bold text-deep-blue">
+              <div className="text-2xl font-bold text-foreground">
                 {loading ? '...' : value}
               </div>
-              <div className="text-xs font-medium text-gray-900">{title}</div>
-              <div className="text-xs text-gray-500">{description}</div>
+              <div className="text-xs font-medium text-muted-foreground">{title}</div>
+              <div className="text-xs text-muted-foreground">{description}</div>
             </>
           )}
         </CardContent>
