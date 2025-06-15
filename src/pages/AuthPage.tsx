@@ -9,17 +9,18 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const AuthPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(false);
   const navigate = useNavigate();
 
   const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
-    console.log("Login successful, showing placeholder.");
+    console.log("Login successful, redirecting to dashboard.");
+    // For existing users, go directly to dashboard
+    navigate('/dashboard');
   };
 
   const handleSignupSuccess = () => {
-    setIsAuthenticated(true);
-    console.log("Signup successful, showing placeholder.");
+    setIsNewUser(true);
+    console.log("Signup successful, showing welcome screen.");
   };
   
   const handleSetupProfile = () => {
@@ -27,7 +28,7 @@ const AuthPage: React.FC = () => {
     navigate('/profile-setup');
   };
 
-  if (isAuthenticated) {
+  if (isNewUser) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black p-4">
         <AuthSuccessPlaceholder onSetupProfile={handleSetupProfile} />
