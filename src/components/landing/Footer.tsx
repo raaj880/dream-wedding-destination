@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Linkedin, Twitter } from 'lucide-react';
@@ -15,7 +16,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <Link to="/" className="inline-block mb-4">
-              <img src="/lovable-uploads/5c310514-b491-4277-8491-e9166333f0c2.png" alt="Wedder Logo" className="h-12" />
+              <img src="/lovable-uploads/1bc95769-04fe-480b-bcec-ee6efd8a7ebc.png" alt="Wedder Logo" className="h-12" />
             </Link>
             <p className="text-sm text-muted-foreground">India's premium marriage connection experience.</p>
           </div>
