@@ -60,7 +60,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div onClick={handleLogoClick} className="cursor-pointer">
-            <img src="/lovable-uploads/1bc95769-04fe-480b-bcec-ee6efd8a7ebc.png" alt="Wedder Logo" className="h-12" />
+            <h1 className="text-3xl font-bold text-destructive">Wedder</h1>
           </div>
 
           {/* Desktop Navigation */}
