@@ -76,15 +76,19 @@ export function useMatchFiltering(matches: PotentialMatch[], filters: FilterOpti
         if (!educationMatch) return false;
       }
 
-      // Languages filter - handle comma-separated string vs array
+      // Languages filter - handle comma-separated string vs array with proper type checking
       if (filters.languages.length > 0) {
         let hasMatchingLanguage = false;
         
         if (match.languages) {
-          // Handle both array format and comma-separated string format
-          const profileLanguages = Array.isArray(match.languages) 
-            ? match.languages 
-            : match.languages.split(',').map(lang => lang.trim());
+          let profileLanguages: string[] = [];
+          
+          // Handle both array format and comma-separated string format with type checking
+          if (Array.isArray(match.languages)) {
+            profileLanguages = match.languages;
+          } else if (typeof match.languages === 'string') {
+            profileLanguages = match.languages.split(',').map(lang => lang.trim());
+          }
             
           hasMatchingLanguage = profileLanguages.some(lang => 
             filters.languages.includes(lang)
