@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home, Heart, User, LayoutDashboard } from 'lucide-react';
+import { Home, LayoutDashboard, Sparkles, MessageCircle, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
@@ -27,8 +27,13 @@ const MobileBottomNav = () => {
       requiresAuth: true,
     },
     {
+      href: '/swipe',
+      icon: Sparkles,
+      requiresAuth: true,
+    },
+    {
       href: '/matches',
-      icon: Heart,
+      icon: MessageCircle,
       requiresAuth: true,
     },
     {
