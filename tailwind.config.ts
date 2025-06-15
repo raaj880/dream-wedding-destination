@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -30,7 +29,7 @@ export default {
         'card-platinum': '#E5E4E2', // Platinum silver
         'card-dark-gray': 'hsl(var(--card))', // Dark Blue
         'card-charcoal': 'hsl(var(--card-charcoal))', // Even Darker Blue
-        'card-accent': '#60A5FA', // Light blue accent
+        'card-accent': '#EFA8B8', // Soft Rose Gold accent
         
         // Legacy colors mapped to blue theme
         'royal-plum': 'hsl(var(--background))',
@@ -40,7 +39,7 @@ export default {
         'charcoal-black': 'hsl(var(--background))',
         'slate-gray': 'hsl(var(--muted))', // Dark Muted Blue
         'vibrant-coral': '#3B82F6', // Blue
-        'soft-pink': '#60A5FA', // Mapped to light blue for consistency
+        'soft-pink': '#EFA8B8', // Mapped to Soft Rose Gold
         'deep-blue': 'hsl(var(--card))', // Dark Blue
         'tinder-bg': 'hsl(var(--background))', // Background color
         
