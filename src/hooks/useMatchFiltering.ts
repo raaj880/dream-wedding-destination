@@ -76,18 +76,23 @@ export function useMatchFiltering(matches: PotentialMatch[], filters: FilterOpti
         if (!educationMatch) return false;
       }
 
-      // Languages filter - handle comma-separated string vs array with proper type checking
+      // Languages filter - handle different data formats properly
       if (filters.languages.length > 0) {
         let hasMatchingLanguage = false;
         
         if (match.languages) {
           let profileLanguages: string[] = [];
           
-          // Handle both array format and comma-separated string format with type checking
+          // Since the interface defines languages as string[], we should primarily expect arrays
+          // But we need to handle cases where data might come as string from database
           if (Array.isArray(match.languages)) {
             profileLanguages = match.languages;
-          } else if (typeof match.languages === 'string') {
-            profileLanguages = match.languages.split(',').map(lang => lang.trim());
+          } else {
+            // Type assertion for handling database string format
+            const languagesAsString = match.languages as unknown as string;
+            if (typeof languagesAsString === 'string') {
+              profileLanguages = languagesAsString.split(',').map(lang => lang.trim());
+            }
           }
             
           hasMatchingLanguage = profileLanguages.some(lang => 
