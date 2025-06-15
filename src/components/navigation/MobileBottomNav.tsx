@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Home, Heart, User, LayoutDashboard, Menu } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Home, Heart, User, LayoutDashboard } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
@@ -14,6 +14,7 @@ interface NavItem {
 
 const MobileBottomNav = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
   const navItems: NavItem[] = [
@@ -52,6 +53,22 @@ const MobileBottomNav = () => {
     return null;
   }
 
+  const handleNavClick = (href: string) => {
+    if (href === '/') {
+      navigate('/');
+      // Scroll to top when navigating to home
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    } else {
+      navigate(href);
+      // Always scroll to top when navigating to any page
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    }
+  };
+
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-pb">
       <div className="flex items-center justify-around py-2 px-4">
@@ -60,30 +77,30 @@ const MobileBottomNav = () => {
           const isActive = location.pathname === item.href;
           
           return (
-            <Link
+            <button
               key={item.href}
-              to={item.href}
+              onClick={() => handleNavClick(item.href)}
               className={cn(
                 "flex flex-col items-center justify-center py-2 px-3 rounded-lg transition-all duration-200 min-w-0 flex-1",
                 "hover:bg-gray-50 active:scale-95",
                 isActive 
-                  ? "text-soft-pink bg-soft-pink/10" 
+                  ? "text-deep-blue bg-deep-blue/10" 
                   : "text-gray-600 hover:text-deep-blue"
               )}
             >
               <Icon 
                 className={cn(
                   "w-5 h-5 mb-1 transition-colors",
-                  isActive ? "text-soft-pink" : "text-gray-600"
+                  isActive ? "text-deep-blue" : "text-gray-600"
                 )} 
               />
               <span className={cn(
                 "text-xs font-medium truncate transition-colors",
-                isActive ? "text-soft-pink" : "text-gray-600"
+                isActive ? "text-deep-blue" : "text-gray-600"
               )}>
                 {item.label}
               </span>
-            </Link>
+            </button>
           );
         })}
       </div>

@@ -10,14 +10,12 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
+  // Remove Dashboard, Matches, and Profile from the navbar since they're now in bottom nav
   const navLinks = [
     { href: '/', label: 'Home', scrollTo: 'home' },
     { href: '/#features', label: 'Features', scrollTo: 'features' },
     { href: '/#testimonials', label: 'Testimonials', scrollTo: 'testimonials' },
     { href: '/#faq', label: 'FAQ', scrollTo: 'faq' },
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/matches', label: 'Matches' },
-    { href: '/profile', label: 'Profile' },
   ];
 
   const toggleMobileMenu = () => {
