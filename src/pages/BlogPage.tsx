@@ -1,11 +1,13 @@
 
 import React from 'react';
-import { Calendar, User, ArrowRight } from 'lucide-react';
+import { Calendar, User, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
 
 const BlogPage: React.FC = () => {
+  const navigate = useNavigate();
   const blogPosts = [
     {
       id: 1,
@@ -74,6 +76,10 @@ const BlogPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
       <div className="container mx-auto px-4 py-16 max-w-7xl">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
+          <ArrowLeft className="w-5 h-5" />
+          Back
+        </Button>
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-deep-blue dark:text-white mb-6">

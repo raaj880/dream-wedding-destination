@@ -25,6 +25,7 @@ import AboutPage from '@/pages/AboutPage';
 import BlogPage from '@/pages/BlogPage';
 import ContactPage from '@/pages/ContactPage';
 import HelpCenterPage from '@/pages/HelpCenterPage';
+import FAQPage from '@/pages/FAQPage';
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/privacy" element={<PrivacyPolicyPage />} />
                 <Route path="/terms" element={<TermsOfServicePage />} />
                 <Route path="/help" element={<HelpCenterPage />} />
+                <Route path="/faq" element={<FAQPage />} />
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="/profile/:id" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
                 <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />

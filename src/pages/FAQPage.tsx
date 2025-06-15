@@ -1,10 +1,13 @@
 
 import React from 'react';
-import { HelpCircle, Search, MessageCircle, Shield, Heart, Users } from 'lucide-react';
+import { HelpCircle, Search, MessageCircle, Shield, Heart, Users, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const FAQPage: React.FC = () => {
+  const navigate = useNavigate();
   const faqCategories = [
     {
       title: 'Getting Started',
@@ -99,8 +102,12 @@ const FAQPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
+          <ArrowLeft className="w-5 h-5" />
+          Back
+        </Button>
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-deep-blue dark:text-white mb-6">
