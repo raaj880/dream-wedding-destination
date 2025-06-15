@@ -55,7 +55,6 @@ const DashboardHeader: React.FC = () => {
             <h1 className="text-lg font-bold text-deep-blue truncate">
               Welcome back{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}!
             </h1>
-            <p className="text-xs text-gray-600">Ready to find your match?</p>
           </div>
         </div>
         
