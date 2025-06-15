@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -28,19 +27,13 @@ export const useSwipeActions = () => {
     
     setLoading(true);
     try {
-      // Map frontend actions to database interaction types
-      let interactionType = action;
-      if (action === 'superlike') {
-        interactionType = 'like'; // Store superlike as like in the database for now
-      }
-
-      // Record the interaction
+      // Record the interaction using the original action
       const { data: interactionData, error: interactionError } = await supabase
         .from('user_interactions')
         .upsert({
           user_id: user.id,
           target_user_id: targetUserId,
-          interaction_type: interactionType
+          interaction_type: action
         })
         .select()
         .single();
@@ -56,23 +49,22 @@ export const useSwipeActions = () => {
       if (action === 'like' || action === 'superlike') {
         console.log('💝 Checking for mutual like...');
         
-        const { data: mutualLike, error: checkError } = await supabase
+        const { data: mutualInteractions, error: checkError } = await supabase
           .from('user_interactions')
-          .select('*')
+          .select('id')
           .eq('user_id', targetUserId)
           .eq('target_user_id', user.id)
-          .eq('interaction_type', 'like')
-          .maybeSingle();
+          .in('interaction_type', ['like', 'superlike']);
 
         if (checkError) {
           console.error('❌ Error checking mutual like:', checkError);
           throw checkError;
         }
 
-        console.log('🔍 Mutual like check result:', mutualLike);
+        console.log('🔍 Mutual like check result:', mutualInteractions);
 
-        // If mutual like exists, create a match
-        if (mutualLike) {
+        // If a mutual like or superlike exists, create a match
+        if (mutualInteractions && mutualInteractions.length > 0) {
           console.log('🎉 Creating match!');
           const user1Id = user.id < targetUserId ? user.id : targetUserId;
           const user2Id = user.id < targetUserId ? targetUserId : user.id;
@@ -87,12 +79,20 @@ export const useSwipeActions = () => {
             .single();
 
           if (matchError) {
-            console.error('❌ Error creating match:', matchError);
-            throw matchError;
+            // It's possible the match already exists, which would violate the unique constraint.
+            // We can ignore this specific error and assume the match is there.
+            if (matchError.code !== '23505') { // 23505 is unique_violation
+                 console.error('❌ Error creating match:', matchError);
+                 throw matchError;
+            } else {
+                 console.log('👍 Match already exists, no action needed.');
+                 // We can optionally fetch the existing match ID here if needed
+            }
           }
 
           console.log('✅ Match created successfully:', match);
-          return { isMatch: true, matchId: match.id };
+          // Even if match existed, we return true.
+          return { isMatch: true, matchId: match?.id };
         } else {
           console.log('💔 No mutual like found yet');
         }
