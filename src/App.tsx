@@ -18,6 +18,7 @@ import ChatInterface from '@/pages/ChatInterface';
 import Index from '@/pages/Index';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
+import MobileBottomNav from '@/components/navigation/MobileBottomNav';
 
 const queryClient = new QueryClient();
 
@@ -26,44 +27,47 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen bg-background font-sans antialiased">
+          <div className="min-h-screen bg-background font-sans antialiased w-full">
             <Navbar />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<AuthPage />} />
-              <Route path="/login" element={<AuthPage />} />
-              <Route path="/register" element={<AuthPage />} />
-              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-              <Route path="/profile/:id" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-              <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-              <Route path="/profile-setup" element={
-                <ProtectedRoute>
-                  <ProfileCompletionCheck>
-                    <ProfileSetupWizard />
-                  </ProfileCompletionCheck>
-                </ProtectedRoute>
-              } />
-              <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-              <Route path="/edit-profile" element={
-                <ProtectedRoute>
-                  <ProfileCompletionCheck>
-                    <Settings />
-                  </ProfileCompletionCheck>
-                </ProtectedRoute>
-              } />
-              <Route path="/matches" element={<ProtectedRoute><Matches /></ProtectedRoute>} />
-              <Route path="/filter" element={<ProtectedRoute><FilterScreen /></ProtectedRoute>} />
-              <Route path="/swipe" element={
-                <ProtectedRoute>
-                  <ProfileCompletionCheck>
-                    <EnhancedSwipeInterface />
-                  </ProfileCompletionCheck>
-                </ProtectedRoute>
-              } />
-              <Route path="/chat/:matchId" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
-              <Route path="/chat" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
-            </Routes>
+            <div className="pb-16 md:pb-0">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/login" element={<AuthPage />} />
+                <Route path="/register" element={<AuthPage />} />
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/profile/:id" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+                <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+                <Route path="/profile-setup" element={
+                  <ProtectedRoute>
+                    <ProfileCompletionCheck>
+                      <ProfileSetupWizard />
+                    </ProfileCompletionCheck>
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+                <Route path="/edit-profile" element={
+                  <ProtectedRoute>
+                    <ProfileCompletionCheck>
+                      <Settings />
+                    </ProfileCompletionCheck>
+                  </ProtectedRoute>
+                } />
+                <Route path="/matches" element={<ProtectedRoute><Matches /></ProtectedRoute>} />
+                <Route path="/filter" element={<ProtectedRoute><FilterScreen /></ProtectedRoute>} />
+                <Route path="/swipe" element={
+                  <ProtectedRoute>
+                    <ProfileCompletionCheck>
+                      <EnhancedSwipeInterface />
+                    </ProfileCompletionCheck>
+                  </ProtectedRoute>
+                } />
+                <Route path="/chat/:matchId" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
+                <Route path="/chat" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
+              </Routes>
+            </div>
             <Footer />
+            <MobileBottomNav />
             <Toaster />
           </div>
         </Router>
