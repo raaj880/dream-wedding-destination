@@ -11,8 +11,11 @@ const CallToAction = () => {
   const handleJoinWedder = () => {
     if (isAuthenticated) {
       navigate('/dashboard');
+      // Instant scroll to top to prevent visual disturbance
+      window.scrollTo({ top: 0, behavior: 'instant' });
     } else {
       navigate('/auth');
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
   };
 

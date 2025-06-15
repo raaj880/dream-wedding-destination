@@ -10,9 +10,17 @@ const Hero = () => {
 
   const handleFindYourMatch = () => {
     if (isAuthenticated) {
+      // Navigate first, then scroll to top immediately without animation
       navigate('/swipe');
+      // Use immediate scroll to top without smooth behavior to avoid visual disturbance
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }, 0);
     } else {
       navigate('/auth');
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }, 0);
     }
   };
 

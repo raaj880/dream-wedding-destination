@@ -54,19 +54,10 @@ const MobileBottomNav = () => {
   }
 
   const handleNavClick = (href: string) => {
-    if (href === '/') {
-      navigate('/');
-      // Scroll to top when navigating to home
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
-    } else {
-      navigate(href);
-      // Always scroll to top when navigating to any page
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100);
-    }
+    // Navigate immediately without any delay
+    navigate(href);
+    // Scroll to top instantly without smooth behavior to prevent visual disturbance
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   return (
