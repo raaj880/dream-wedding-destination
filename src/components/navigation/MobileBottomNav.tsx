@@ -54,8 +54,8 @@ const MobileBottomNav = () => {
   };
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-black border-t border-card-gold/30 z-50 safe-area-pb backdrop-blur-sm">
-      <div className="flex items-center justify-around py-4 px-2">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-card-charcoal border-t border-card-gold/30 z-50 safe-area-pb backdrop-blur-sm">
+      <div className="flex items-center justify-around py-2 px-2">
         {visibleItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.href;
@@ -65,19 +65,19 @@ const MobileBottomNav = () => {
               key={item.href}
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "flex items-center justify-center p-3 rounded-2xl transition-all duration-300 min-w-0 flex-1 mx-1",
+                "flex items-center justify-center p-2 rounded-2xl transition-all duration-300 min-w-0 flex-1 mx-1",
                 "hover:bg-card-gold/10 active:scale-95",
                 isActive 
                   ? "text-black gold-gradient shadow-lg scale-105" 
-                  : "text-card-gold hover:text-white bg-black hover:bg-card-gold/20"
+                  : "text-card-gold hover:text-white bg-black/20 hover:bg-card-gold/20"
               )}
             >
               <Icon 
                 className={cn(
-                  "w-7 h-7 transition-all duration-300",
+                  "w-6 h-6 transition-all duration-300",
                   isActive ? "text-black drop-shadow-sm" : "text-card-gold"
                 )} 
-                strokeWidth={isActive ? 2.5 : 2}
+                strokeWidth={isActive ? 2.25 : 1.75}
               />
             </button>
           );

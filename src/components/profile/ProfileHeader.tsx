@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ProfileData } from '@/types/profile';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,14 +19,14 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
   return (
     <div className="relative">
       {/* Background Banner */}
-      <div className="h-48 bg-gradient-to-br from-deep-blue via-deep-blue/90 to-deep-blue/80 relative overflow-hidden">
+      <div className="h-48 bg-gradient-to-b from-card-dark-gray to-card-charcoal relative overflow-hidden">
         {profileData.photoPreviews[0] && (
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-20 blur-sm"
             style={{ backgroundImage: `url(${profileData.photoPreviews[0]})` }}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
 
       {/* Profile Picture & Basic Info */}

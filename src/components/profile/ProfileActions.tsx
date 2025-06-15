@@ -10,10 +10,10 @@ interface ProfileActionsProps {
 
 const ProfileActions: React.FC<ProfileActionsProps> = ({ onEditProfile, onSettings }) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 space-y-3 z-10">
+    <div className="fixed bottom-16 md:bottom-0 left-0 right-0 bg-card-charcoal/90 border-t border-card-gold/20 p-4 space-y-3 z-10 backdrop-blur-sm safe-area-pb">
       <Button 
         onClick={onEditProfile}
-        className="w-full bg-deep-blue text-white hover:bg-deep-blue/90 rounded-full py-3 font-medium"
+        className="w-full gold-gradient text-black rounded-full py-3 font-medium text-base"
       >
         <Edit className="w-4 h-4 mr-2" />
         Edit My Profile
@@ -22,7 +22,7 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({ onEditProfile, onSettin
       <Button 
         onClick={onSettings}
         variant="outline"
-        className="w-full border-soft-pink text-deep-blue hover:bg-soft-pink/10 rounded-full py-3 dark:border-deep-blue dark:text-soft-pink dark:hover:bg-deep-blue/10"
+        className="w-full border-card-gold text-card-gold hover:bg-card-gold/10 rounded-full py-3 text-base font-medium hover:text-white"
       >
         <Settings className="w-4 h-4 mr-2" />
         Settings

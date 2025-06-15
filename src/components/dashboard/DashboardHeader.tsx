@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, Settings, Crown } from 'lucide-react';
@@ -40,7 +39,7 @@ const DashboardHeader: React.FC = () => {
   const profilePhoto = profile?.photos?.[0];
 
   return (
-    <div className="bg-black border-b border-card-gold/30 px-4 py-4 sticky top-0 z-10">
+    <div className="bg-card-charcoal border-b border-card-gold/30 px-4 py-4 sticky top-0 z-10 backdrop-blur-sm">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         <div className="flex items-center space-x-4 flex-1 min-w-0">
           <Link to="/profile" className="flex-shrink-0">
