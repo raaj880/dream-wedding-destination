@@ -6,7 +6,6 @@ import ProfileGallery from './ProfileGallery';
 import ProfileSummary from './ProfileSummary';
 import ProfileAbout from './ProfileAbout';
 import ProfilePreferences from './ProfilePreferences';
-import ProfileActions from './ProfileActions';
 import PhotoLightbox from './PhotoLightbox';
 import { ProfileData } from '@/types/profile';
 
@@ -44,10 +43,13 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <ProfileHeader 
         profileData={profileData}
-        onPhotoChange={isOwnProfile ? onPhotoChange : undefined}
+        onPhotoChange={onPhotoChange}
+        isOwnProfile={isOwnProfile}
+        onEditProfile={onEditProfile}
+        onSettings={onSettings}
       />
 
-      <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">
+      <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,19 +84,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
         >
           <ProfilePreferences profileData={profileData} />
         </motion.div>
-
-        {isOwnProfile && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <ProfileActions 
-              onEditProfile={onEditProfile}
-              onSettings={onSettings}
-            />
-          </motion.div>
-        )}
       </div>
 
       {selectedPhotoIndex !== null && displayPhotos.length > 0 && (
