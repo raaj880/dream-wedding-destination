@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useSwipeInterface } from '@/hooks/useSwipeInterface';
 import { useProfileViewing } from '@/hooks/useProfileViewing';
-import SwipeHeader from '@/components/swipe/SwipeHeader';
+import DiscoverHeader from '@/components/discover/DiscoverHeader';
 import SwipeFeedback from '@/components/swipe/SwipeFeedback';
-import SwipeStatsBar from '@/components/swipe/SwipeStatsBar';
 import SwipeTutorial from '@/components/swipe/SwipeTutorial';
 import FilterSummary from '@/components/swipe/FilterSummary';
 import LoadingState from '@/components/discover/LoadingState';
@@ -112,12 +110,13 @@ const EnhancedSwipeInterface: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <SwipeHeader 
+      <DiscoverHeader 
         isFilterActive={isFilterActive}
+        totalProfiles={totalCount}
         showStats={showStats}
         onToggleStats={() => setShowStats(!showStats)}
         onRefresh={resetSwipes}
-        isRefreshing={loading}
+        isRefreshing={isRefreshing || loading}
       />
       
       {isFilterActive && (
@@ -128,14 +127,6 @@ const EnhancedSwipeInterface: React.FC = () => {
         />
       )}
       
-      <SwipeStatsBar 
-        remainingProfiles={displayProfiles.length}
-        isFilterActive={isFilterActive}
-        filteredCount={filteredCount}
-        totalCount={totalCount}
-        swipeStats={swipeStats}
-      />
-
       {/* Main Feed Container */}
       <div className="container mx-auto px-4 py-6 max-w-2xl">
         <ProfileList 
