@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 function CustomCaption(props: CaptionProps) {
-  const { goToMonth, month } = useNavigation();
+  const { goToMonth, currentMonth: month } = useNavigation();
   const { fromYear, toYear } = useDayPicker();
 
   const handleMonthChange = (value: string) => {
