@@ -20,7 +20,7 @@ const SettingsHeader: React.FC = () => {
             <h1 className="text-xl font-semibold text-foreground">Settings</h1>
           </div>
           <div onClick={() => navigate('/')} className="cursor-pointer">
-            <img src="/lovable-uploads/1bc95769-04fe-480b-bcec-ee6efd8a7ebc.png" alt="Wedder Logo" className="h-10" />
+            <img src="/lovable-uploads/3a1667f0-2830-417c-b612-6ad24a3fbf87.png" alt="Wedder Logo" className="h-10" />
           </div>
         </div>
       </div>

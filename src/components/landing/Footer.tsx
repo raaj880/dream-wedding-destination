@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <Link to="/" className="inline-block mb-4">
-              <img src="/lovable-uploads/1bc95769-04fe-480b-bcec-ee6efd8a7ebc.png" alt="Wedder Logo" className="h-12" />
+              <img src="/lovable-uploads/3a1667f0-2830-417c-b612-6ad24a3fbf87.png" alt="Wedder Logo" className="h-12" />
             </Link>
             <p className="text-sm text-muted-foreground">India's premium marriage connection experience.</p>
           </div>
