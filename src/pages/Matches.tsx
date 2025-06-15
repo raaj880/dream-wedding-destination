@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useMatches } from '@/hooks/useMatches';
 import { usePotentialMatches } from '@/hooks/usePotentialMatches';
@@ -22,6 +21,21 @@ const Matches: React.FC = () => {
   console.log('Matches data:', matches);
   console.log('Potential matches data:', potentialMatches);
   console.log('New real-time matches:', newMatches);
+
+  // Calculate stats
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const matchesToday = matches.filter(
+    (match) => new Date(match.matchedAt) >= today
+  ).length;
+
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
+
+  const matchesThisWeek = matches.filter(
+    (match) => new Date(match.matchedAt) >= weekAgo
+  ).length;
 
   // Transform data to match PotentialMatch interface for filtering
   const displayProfiles = matches.length > 0 ? matches.map(match => ({
@@ -123,7 +137,7 @@ const Matches: React.FC = () => {
                 <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <Star className="w-4 h-4 text-yellow-600" />
                 </div>
-                <p className="text-2xl font-bold text-deep-blue">{newMatches.length}</p>
+                <p className="text-2xl font-bold text-deep-blue">{matchesToday}</p>
                 <p className="text-xs text-gray-600">New Today</p>
               </CardContent>
             </Card>
@@ -133,7 +147,7 @@ const Matches: React.FC = () => {
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <TrendingUp className="w-4 h-4 text-green-600" />
                 </div>
-                <p className="text-2xl font-bold text-deep-blue">+{Math.floor(Math.random() * 5) + 1}</p>
+                <p className="text-2xl font-bold text-deep-blue">+{matchesThisWeek}</p>
                 <p className="text-xs text-gray-600">This Week</p>
               </CardContent>
             </Card>
