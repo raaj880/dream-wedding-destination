@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { type Notification } from '@/types/notification';
+import { type Notification, type NotificationType } from '@/types/notification';
 
 const fetchNotifications = async (userId: string): Promise<Notification[]> => {
   const { data, error } = await supabase
