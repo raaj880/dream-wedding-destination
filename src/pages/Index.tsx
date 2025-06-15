@@ -9,7 +9,7 @@ import CallToAction from '@/components/landing/CallToAction';
 
 const Index = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-background">
       <Hero />
       <Features />
       <Testimonials />

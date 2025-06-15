@@ -29,10 +29,10 @@ const getVisibilityText = (visibility: string) => {
 
 const ProfilePreferences: React.FC<ProfilePreferencesProps> = ({ profileData }) => {
   return (
-    <Card className="shadow-md border-0 bg-white dark:bg-gray-800">
+    <Card className="shadow-md border-0 bg-card">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-deep-blue dark:text-white flex items-center">
-          <Heart className="w-5 h-5 mr-2" />
+        <CardTitle className="text-lg font-semibold text-foreground flex items-center">
+          <Heart className="w-5 h-5 mr-2 text-primary" />
           Marriage Preferences
         </CardTitle>
       </CardHeader>
@@ -40,24 +40,24 @@ const ProfilePreferences: React.FC<ProfilePreferencesProps> = ({ profileData }) 
         <div className="grid grid-cols-1 gap-3">
           {profileData.marryTimeframe && (
             <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Looking to Marry:</span>
-              <span className="text-gray-700 dark:text-gray-300 font-medium">
+              <span className="text-muted-foreground">Looking to Marry:</span>
+              <span className="text-foreground font-medium">
                 {getMarriageTimeframe(profileData.marryTimeframe)}
               </span>
             </div>
           )}
           
           <div className="flex justify-between">
-            <span className="text-gray-600 dark:text-gray-400">Age Preference:</span>
-            <span className="text-gray-700 dark:text-gray-300 font-medium">
+            <span className="text-muted-foreground">Age Preference:</span>
+            <span className="text-foreground font-medium">
               {profileData.partnerAgeRange[0]}–{profileData.partnerAgeRange[1]} years
             </span>
           </div>
           
           {profileData.partnerLocation && (
             <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Preferred Location:</span>
-              <span className="text-gray-700 dark:text-gray-300 font-medium">
+              <span className="text-muted-foreground">Preferred Location:</span>
+              <span className="text-foreground font-medium">
                 {profileData.partnerLocation}
               </span>
             </div>
@@ -65,9 +65,9 @@ const ProfilePreferences: React.FC<ProfilePreferencesProps> = ({ profileData }) 
           
           {profileData.profileVisibility && (
             <div className="flex justify-between">
-              <span className="text-gray-600 dark:text-gray-400">Visibility Mode:</span>
-              <span className="text-gray-700 dark:text-gray-300 font-medium flex items-center">
-                <Eye className="w-4 h-4 mr-1" />
+              <span className="text-muted-foreground">Visibility Mode:</span>
+              <span className="text-foreground font-medium flex items-center">
+                <Eye className="w-4 h-4 mr-1 text-primary" />
                 {getVisibilityText(profileData.profileVisibility)}
               </span>
             </div>
