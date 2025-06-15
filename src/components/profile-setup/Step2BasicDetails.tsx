@@ -62,21 +62,15 @@ const Step2BasicDetails: React.FC<Step2BasicDetailsProps> = ({ data, updateData,
                 selected={data.dob}
                 onSelect={(date) => updateData({ dob: date || undefined })}
                 initialFocus
-                captionLayout="dropdown-buttons"
                 fromYear={1950}
                 toYear={new Date().getFullYear() - 18} // Must be at least 18
+                useCustomCaption
                 classNames={{
-                  caption: 'mb-4',
-                  caption_label: 'hidden',
-                  nav: 'hidden',
-                  caption_dropdowns: "flex justify-center gap-4",
-                  dropdown: "bg-card-dark-gray border-card-gold/30 text-white focus:border-card-gold rounded-md px-2 py-1 text-sm cursor-pointer",
-                  dropdown_month: 'w-[100px]',
-                  dropdown_year: 'w-[80px]',
-                  day: "text-white hover:bg-card-gold hover:text-card-black rounded-md",
-                  day_selected: "bg-card-gold text-card-black focus:bg-card-gold focus:text-card-black",
-                  day_today: "text-card-gold border border-card-gold/50 rounded-md",
-                  head_cell: "text-gray-400",
+                  day: "text-white hover:bg-card-gold hover:text-card-black rounded-full",
+                  day_selected:
+                    "bg-card-gold text-card-black focus:bg-card-gold focus:text-card-black rounded-full",
+                  day_today: "text-card-gold border border-card-gold/50 rounded-full",
+                  head_cell: "text-gray-400 font-medium",
                 }}
               />
             </PopoverContent>
