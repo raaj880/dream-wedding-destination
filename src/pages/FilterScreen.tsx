@@ -47,26 +47,26 @@ const FilterScreen: React.FC = () => {
       {/* Enhanced Header */}
       <div className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center justify-between max-w-4xl mx-auto">
-          <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon" asChild className="hover:bg-gray-100">
+          <div className="flex items-center space-x-3 flex-1">
+            <Button variant="ghost" size="icon" asChild className="hover:bg-gray-100 flex-shrink-0">
               <Link to="/matches">
-                <ArrowLeft className="w-6 h-6 text-deep-blue" />
+                <ArrowLeft className="w-5 h-5 text-deep-blue" />
               </Link>
             </Button>
-            <div>
-              <h1 className="text-xl font-bold text-deep-blue">Filter Preferences</h1>
-              <p className="text-sm text-gray-500">Customize your match criteria</p>
+            <div className="flex-1">
+              <h1 className="text-lg font-bold text-deep-blue">Filter Preferences</h1>
+              <p className="text-xs text-gray-500">Customize your match criteria</p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-shrink-0">
             {isActive && (
-              <div className="flex items-center text-sm text-soft-pink font-medium">
-                <Check className="w-4 h-4 mr-1" />
+              <div className="flex items-center text-xs text-soft-pink font-medium">
+                <Check className="w-3 h-3 mr-1" />
                 Active
               </div>
             )}
-            <Button variant="ghost" onClick={handleReset} className="text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+            <Button variant="ghost" onClick={handleReset} className="text-gray-500 hover:text-gray-700 hover:bg-gray-100 text-sm px-3">
               <X className="w-4 h-4 mr-1" />
               Reset
             </Button>
