@@ -14,7 +14,7 @@ const Dashboard: React.FC = () => {
   const { isActive: hasActiveFilters } = useFilters();
 
   return (
-    <div className="min-h-screen bg-tinder-bg">
+    <div className="min-h-screen bg-gradient-to-br from-card-black via-card-charcoal to-card-black">
       <DashboardHeader />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">

@@ -54,8 +54,8 @@ const MobileBottomNav = () => {
   };
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-pb backdrop-blur-sm tinder-shadow">
-      <div className="flex items-center justify-around py-2 px-2">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-card-black border-t border-card-gold/20 z-50 safe-area-pb backdrop-blur-sm card-shadow">
+      <div className="flex items-center justify-around py-3 px-2">
         {visibleItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.href;
@@ -65,17 +65,17 @@ const MobileBottomNav = () => {
               key={item.href}
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "flex items-center justify-center p-4 rounded-full transition-all duration-300 min-w-0 flex-1 mx-1",
-                "hover:bg-gray-100 active:scale-95",
+                "flex items-center justify-center p-3 rounded-2xl transition-all duration-300 min-w-0 flex-1 mx-1 border",
+                "hover:bg-card-gold/10 active:scale-95",
                 isActive 
-                  ? "text-white tinder-gradient shadow-lg scale-110" 
-                  : "text-tinder-gray hover:text-tinder-primary bg-transparent"
+                  ? "text-card-black gold-gradient shadow-lg scale-105 border-card-gold" 
+                  : "text-card-gold hover:text-white bg-card-charcoal border-card-gold/30 hover:border-card-gold/50"
               )}
             >
               <Icon 
                 className={cn(
-                  "w-7 h-7 transition-all duration-300",
-                  isActive ? "text-white drop-shadow-sm" : "text-tinder-gray"
+                  "w-6 h-6 transition-all duration-300",
+                  isActive ? "text-card-black drop-shadow-sm" : "text-card-gold"
                 )} 
                 strokeWidth={isActive ? 2.5 : 2}
               />

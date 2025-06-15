@@ -20,28 +20,29 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-        sans: ['Proxima Nova', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
+        sans: ['Inter', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['SF Pro Display', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
 			colors: {
-        // Tinder Brand Colors
-        'tinder-primary': '#FD4F6D', // Main Tinder pink
-        'tinder-orange': '#FF7D3F', // Tinder orange
-        'tinder-gold': '#FFC300', // Tinder gold
-        'tinder-green': '#42DA5F', // Tinder green (like)
-        'tinder-gray': '#424242', // Tinder dark gray
-        'tinder-light-gray': '#9E9E9E', // Light gray
-        'tinder-bg': '#FAFAFA', // Background
+        // Premium Card Colors
+        'card-black': '#000000', // Pure black
+        'card-gold': '#FFD700', // Pure gold
+        'card-platinum': '#E5E4E2', // Platinum silver
+        'card-dark-gray': '#202020', // Dark gray
+        'card-charcoal': '#121212', // Charcoal
+        'card-accent': '#FFA500', // Orange gold accent
         
-        // Legacy colors mapped to Tinder theme
-        'royal-plum': '#FD4F6D', // Now Tinder Pink
-        'blush-rose': '#FF7D3F', // Now Tinder Orange
-        'regal-gold': '#FFC300', // Now Tinder Gold
+        // Legacy colors mapped to card theme
+        'royal-plum': '#FFD700', // Now Gold
+        'blush-rose': '#FFA500', // Now Orange Gold
+        'regal-gold': '#FFD700', // Gold
         'ivory-white': '#FFFFFF', // White
-        'charcoal-black': '#424242', // Tinder Gray
-        'slate-gray': '#9E9E9E', // Light Gray
-        'vibrant-coral': '#FD4F6D', // Tinder Pink
-        'soft-pink': '#FF7D3F', // Tinder Orange
-        'deep-blue': '#FD4F6D', // Tinder Pink
+        'charcoal-black': '#000000', // Pure Black
+        'slate-gray': '#404040', // Dark Gray
+        'vibrant-coral': '#FFD700', // Gold
+        'soft-pink': '#FFA500', // Orange Gold
+        'deep-blue': '#FFD700', // Gold
+        'tinder-bg': '#000000', // Black background
         
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -49,11 +50,11 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				primary: {
-					DEFAULT: 'hsl(var(--primary))', // Tinder Pink
+					DEFAULT: 'hsl(var(--primary))', // Gold
 					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))', // Tinder Orange
+					DEFAULT: 'hsl(var(--secondary))', // Bright Gold
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				destructive: {
@@ -65,7 +66,7 @@ export default {
 					foreground: 'hsl(var(--muted-foreground))'
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))', // Tinder Gold
+					DEFAULT: 'hsl(var(--accent))', // Gold
 					foreground: 'hsl(var(--accent-foreground))'
 				},
 				popover: {
@@ -96,8 +97,9 @@ export default {
         '4xl': '2rem',
 			},
       boxShadow: {
-        'tinder': '0 8px 25px rgba(253, 79, 109, 0.15)',
-        'tinder-card': '0 4px 12px rgba(0, 0, 0, 0.08)',
+        'card': '0 25px 50px rgba(255, 215, 0, 0.1), 0 0 0 1px rgba(255, 215, 0, 0.05)',
+        'card-hover': '0 35px 60px rgba(255, 215, 0, 0.15), 0 0 0 1px rgba(255, 215, 0, 0.1)',
+        'premium': '0 8px 32px rgba(0, 0, 0, 0.4)',
         'md_dark': '0 -4px 6px -1px rgba(255, 255, 255, 0.05), 0 -2px 4px -1px rgba(255, 255, 255, 0.03)',
       },
 			keyframes: {
@@ -130,6 +132,10 @@ export default {
         'subtle-pulse': {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.03)' },
+        },
+        'gold-shimmer': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
         }
 			},
 			animation: {
@@ -137,6 +143,7 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
         'subtle-pulse': 'subtle-pulse 2s infinite ease-in-out',
+        'gold-shimmer': 'gold-shimmer 2s infinite linear',
 			}
 		}
 	},
