@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Accordion } from "@/components/ui/accordion";
 import FAQItem from './FAQItem';
@@ -28,9 +27,9 @@ const faqData = [
 
 const FAQ = () => {
   return (
-    <section id="faq" className="bg-gray-50">
+    <section id="faq" className="bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl md:text-5xl font-bold text-deep-blue text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold text-foreground text-center mb-16">
           Frequently Asked Questions
         </h2>
         <div className="max-w-3xl mx-auto">
