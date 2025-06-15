@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { ProfileData } from '@/types/profile';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from '@/components/ui/badge';
-import { User, MapPin, Edit, Settings } from 'lucide-react';
+import { User, MapPin, Edit, Settings, Check } from 'lucide-react';
 import { differenceInYears } from 'date-fns';
 import { Button } from '@/components/ui/button';
 
@@ -75,8 +74,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
             </label>
 
             <div className="absolute -bottom-2 -right-2">
-              <Badge className="bg-success text-white px-2 py-1 text-xs font-medium">
-                ✅ Verified
+              <Badge variant="highlight" className="h-8 w-8 p-0 flex items-center justify-center rounded-full border-2 border-background">
+                <Check className="w-5 h-5" />
               </Badge>
             </div>
           </div>

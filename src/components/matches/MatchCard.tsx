@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Briefcase, MessageCircle } from 'lucide-react';
+import { MapPin, Briefcase, MessageCircle, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -60,8 +59,10 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, index }) => {
                   </AvatarFallback>
                 </Avatar>
                 {match.verified && (
-                  <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs">✓</span>
+                  <div className="absolute -bottom-1 -right-1">
+                    <Badge variant="highlight" className="h-6 w-6 p-0 flex items-center justify-center rounded-full border-2 border-card">
+                      <Check className="w-4 h-4" />
+                    </Badge>
                   </div>
                 )}
               </div>

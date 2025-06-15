@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, X, Star, MapPin, Briefcase, Users, Shield, Camera } from 'lucide-react';
@@ -98,9 +97,8 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
           {/* Status Badges */}
           <div className="absolute top-4 left-4 flex flex-col space-y-2">
             {profile.verified && (
-              <Badge className="bg-card-gold text-black flex items-center font-medium">
-                <Shield className="w-3 h-3 mr-1" />
-                Verified
+              <Badge variant="highlight" className="h-7 w-7 p-0 flex items-center justify-center rounded-full border-2 border-black/30">
+                <Shield className="w-4 h-4" />
               </Badge>
             )}
           </div>
