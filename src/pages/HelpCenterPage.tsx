@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Search, ChevronDown, ChevronRight, HelpCircle, Book, MessageCircle, Shield, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -102,8 +101,8 @@ const HelpCenterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 py-16 max-w-6xl">
+    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
+      <div className="container mx-auto px-4 pt-12 pb-16 max-w-6xl">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
@@ -148,7 +147,7 @@ const HelpCenterPage: React.FC = () => {
                   <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
                     {category.description}
                   </p>
-                  <p className="text-soft-pink font-medium text-sm">
+                  <p className="text-deep-blue font-medium text-sm">
                     {category.articles} articles
                   </p>
                 </CardContent>
@@ -210,7 +209,7 @@ const HelpCenterPage: React.FC = () => {
             <p className="text-gray-600 dark:text-gray-300 mb-6">
               Can't find what you're looking for? Our support team is here to help.
             </p>
-            <Button className="bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-soft-pink dark:text-deep-blue dark:hover:bg-soft-pink/90">
+            <Button className="bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90">
               Contact Support
             </Button>
           </CardContent>

@@ -57,8 +57,8 @@ const PrivacyPolicyPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
+      <div className="container mx-auto px-4 pt-12 pb-16 max-w-4xl">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
@@ -101,7 +101,7 @@ const PrivacyPolicyPage: React.FC = () => {
                 <ul className="space-y-3">
                   {section.content.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-soft-pink rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-deep-blue rounded-full mt-2 flex-shrink-0"></div>
                       <span className="text-gray-600 dark:text-gray-300">{item}</span>
                     </li>
                   ))}

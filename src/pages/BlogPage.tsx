@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Calendar, User, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -74,8 +73,8 @@ const BlogPage: React.FC = () => {
   const categories = ["All", "Profile Tips", "Relationships", "Dating Tips", "Family & Culture", "Safety", "Wedding Planning"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 py-16 max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
+      <div className="container mx-auto px-4 pt-12 pb-16 max-w-7xl">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
@@ -96,7 +95,7 @@ const BlogPage: React.FC = () => {
             <Badge
               key={index}
               variant={index === 0 ? "default" : "outline"}
-              className="px-4 py-2 cursor-pointer hover:bg-soft-pink/20 transition-colors"
+              className="px-4 py-2 cursor-pointer hover:bg-deep-blue/10 transition-colors"
             >
               {category}
             </Badge>
@@ -142,7 +141,7 @@ const BlogPage: React.FC = () => {
                       <span>{post.date}</span>
                     </div>
                   </div>
-                  <Button variant="ghost" size="sm" className="text-soft-pink hover:text-soft-pink/80">
+                  <Button variant="ghost" size="sm" className="text-deep-blue hover:text-deep-blue/80">
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                 </div>
@@ -153,7 +152,7 @@ const BlogPage: React.FC = () => {
 
         {/* Load More Button */}
         <div className="text-center mt-12">
-          <Button className="bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-soft-pink dark:text-deep-blue dark:hover:bg-soft-pink/90 px-8 py-3">
+          <Button className="bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90 px-8 py-3">
             Load More Articles
           </Button>
         </div>

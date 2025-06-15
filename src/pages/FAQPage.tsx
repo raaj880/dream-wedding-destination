@@ -102,8 +102,8 @@ const FAQPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soft-pink/20 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
@@ -132,7 +132,7 @@ const FAQPage: React.FC = () => {
                 <Accordion type="single" collapsible className="w-full">
                   {category.questions.map((faq, questionIndex) => (
                     <AccordionItem key={questionIndex} value={`${categoryIndex}-${questionIndex}`}>
-                      <AccordionTrigger className="text-left text-deep-blue dark:text-white hover:text-soft-pink">
+                      <AccordionTrigger className="text-left text-deep-blue dark:text-white hover:text-deep-blue/80">
                         {faq.question}
                       </AccordionTrigger>
                       <AccordionContent className="text-gray-600 dark:text-gray-300">
