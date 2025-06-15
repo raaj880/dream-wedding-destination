@@ -17,7 +17,7 @@
     --primary: 199 94% 67%; /* #5AC8FA */
     --primary-foreground: 0 0% 7%; /* #121212 */
 
-    --secondary: 348 100% 59%; /* #FF2D55 */
+    --secondary: 350 95% 58%; /* #F93155 */
     --secondary-foreground: 240 8% 97%; /* #F5F5F7 */
 
     --muted: 240 10% 17%; /* #2C2C3A */
@@ -43,8 +43,8 @@
     
     /* Legacy color compatibility */
     --champagne-gold: 48 100% 52%;
-    --coral-pink: 348 100% 59%;
-    --dusky-rose: 348 100% 59%;
+    --coral-pink: 350 95% 58%;
+    --dusky-rose: 350 95% 58%;
     --ivory-cream: 0 0% 7%;
   }
 }
