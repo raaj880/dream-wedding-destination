@@ -8,36 +8,36 @@
     --background: 0 0 0; /* Pure black background */
     --foreground: 255 255 255; /* White text */
 
-    --card: 255 215 0; /* Gold cards */
-    --card-foreground: 0 0 0; /* Black text on gold cards */
+    --card: 217 91% 60%; /* Blue cards */
+    --card-foreground: 255 255 255; /* White text on blue cards */
 
     --popover: 0 0 0; /* Black popover */
     --popover-foreground: 255 255 255; /* White text */
 
-    --primary: 255 215 0; /* Gold primary */
-    --primary-foreground: 0 0 0; /* Black text on gold */
+    --primary: 217 91% 60%; /* Blue primary */
+    --primary-foreground: 255 255 255; /* White text on blue */
 
-    --secondary: 255 223 0; /* Bright gold */
+    --secondary: 217 91% 67%; /* Light Blue */
     --secondary-foreground: 0 0 0; /* Black text on secondary */
 
     --muted: 64 64 64; /* Dark gray */
     --muted-foreground: 163 163 163; /* Light gray for muted text */
 
-    --accent: 255 215 0; /* Gold accent */
-    --accent-foreground: 0 0 0; /* Black text on accent */
+    --accent: 217 91% 60%; /* Blue accent */
+    --accent-foreground: 255 255 255; /* White text on accent */
 
     --destructive: 220 38 127; /* Deep red for destructive actions */
     --destructive-foreground: 255 255 255; /* White text */
 
-    --border: 255 215 0; /* Gold borders */
+    --border: 217 91% 60%; /* Blue borders */
     --input: 32 32 32; /* Dark inputs */
-    --ring: 255 215 0; /* Gold for focus rings */
+    --ring: 217 91% 60%; /* Blue for focus rings */
 
     --radius: 0.75rem;
 
     /* Premium card colors */
     --card-black: 0 0 0; /* Pure black */
-    --card-gold: 255 215 0; /* Pure gold */
+    --card-gold: 59 130 246; /* Blue */
     --card-platinum: 229 228 226; /* Platinum silver */
     --card-dark-gray: 32 32 32; /* Dark gray */
     --card-charcoal: 18 18 18; /* Charcoal */
@@ -47,30 +47,30 @@
     --background: 0 0 0; /* Keep black */
     --foreground: 255 255 255; /* White text */
 
-    --card: 255 215 0; /* Gold cards */
-    --card-foreground: 0 0 0; /* Black text on gold cards */
+    --card: 217 91% 60%; /* Blue cards */
+    --card-foreground: 255 255 255; /* White text on blue cards */
 
     --popover: 0 0 0; /* Black popover */
     --popover-foreground: 255 255 255; /* White text */
 
-    --primary: 255 215 0; /* Gold */
-    --primary-foreground: 0 0 0; /* Black text */
+    --primary: 217 91% 60%; /* Blue */
+    --primary-foreground: 255 255 255; /* White text */
 
-    --secondary: 255 223 0; /* Bright gold */
+    --secondary: 217 91% 67%; /* Light blue */
     --secondary-foreground: 0 0 0; /* Black text */
 
     --muted: 64 64 64; /* Dark gray */
     --muted-foreground: 163 163 163; /* Light gray */
 
-    --accent: 255 215 0; /* Gold */
-    --accent-foreground: 0 0 0; /* Black text */
+    --accent: 217 91% 60%; /* Blue */
+    --accent-foreground: 255 255 255; /* White text */
 
     --destructive: 220 38 127; /* Deep red */
     --destructive-foreground: 255 255 255; /* White text */
 
-    --border: 255 215 0; /* Gold borders */
+    --border: 217 91% 60%; /* Blue borders */
     --input: 32 32 32; /* Dark inputs */
-    --ring: 255 215 0; /* Gold */
+    --ring: 217 91% 60%; /* Blue */
   }
 }
 
@@ -101,26 +101,26 @@
   
   /* Premium card utility classes */
   .card-gradient {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
   }
   
   .card-shadow {
-    box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3), 0 0 0 1px rgba(255, 215, 0, 0.1);
+    box-shadow: 0 25px 50px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1);
   }
   
   .premium-card {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    border: 1px solid rgba(59, 130, 246, 0.3);
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
   }
   
   .gold-gradient {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
   }
   
   .text-gradient {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
