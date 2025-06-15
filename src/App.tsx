@@ -19,6 +19,12 @@ import Index from '@/pages/Index';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import MobileBottomNav from '@/components/navigation/MobileBottomNav';
+import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
+import TermsOfServicePage from '@/pages/TermsOfServicePage';
+import AboutPage from '@/pages/AboutPage';
+import BlogPage from '@/pages/BlogPage';
+import ContactPage from '@/pages/ContactPage';
+import HelpCenterPage from '@/pages/HelpCenterPage';
 
 const queryClient = new QueryClient();
 
@@ -35,6 +41,12 @@ function App() {
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/login" element={<AuthPage />} />
                 <Route path="/register" element={<AuthPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/privacy" element={<PrivacyPolicyPage />} />
+                <Route path="/terms" element={<TermsOfServicePage />} />
+                <Route path="/help" element={<HelpCenterPage />} />
                 <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                 <Route path="/profile/:id" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
                 <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
