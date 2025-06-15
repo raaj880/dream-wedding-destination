@@ -68,26 +68,26 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
   }, []);
 
   return (
-    <Card className="w-full animate-in fade-in-50 duration-500">
-      <CardHeader>
-        <CardTitle className="text-2xl font-semibold text-deep-blue dark:text-white flex items-center">
+    <Card className="w-full animate-in fade-in-50 duration-500 bg-transparent border-none shadow-none">
+      <CardHeader className="px-0">
+        <CardTitle className="text-2xl font-semibold text-card-gold flex items-center">
           {hasExistingPhotos ? 'Manage Your Photos' : 'Add Your Best Photos'} <span className="ml-2">📸</span>
         </CardTitle>
-        <CardDescription className="text-gray-600 dark:text-gray-300">
+        <CardDescription className="text-gray-400">
           {hasExistingPhotos 
             ? 'You can add more photos or remove existing ones. Your profile looks great!'
             : 'Profiles with photos get 7x more matches! Upload 1-3 photos.'
           }
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 px-0">
         {totalPhotos < MAX_PHOTOS && (
-          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center cursor-pointer hover:border-deep-blue dark:hover:border-soft-pink transition-colors">
+          <div className="border-2 border-dashed border-card-gold/30 rounded-xl p-6 text-center cursor-pointer hover:border-card-gold transition-colors">
             <label htmlFor="photo-upload" className="cursor-pointer">
-              <UploadCloud className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-2" />
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <UploadCloud className="mx-auto h-12 w-12 text-card-gold/70 mb-2" />
+              <p className="text-sm text-gray-400">
                 Drag & drop your photos here, or{' '}
-                <span className="font-semibold text-deep-blue dark:text-soft-pink">click to browse</span>.
+                <span className="font-semibold text-card-gold">click to browse</span>.
               </p>
               <Input
                 id="photo-upload"
@@ -104,23 +104,23 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
 
         {totalPhotos > 0 && (
           <div>
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <h3 className="text-sm font-medium text-gray-300 mb-2">
               {hasExistingPhotos ? 'Your Photos:' : 'Uploaded Photos:'}
             </h3>
             <div className="flex space-x-3 overflow-x-auto pb-2">
               {data.photoPreviews.map((previewUrl, index) => (
-                <div key={index} className="relative flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden shadow">
+                <div key={index} className="relative flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden shadow-md border border-card-gold/20">
                   <img src={previewUrl} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute top-1 right-1 bg-black/50 text-white hover:bg-black/70 w-6 h-6"
+                    className="absolute top-1 right-1 bg-black/60 text-white hover:bg-black/80 w-6 h-6 rounded-full"
                     onClick={() => removePhoto(index)}
                   >
                     <XCircle className="w-4 h-4" />
                   </Button>
                   {index === 0 && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-xs px-1 py-0.5 text-center">
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-xs px-1 py-0.5 text-center font-semibold">
                       Main
                     </div>
                   )}
@@ -133,7 +133,7 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
         {totalPhotos < MAX_PHOTOS && (
           <Button
             variant="outline"
-            className="w-full border-soft-pink text-soft-pink hover:bg-soft-pink hover:text-deep-blue dark:border-deep-blue dark:text-deep-blue dark:hover:bg-deep-blue dark:hover:text-soft-pink"
+            className="w-full border-card-gold text-card-gold hover:bg-card-gold hover:text-card-black font-semibold"
             onClick={() => document.getElementById('photo-upload')?.click()}
             disabled={totalPhotos >= MAX_PHOTOS}
           >
@@ -143,7 +143,7 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
         )}
         
         {totalPhotos === 0 && (
-          <p className="text-sm text-red-500 text-center">Please upload at least one photo to continue.</p>
+          <p className="text-sm text-red-500 text-center pt-2">Please upload at least one photo to continue.</p>
         )}
       </CardContent>
     </Card>

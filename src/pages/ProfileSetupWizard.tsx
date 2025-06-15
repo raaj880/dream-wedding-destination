@@ -61,11 +61,11 @@ const ProfileSetupWizard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-soft-pink/10 via-white to-white dark:from-deep-blue/10 dark:via-gray-900 dark:to-black">
+    <div className="min-h-screen bg-card-charcoal text-white">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <Card className="shadow-lg">
+        <Card className="shadow-premium bg-card-dark-gray border border-card-gold/20">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold text-deep-blue dark:text-white mb-2">
+            <CardTitle className="text-3xl font-bold text-card-gold mb-2">
               {isEditMode ? 'Edit Your Profile' : 'Complete Your Profile'}
             </CardTitle>
             <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
@@ -73,12 +73,12 @@ const ProfileSetupWizard: React.FC = () => {
           <CardContent className="space-y-6">
             {renderStep()}
             
-            <div className="flex justify-between pt-6">
+            <div className="flex justify-between pt-6 border-t border-card-gold/20">
               <Button
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="flex items-center"
+                className="flex items-center text-card-gold border-card-gold/50 hover:bg-card-gold/10"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous
@@ -87,7 +87,7 @@ const ProfileSetupWizard: React.FC = () => {
               {currentStep < totalSteps ? (
                 <Button
                   onClick={nextStep}
-                  className="bg-deep-blue hover:bg-deep-blue/90 text-white flex items-center"
+                  className="bg-card-gold hover:bg-card-gold/90 text-card-black font-semibold flex items-center"
                 >
                   Next
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -96,7 +96,7 @@ const ProfileSetupWizard: React.FC = () => {
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting || loading}
-                  className="bg-soft-pink hover:bg-soft-pink/90 text-deep-blue flex items-center"
+                  className="bg-card-gold hover:bg-card-gold/90 text-card-black font-semibold flex items-center"
                 >
                   {isSubmitting || loading ? (
                     isEditMode ? 'Saving Changes...' : 'Creating Profile...'

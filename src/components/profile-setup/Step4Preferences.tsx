@@ -31,15 +31,15 @@ const locationPreferenceOptions = ["Same City", "Same State/Province", "Same Cou
 
 const Step4Preferences: React.FC<Step4PreferencesProps> = ({ data, updateData, errors }) => {
   return (
-    <Card className="w-full animate-in fade-in-50 duration-500">
-      <CardHeader>
-        <CardTitle className="text-2xl font-semibold text-deep-blue dark:text-white flex items-center">
+    <Card className="w-full animate-in fade-in-50 duration-500 bg-transparent border-none shadow-none">
+      <CardHeader className="px-0">
+        <CardTitle className="text-2xl font-semibold text-card-gold flex items-center">
           What Are You Looking For? <span className="ml-2">🎯</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-8">
+      <CardContent className="space-y-8 px-0">
         <div>
-          <Label className="text-gray-700 dark:text-gray-300">Looking to marry in:</Label>
+          <Label className="text-gray-300">Looking to marry in:</Label>
           <RadioGroup
             value={data.marryTimeframe}
             onValueChange={(value) => updateData({ marryTimeframe: value as ProfileData['marryTimeframe'] })}
@@ -47,8 +47,8 @@ const Step4Preferences: React.FC<Step4PreferencesProps> = ({ data, updateData, e
           >
             {marryTimeframeOptions.map(option => (
               <div key={option.value} className="flex items-center space-x-2">
-                <RadioGroupItem value={option.value} id={`marry-${option.value}`} />
-                <Label htmlFor={`marry-${option.value}`} className="text-gray-700 dark:text-gray-300">{option.label}</Label>
+                <RadioGroupItem value={option.value} id={`marry-${option.value}`} className="border-card-gold/50 data-[state=checked]:bg-card-gold data-[state=checked]:text-card-black" />
+                <Label htmlFor={`marry-${option.value}`} className="text-gray-300">{option.label}</Label>
               </div>
             ))}
           </RadioGroup>
@@ -56,7 +56,7 @@ const Step4Preferences: React.FC<Step4PreferencesProps> = ({ data, updateData, e
         </div>
 
         <div>
-          <Label htmlFor="ageRange" className="text-gray-700 dark:text-gray-300">
+          <Label htmlFor="ageRange" className="text-gray-300">
             Preferred Partner Age Range: {data.partnerAgeRange[0]} - {data.partnerAgeRange[1]} years
           </Label>
           <Slider
@@ -66,26 +66,26 @@ const Step4Preferences: React.FC<Step4PreferencesProps> = ({ data, updateData, e
             step={1}
             value={data.partnerAgeRange}
             onValueChange={(value) => updateData({ partnerAgeRange: value as [number, number] })}
-            className="mt-3 [&>span]:bg-deep-blue [&>span>span]:bg-white dark:[&>span]:bg-soft-pink"
+            className="mt-3 [&>span]:bg-card-gold [&>span>span]:bg-card-black [&>span>span]:border [&>span>span]:border-card-gold"
           />
            {/* No specific error message for slider, visual validation is usually enough */}
         </div>
         
         <div>
-          <Label htmlFor="partnerLocation" className="text-gray-700 dark:text-gray-300">Preferred Partner Location</Label>
+          <Label htmlFor="partnerLocation" className="text-gray-300">Preferred Partner Location</Label>
           <Select value={data.partnerLocation} onValueChange={(value) => updateData({ partnerLocation: value })}>
-            <SelectTrigger className={cn("w-full mt-1", errors.partnerLocation && "border-red-500")}>
+            <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.partnerLocation && "border-red-500")}>
               <SelectValue placeholder="Select location preference" />
             </SelectTrigger>
-            <SelectContent>
-              {locationPreferenceOptions.map(option => <SelectItem key={option} value={option}>{option}</SelectItem>)}
+            <SelectContent className="bg-card-charcoal border-card-gold/50 text-white">
+              {locationPreferenceOptions.map(option => <SelectItem key={option} value={option} className="focus:bg-card-gold/20">{option}</SelectItem>)}
             </SelectContent>
           </Select>
           {errors.partnerLocation && <p className="text-sm text-red-500 mt-1">{errors.partnerLocation}</p>}
         </div>
 
         <div>
-          <Label className="text-gray-700 dark:text-gray-300">Allow profile visibility to:</Label>
+          <Label className="text-gray-300">Allow profile visibility to:</Label>
            <RadioGroup
             value={data.profileVisibility}
             onValueChange={(value) => updateData({ profileVisibility: value as ProfileData['profileVisibility'] })}
@@ -93,8 +93,8 @@ const Step4Preferences: React.FC<Step4PreferencesProps> = ({ data, updateData, e
           >
             {profileVisibilityOptions.map(option => (
               <div key={option.value} className="flex items-center space-x-2">
-                <RadioGroupItem value={option.value} id={`visibility-${option.value}`} />
-                <Label htmlFor={`visibility-${option.value}`} className="text-gray-700 dark:text-gray-300">{option.label}</Label>
+                <RadioGroupItem value={option.value} id={`visibility-${option.value}`} className="border-card-gold/50 data-[state=checked]:bg-card-gold data-[state=checked]:text-card-black" />
+                <Label htmlFor={`visibility-${option.value}`} className="text-gray-300">{option.label}</Label>
               </div>
             ))}
           </RadioGroup>
