@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, LayoutDashboard, Sparkles, MessageCircle, User } from 'lucide-react';
@@ -55,7 +54,7 @@ const DesktopNav = () => {
               "flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200",
               "hover:bg-card-gold/20 text-sm font-medium",
               isActive 
-                ? "bg-card-gold text-black font-semibold" 
+                ? "bg-card-gold text-primary-foreground font-semibold" 
                 : "text-card-gold hover:text-white"
             )}
           >
@@ -69,4 +68,3 @@ const DesktopNav = () => {
 };
 
 export default DesktopNav;
-

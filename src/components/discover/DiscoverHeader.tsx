@@ -23,23 +23,23 @@ const DiscoverHeader: React.FC<DiscoverHeaderProps> = ({
   isRefreshing
 }) => {
   return (
-    <div className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
       <div className="flex items-center justify-between px-4 py-4 max-w-4xl mx-auto">
         <Button variant="ghost" size="icon" asChild>
           <Link to="/dashboard">
-            <ArrowLeft className="w-6 h-6 text-deep-blue" />
+            <ArrowLeft className="w-6 h-6 text-primary" />
           </Link>
         </Button>
         
         <div className="flex items-center space-x-3">
-          <h1 className="text-xl font-bold text-deep-blue">Discover</h1>
+          <h1 className="text-xl font-bold text-foreground">Discover</h1>
           {isFilterActive && (
-            <Badge variant="secondary" className="bg-soft-pink text-deep-blue">
+            <Badge variant="secondary" className="bg-soft-pink text-secondary-foreground">
               <Filter className="w-3 h-3 mr-1" />
               Filtered
             </Badge>
           )}
-          <div className="text-sm text-gray-500 flex items-center">
+          <div className="text-sm text-muted-foreground flex items-center">
             <Users className="w-4 h-4 mr-1" />
             {totalProfiles}
           </div>
@@ -48,7 +48,7 @@ const DiscoverHeader: React.FC<DiscoverHeaderProps> = ({
         <div className="flex space-x-2">
           <Button variant="ghost" size="icon" asChild>
             <Link to="/filter">
-              <Filter className="w-5 h-5 text-gray-600" />
+              <Filter className="w-5 h-5 text-primary" />
             </Link>
           </Button>
           <Button 
@@ -57,7 +57,7 @@ const DiscoverHeader: React.FC<DiscoverHeaderProps> = ({
             onClick={onToggleStats}
             className={showStats ? 'bg-soft-pink/20' : ''}
           >
-            <TrendingUp className="w-5 h-5 text-gray-600" />
+            <TrendingUp className="w-5 h-5 text-primary" />
           </Button>
           <Button 
             variant="ghost" 
@@ -65,7 +65,7 @@ const DiscoverHeader: React.FC<DiscoverHeaderProps> = ({
             onClick={onRefresh} 
             disabled={isRefreshing}
           >
-            <RotateCcw className={`w-5 h-5 text-gray-600 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RotateCcw className={`w-5 h-5 text-primary ${isRefreshing ? 'animate-spin' : ''}`} />
           </Button>
         </div>
       </div>

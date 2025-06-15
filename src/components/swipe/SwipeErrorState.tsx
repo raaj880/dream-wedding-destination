@@ -21,7 +21,7 @@ const SwipeErrorState: React.FC<SwipeErrorStateProps> = ({
   isRefreshing
 }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <SwipeHeader
         isFilterActive={isFilterActive}
         showStats={showStats}
@@ -33,11 +33,11 @@ const SwipeErrorState: React.FC<SwipeErrorStateProps> = ({
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-6">⚠️</div>
-          <h2 className="text-2xl font-bold text-deep-blue mb-4">
+          <h2 className="text-2xl font-bold text-foreground mb-4">
             Something went wrong
           </h2>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <Button className="w-full bg-deep-blue text-white" onClick={onRefresh}>
+          <p className="text-muted-foreground mb-6">{error}</p>
+          <Button className="w-full bg-primary text-primary-foreground" onClick={onRefresh}>
             Try Again
           </Button>
         </div>

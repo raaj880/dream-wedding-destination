@@ -21,7 +21,7 @@ const SwipeHeader: React.FC<SwipeHeaderProps> = ({
   isRefreshing
 }) => {
   return (
-    <div className="bg-card-charcoal border-b border-card-gold/30 px-4 py-4 backdrop-blur-sm">
+    <div className="bg-background border-b border-primary/30 px-4 py-4 backdrop-blur-sm">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         <Button variant="ghost" size="icon" asChild className="text-card-gold hover:bg-card-gold/20">
           <Link to="/dashboard">

@@ -23,7 +23,7 @@ const SwipeEmptyState: React.FC<SwipeEmptyStateProps> = ({
   isRefreshing
 }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <SwipeHeader
         isFilterActive={isFilterActive}
         showStats={showStats}
@@ -37,22 +37,22 @@ const SwipeEmptyState: React.FC<SwipeEmptyStateProps> = ({
           <div className="text-6xl mb-6">
             {isFilterActive ? '🔍' : '🎯'}
           </div>
-          <h2 className="text-2xl font-bold text-deep-blue mb-4">
+          <h2 className="text-2xl font-bold text-foreground mb-4">
             {isFilterActive ? 'No matches found' : 'No more profiles to show'}
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             {isFilterActive 
               ? `No profiles match your current filters. Try adjusting them to see more people.`
               : 'You\'ve seen all available profiles. Check back later for new members or adjust your filters!'
             }
           </p>
           {isFilterActive && totalCount > 0 && (
-            <p className="text-sm text-gray-500 mb-6">
+            <p className="text-sm text-muted-foreground mb-6">
               {totalCount} total profiles available
             </p>
           )}
           <div className="space-y-3">
-            <Button className="w-full bg-deep-blue text-white" asChild>
+            <Button className="w-full bg-primary text-primary-foreground" asChild>
               <Link to="/filter">
                 <Filter className="w-4 h-4 mr-2" />
                 {isFilterActive ? 'Adjust Filters' : 'Set Filters'}
