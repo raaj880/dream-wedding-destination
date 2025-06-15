@@ -35,7 +35,7 @@ const Hero = () => {
         </p>
         <Button 
           size="lg"
-          className="bg-primary text-primary-foreground font-bold rounded-2xl px-10 py-7 text-lg hover:bg-primary/90 hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-subtle-pulse"
+          className="bg-secondary text-secondary-foreground font-bold rounded-2xl px-10 py-7 text-lg hover:bg-secondary/90 hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-subtle-pulse"
           onClick={handleFindYourMatch}
         >
           Find Your Match
