@@ -14,11 +14,11 @@ interface FAQItemProps {
 
 const FAQItem: React.FC<FAQItemProps> = ({ value, question, answer }) => {
   return (
-    <AccordionItem value={value} className="border-b border-gray-300 last:border-b-0">
-      <AccordionTrigger className="py-6 text-lg font-semibold text-deep-blue hover:no-underline hover:text-deep-blue/80 text-left">
+    <AccordionItem value={value} className="border-b border-border last:border-b-0">
+      <AccordionTrigger className="py-6 text-lg font-semibold text-foreground hover:no-underline hover:text-foreground/80 text-left">
         {question}
       </AccordionTrigger>
-      <AccordionContent className="pb-6 text-gray-700 text-base">
+      <AccordionContent className="pb-6 text-muted-foreground text-base">
         {answer}
       </AccordionContent>
     </AccordionItem>
