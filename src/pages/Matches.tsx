@@ -79,7 +79,7 @@ const Matches: React.FC = () => {
 
   if (matchesLoading || profilesLoading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
           <p className="text-muted-foreground font-medium">Finding your perfect matches...</p>
@@ -89,7 +89,7 @@ const Matches: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <MatchesHeader isFilterActive={isActive} />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl">
@@ -101,7 +101,7 @@ const Matches: React.FC = () => {
                 {matches.length > 0 ? 'Your Mutual Matches' : 'Available Profiles'}
               </h2>
               {newMatches.length > 0 && (
-                <Badge className="bg-soft-pink text-deep-blue animate-pulse">
+                <Badge className="bg-primary text-primary-foreground animate-pulse">
                   {newMatches.length} New!
                 </Badge>
               )}

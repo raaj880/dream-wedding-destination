@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ProfileData } from '@/types/profile';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -44,7 +45,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
             style={{ backgroundImage: `url(${profileData.photoPreviews[0]})` }}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
       </div>
 
       {/* Profile Picture & Basic Info */}
@@ -60,15 +61,15 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
               disabled={!isOwnProfile}
             />
             <label htmlFor="avatar-upload" className={`${isOwnProfile ? 'cursor-pointer group' : ''} relative block`}>
-              <Avatar className="w-32 h-32 border-4 border-white dark:border-gray-800 shadow-xl ring-2 ring-soft-pink/50">
+              <Avatar className="w-32 h-32 border-4 border-background shadow-xl ring-2 ring-primary/50">
                 <AvatarImage src={profileData.photoPreviews[0]} alt={profileData.fullName} />
-                <AvatarFallback className="bg-gray-200 text-2xl font-semibold text-deep-blue">
+                <AvatarFallback className="bg-muted text-2xl font-semibold text-muted-foreground">
                   <User className="w-16 h-16" />
                 </AvatarFallback>
               </Avatar>
               {isOwnProfile && (
                 <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Edit className="w-8 h-8 text-white" />
+                  <Edit className="w-8 h-8 text-foreground" />
                 </div>
               )}
             </label>
@@ -81,13 +82,13 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
           </div>
 
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-deep-blue dark:text-white mb-1">
+            <h1 className="text-2xl font-bold text-foreground mb-1">
               {profileData.fullName}
             </h1>
-            <p className="text-gray-600 dark:text-gray-300 mb-2">
+            <p className="text-muted-foreground mb-2">
               {getAge(profileData.dob)} years old
             </p>
-            <div className="flex items-center justify-center text-gray-500 dark:text-gray-400">
+            <div className="flex items-center justify-center text-muted-foreground">
               <MapPin className="w-4 h-4 mr-1" />
               <span className="text-sm">{profileData.location}</span>
             </div>
@@ -97,7 +98,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
             <div className="mt-6 w-full max-w-xs">
               <Button
                 onClick={onEditProfile}
-                className="w-full gold-gradient text-black rounded-full py-3 font-medium text-base"
+                className="w-full gold-gradient text-background rounded-full py-3 font-medium text-base"
               >
                 <Edit className="w-4 h-4 mr-2" />
                 Edit My Profile

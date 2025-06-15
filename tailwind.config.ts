@@ -24,25 +24,25 @@ export default {
         display: ['SF Pro Display', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
 			colors: {
-        // Premium Card Colors - Black and Blue Theme
-        'card-black': '#000000', // Pure black
+        // Premium Card Colors - Blue Theme
+        'card-black': 'hsl(var(--background))', // Very Dark Blue
         'card-gold': '#3B82F6', // Blue
         'card-platinum': '#E5E4E2', // Platinum silver
-        'card-dark-gray': '#202020', // Dark gray
-        'card-charcoal': '#121212', // Charcoal
+        'card-dark-gray': 'hsl(var(--card))', // Dark Blue
+        'card-charcoal': 'hsl(var(--card-charcoal))', // Even Darker Blue
         'card-accent': '#60A5FA', // Light blue accent
         
-        // Legacy colors mapped to black/blue theme
-        'royal-plum': '#000000', // Black
+        // Legacy colors mapped to blue theme
+        'royal-plum': 'hsl(var(--background))',
         'blush-rose': '#3B82F6', // Blue
         'regal-gold': '#3B82F6', // Blue
         'ivory-white': '#FFFFFF', // White
-        'charcoal-black': '#000000', // Pure Black
-        'slate-gray': '#404040', // Dark Gray
+        'charcoal-black': 'hsl(var(--background))',
+        'slate-gray': 'hsl(var(--muted))', // Dark Muted Blue
         'vibrant-coral': '#3B82F6', // Blue
-        'soft-pink': '#3B82F6', // Blue
-        'deep-blue': '#000000', // Black
-        'tinder-bg': '#000000', // Black background
+        'soft-pink': '#60A5FA', // Mapped to light blue for consistency
+        'deep-blue': 'hsl(var(--card))', // Dark Blue
+        'tinder-bg': 'hsl(var(--background))', // Background color
         
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

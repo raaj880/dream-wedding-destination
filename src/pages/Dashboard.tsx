@@ -14,7 +14,7 @@ const Dashboard: React.FC = () => {
   const { isActive: hasActiveFilters } = useFilters();
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       <DashboardHeader />
 
       <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6">

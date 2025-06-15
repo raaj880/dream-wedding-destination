@@ -35,7 +35,7 @@ const PhotoLightbox: React.FC<PhotoLightboxProps> = ({ photos, selectedIndex, on
 
   return (
     <div 
-      className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-background/90 z-50 flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div className="relative max-w-4xl w-full max-h-full" onClick={(e) => e.stopPropagation()}>
@@ -48,14 +48,14 @@ const PhotoLightbox: React.FC<PhotoLightboxProps> = ({ photos, selectedIndex, on
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-4 right-4 bg-black/50 text-white hover:bg-black/70 rounded-full"
+          className="absolute top-4 right-4 bg-background/50 text-foreground hover:bg-background/70 rounded-full"
           onClick={onClose}
         >
           <X className="w-5 h-5" />
         </Button>
         
         {/* Photo counter */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-background/50 text-foreground px-3 py-1 rounded-full text-sm">
           {selectedIndex + 1} of {photos.length}
         </div>
       </div>

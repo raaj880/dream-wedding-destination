@@ -194,8 +194,8 @@ const ProfilePage: React.FC = () => {
 
   if (loading || !profileData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="animate-spin rounded-full h-24 w-24 border-b-2 border-deep-blue dark:border-soft-pink"></div>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin rounded-full h-24 w-24 border-b-2 border-primary"></div>
       </div>
     );
   }

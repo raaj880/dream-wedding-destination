@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useSwipeInterface } from '@/hooks/useSwipeInterface';
@@ -90,12 +91,12 @@ const EnhancedSwipeInterface: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <p className="text-red-500 mb-4">{error}</p>
           <button 
             onClick={resetSwipes}
-            className="bg-deep-blue text-white px-4 py-2 rounded"
+            className="bg-primary text-primary-foreground px-4 py-2 rounded"
           >
             Try Again
           </button>
@@ -109,7 +110,7 @@ const EnhancedSwipeInterface: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <DiscoverHeader 
         isFilterActive={isFilterActive}
         totalProfiles={totalCount}
@@ -138,8 +139,8 @@ const EnhancedSwipeInterface: React.FC = () => {
         
         {loading && displayProfiles.length > 0 && (
           <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-deep-blue mx-auto"></div>
-            <p className="text-gray-600 mt-2">Loading more profiles...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+            <p className="text-muted-foreground mt-2">Loading more profiles...</p>
           </div>
         )}
       </div>

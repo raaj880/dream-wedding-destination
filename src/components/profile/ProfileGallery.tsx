@@ -14,9 +14,9 @@ const ProfileGallery: React.FC<ProfileGalleryProps> = ({ photoPreviews, onPhotoS
   if (photoPreviews.length <= 1) return null;
 
   return (
-    <Card className="shadow-md border-0 bg-white dark:bg-gray-800">
+    <Card className="shadow-md border-0 bg-card">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-deep-blue dark:text-white flex items-center">
+        <CardTitle className="text-lg font-semibold text-foreground flex items-center">
           <ImageIcon className="w-5 h-5 mr-2" />
           Photo Gallery ({photoPreviews.length} photos)
         </CardTitle>
@@ -26,7 +26,7 @@ const ProfileGallery: React.FC<ProfileGalleryProps> = ({ photoPreviews, onPhotoS
           {photoPreviews.map((photo, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-deep-blue transition-all duration-200 hover:scale-105"
+              className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-200 hover:scale-105"
               onClick={() => onPhotoSelect(index)}
             >
               <img 

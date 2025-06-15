@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import ProfileHeader from './ProfileHeader';
@@ -40,7 +39,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
     : [];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-background">
       <ProfileHeader 
         profileData={profileData}
         onPhotoChange={onPhotoChange}
