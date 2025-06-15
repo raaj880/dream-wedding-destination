@@ -1,8 +1,6 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { toast } from '@/hooks/use-toast';
 
 export interface RealTimeMatch {
   id: string;
@@ -70,13 +68,6 @@ export const useRealTimeMatches = () => {
               };
 
               setNewMatches(prev => [...prev, matchData]);
-
-              // Show toast notification
-              toast({
-                title: "New Match! 💕",
-                description: `You and ${profile.full_name} liked each other!`,
-                duration: 5000,
-              });
 
               // Trigger browser notification if permission granted
               if (Notification.permission === 'granted') {

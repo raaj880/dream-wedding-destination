@@ -77,6 +77,41 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          id: string
+          is_read: boolean
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          is_read?: boolean
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          is_read?: boolean
+          type?: Database["public"]["Enums"]["notification_type"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           account_status: string
@@ -203,6 +238,7 @@ export type Database = {
     }
     Enums: {
       interaction_enum: "like" | "pass" | "superlike" | "block" | "view"
+      notification_type: "new_match" | "new_message" | "profile_view"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -319,6 +355,7 @@ export const Constants = {
   public: {
     Enums: {
       interaction_enum: ["like", "pass", "superlike", "block", "view"],
+      notification_type: ["new_match", "new_message", "profile_view"],
     },
   },
 } as const

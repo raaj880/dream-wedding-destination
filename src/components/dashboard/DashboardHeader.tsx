@@ -1,10 +1,12 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Bell, Settings, Crown } from 'lucide-react';
+import { Settings, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from '@/contexts/AuthContext';
 import { useProfile } from '@/hooks/useProfile';
+import { NotificationBell } from '@/components/notifications/NotificationBell';
 
 const DashboardHeader: React.FC = () => {
   const { user } = useAuth();
@@ -62,9 +64,7 @@ const DashboardHeader: React.FC = () => {
         </div>
         
         <div className="flex items-center space-x-2 flex-shrink-0">
-          <Button variant="ghost" size="icon" title="Notifications" className="w-10 h-10 hover:bg-card-gold/20 rounded-full text-card-gold border border-card-gold/30">
-            <Bell className="w-5 h-5" />
-          </Button>
+          <NotificationBell />
           <Button variant="ghost" size="icon" asChild title="Settings" className="w-10 h-10 hover:bg-card-gold/20 rounded-full text-card-gold border border-card-gold/30">
             <Link to="/settings">
               <Settings className="w-5 h-5" />
