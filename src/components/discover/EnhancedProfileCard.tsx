@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, X, Star, MapPin, Briefcase, GraduationCap, Calendar, Languages, Church, Users, Shield, Clock, Ruler, MessageCircle, Camera, Phone, Mail } from 'lucide-react';
@@ -148,65 +147,16 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
                     <span className="truncate">{profile.religion}</span>
                   </div>
                 )}
-                {profile.education && (
-                  <div className="flex items-center text-gray-300">
-                    <GraduationCap className="w-4 h-4 mr-2 text-card-gold" />
-                    <span className="truncate">{profile.education}</span>
-                  </div>
-                )}
-                {profile.height && (
-                  <div className="flex items-center text-gray-300">
-                    <Ruler className="w-4 h-4 mr-2 text-card-gold" />
-                    <span className="truncate">{profile.height}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Bio Preview */}
-              {profile.bio && (
-                <div className="bg-gray-900/50 rounded-lg p-3 border border-card-gold/20">
-                  <p className="text-sm text-gray-200 line-clamp-3 leading-relaxed">
-                    {profile.bio}
-                  </p>
-                </div>
-              )}
-
-              {/* Languages & Community Tags */}
-              <div className="space-y-2">
-                {profile.languages && profile.languages.length > 0 && (
-                  <div>
-                    <div className="flex items-center mb-2">
-                      <Languages className="w-4 h-4 mr-2 text-card-gold" />
-                      <span className="text-sm font-medium text-gray-200">Languages</span>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {profile.languages.slice(0, 4).map((language) => (
-                        <Badge key={language} variant="secondary" className="text-xs bg-card-gold/20 text-card-gold border border-card-gold/30">
-                          {language}
-                        </Badge>
-                      ))}
-                      {profile.languages.length > 4 && (
-                        <Badge variant="secondary" className="text-xs bg-card-gold/20 text-card-gold border border-card-gold/30">
-                          +{profile.languages.length - 4}
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                )}
-
                 {profile.community && (
-                  <div className="flex items-center">
+                  <div className="flex items-center text-gray-300">
                     <Users className="w-4 h-4 mr-2 text-card-gold" />
-                    <span className="text-sm text-gray-300">{profile.community}</span>
+                    <span className="truncate">{profile.community}</span>
                   </div>
                 )}
-
                 {profile.marry_timeframe && (
-                  <div className="flex items-center">
+                  <div className="flex items-center text-gray-300">
                     <Calendar className="w-4 h-4 mr-2 text-card-gold" />
-                    <span className="text-sm text-gray-300">
-                      Looking to marry: {formatTimeframe(profile.marry_timeframe)}
-                    </span>
+                    <span className="truncate">Wants to marry: {formatTimeframe(profile.marry_timeframe)}</span>
                   </div>
                 )}
               </div>
@@ -215,7 +165,7 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
               <Button
                 variant="ghost"
                 onClick={() => setShowDetails(true)}
-                className="w-full text-card-gold hover:bg-card-gold/20 border border-card-gold/30 hover:border-card-gold/50"
+                className="w-full text-card-gold hover:bg-card-gold/20 border border-card-gold/30 hover:border-card-gold/50 mt-4"
               >
                 See More Details
               </Button>
