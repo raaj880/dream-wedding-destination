@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Bell, Settings, User } from 'lucide-react';
+import { Bell, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from '@/contexts/AuthContext';
@@ -40,37 +40,32 @@ const DashboardHeader: React.FC = () => {
   const profilePhoto = profile?.photos?.[0];
 
   return (
-    <div className="bg-white border-b border-gray-200 px-4 py-4 sticky top-0 z-10">
+    <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 flex-1 min-w-0">
           <Link to="/profile" className="flex-shrink-0">
-            <Avatar className="w-10 h-10 cursor-pointer hover:ring-2 hover:ring-soft-pink transition-all">
+            <Avatar className="w-9 h-9 cursor-pointer hover:ring-2 hover:ring-soft-pink transition-all">
               {profilePhoto && <AvatarImage src={profilePhoto} alt={displayName} className="object-cover" />}
-              <AvatarFallback className="bg-soft-pink text-deep-blue">
+              <AvatarFallback className="bg-soft-pink text-deep-blue text-sm">
                 {loading ? '...' : getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
           </Link>
-          <div>
-            <h1 className="text-xl font-bold text-deep-blue">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-lg font-bold text-deep-blue truncate">
               Welcome back{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}!
             </h1>
-            <p className="text-sm text-gray-600">Ready to find your match?</p>
+            <p className="text-xs text-gray-600">Ready to find your match?</p>
           </div>
         </div>
         
-        <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="icon" title="Notifications">
-            <Bell className="w-5 h-5 text-gray-600" />
+        <div className="flex items-center space-x-1 flex-shrink-0">
+          <Button variant="ghost" size="icon" title="Notifications" className="w-9 h-9">
+            <Bell className="w-4 h-4 text-gray-600" />
           </Button>
-          <Button variant="ghost" size="icon" asChild title="Profile">
-            <Link to="/profile">
-              <User className="w-5 h-5 text-gray-600" />
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon" asChild title="Settings">
+          <Button variant="ghost" size="icon" asChild title="Settings" className="w-9 h-9">
             <Link to="/settings">
-              <Settings className="w-5 h-5 text-gray-600" />
+              <Settings className="w-4 h-4 text-gray-600" />
             </Link>
           </Button>
         </div>
