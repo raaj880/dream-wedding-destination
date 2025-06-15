@@ -37,7 +37,7 @@
 
     /* Premium card colors */
     --card-black: 224 71% 4%; /* Very Dark Blue */
-    --card-gold: 59 130 246; /* Blue */
+    --card-gold: 348 68% 80%; /* Soft Rose Gold */
     --card-platinum: 229 228 226; /* Platinum silver */
     --card-dark-gray: 222 47% 11%; /* Dark Blue */
     --card-charcoal: 225 50% 8%; /* Even Darker Blue */
@@ -100,26 +100,26 @@
   
   /* Premium card utility classes */
   .card-gradient {
-    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
   }
   
   .card-shadow {
-    box-shadow: 0 25px 50px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 25px 50px rgba(239, 168, 184, 0.3), 0 0 0 1px rgba(239, 168, 184, 0.1);
   }
   
   .premium-card {
-    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
+    border: 1px solid rgba(239, 168, 184, 0.3);
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 8px 32px rgba(239, 168, 184, 0.2);
   }
   
   .gold-gradient {
-    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
   }
   
   .text-gradient {
-    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    background: linear-gradient(135deg, #D99AAA 0%, #EFA8B8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

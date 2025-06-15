@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -23,18 +24,18 @@ export default {
         display: ['SF Pro Display', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
 			colors: {
-        // Premium Card Colors - Blue Theme
+        // Premium Card Colors - Rose Gold Theme
         'card-black': 'hsl(var(--background))', // Very Dark Blue
-        'card-gold': '#3B82F6', // Blue
+        'card-gold': '#EFA8B8', // Soft Rose Gold
         'card-platinum': '#E5E4E2', // Platinum silver
         'card-dark-gray': 'hsl(var(--card))', // Dark Blue
         'card-charcoal': 'hsl(var(--card-charcoal))', // Even Darker Blue
         'card-accent': '#EFA8B8', // Soft Rose Gold accent
         
-        // Legacy colors mapped to blue theme
+        // Legacy colors mapped to theme
         'royal-plum': 'hsl(var(--background))',
-        'blush-rose': '#3B82F6', // Blue
-        'regal-gold': '#3B82F6', // Blue
+        'blush-rose': '#EFA8B8', // Soft Rose Gold
+        'regal-gold': '#EFA8B8', // Soft Rose Gold
         'ivory-white': '#FFFFFF', // White
         'charcoal-black': 'hsl(var(--background))',
         'slate-gray': 'hsl(var(--muted))', // Dark Muted Blue
@@ -96,9 +97,9 @@ export default {
         '4xl': '2rem',
 			},
       boxShadow: {
-        'card': '0 25px 50px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1)',
-        'card-hover': '0 35px 60px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.2)',
-        'premium': '0 8px 32px rgba(59, 130, 246, 0.2)',
+        'card': '0 25px 50px rgba(239, 168, 184, 0.3), 0 0 0 1px rgba(239, 168, 184, 0.1)',
+        'card-hover': '0 35px 60px rgba(239, 168, 184, 0.4), 0 0 0 1px rgba(239, 168, 184, 0.2)',
+        'premium': '0 8px 32px rgba(239, 168, 184, 0.2)',
         'md_dark': '0 -4px 6px -1px rgba(255, 255, 255, 0.05), 0 -2px 4px -1px rgba(255, 255, 255, 0.03)',
       },
 			keyframes: {
