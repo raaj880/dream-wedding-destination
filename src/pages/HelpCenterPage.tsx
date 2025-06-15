@@ -13,25 +13,25 @@ const HelpCenterPage: React.FC = () => {
 
   const helpCategories = [
     {
-      icon: <Book className="w-6 h-6 text-blue-500" />,
+      icon: <Book className="w-6 h-6 text-blue-400" />,
       title: "Getting Started",
       description: "Learn the basics of using Wedder",
       articles: 12
     },
     {
-      icon: <MessageCircle className="w-6 h-6 text-green-500" />,
+      icon: <MessageCircle className="w-6 h-6 text-green-400" />,
       title: "Profile & Matches",
       description: "Managing your profile and finding matches",
       articles: 8
     },
     {
-      icon: <Shield className="w-6 h-6 text-red-500" />,
+      icon: <Shield className="w-6 h-6 text-red-400" />,
       title: "Privacy & Safety",
       description: "Keeping your information secure",
       articles: 6
     },
     {
-      icon: <HelpCircle className="w-6 h-6 text-purple-500" />,
+      icon: <HelpCircle className="w-6 h-6 text-purple-400" />,
       title: "Troubleshooting",
       description: "Common issues and solutions",
       articles: 10
@@ -101,18 +101,18 @@ const HelpCenterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 pt-12 pb-16 max-w-6xl">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-black text-white">
+      <div className="container mx-auto px-4 pt-6 pb-16 max-w-6xl">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6 flex items-center gap-2 text-white hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
         </Button>
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-deep-blue dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Help Center
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Find answers to your questions and get the help you need.
           </p>
           
@@ -131,23 +131,23 @@ const HelpCenterPage: React.FC = () => {
 
         {/* Help Categories */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-deep-blue dark:text-white text-center mb-8">
+          <h2 className="text-2xl font-bold text-white text-center mb-8">
             Browse by Category
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {helpCategories.map((category, index) => (
-              <Card key={index} className="bg-white dark:bg-gray-800 border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+              <Card key={index} className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg hover:bg-gray-800/50 transition-shadow cursor-pointer">
                 <CardContent className="p-6 text-center">
                   <div className="flex justify-center mb-4">
                     {category.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-deep-blue dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     {category.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+                  <p className="text-gray-300 text-sm mb-3">
                     {category.description}
                   </p>
-                  <p className="text-deep-blue font-medium text-sm">
+                  <p className="text-blue-400 font-medium text-sm">
                     {category.articles} articles
                   </p>
                 </CardContent>
@@ -158,14 +158,14 @@ const HelpCenterPage: React.FC = () => {
 
         {/* FAQ Section */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold text-deep-blue dark:text-white text-center mb-8">
+          <h2 className="text-2xl font-bold text-white text-center mb-8">
             Frequently Asked Questions
           </h2>
           <div className="space-y-6">
             {faqSections.map((section, sectionIndex) => (
-              <Card key={sectionIndex} className="bg-white dark:bg-gray-800 border-0 shadow-md">
+              <Card key={sectionIndex} className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg">
                 <CardHeader>
-                  <CardTitle className="text-deep-blue dark:text-white">
+                  <CardTitle className="text-white">
                     {section.title}
                   </CardTitle>
                 </CardHeader>
@@ -177,17 +177,17 @@ const HelpCenterPage: React.FC = () => {
                       
                       return (
                         <Collapsible key={faqIndex} open={isOpen} onOpenChange={() => toggleSection(uniqueIndex)}>
-                          <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                            <span className="font-medium text-deep-blue dark:text-white">
+                          <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left bg-gray-800/60 rounded-lg hover:bg-gray-700/80 transition-colors">
+                            <span className="font-medium text-white">
                               {faq.question}
                             </span>
                             {isOpen ? (
-                              <ChevronDown className="w-5 h-5 text-gray-500" />
+                              <ChevronDown className="w-5 h-5 text-gray-400" />
                             ) : (
-                              <ChevronRight className="w-5 h-5 text-gray-500" />
+                              <ChevronRight className="w-5 h-5 text-gray-400" />
                             )}
                           </CollapsibleTrigger>
-                          <CollapsibleContent className="px-4 pb-4 text-gray-600 dark:text-gray-300">
+                          <CollapsibleContent className="p-4 text-gray-300">
                             {faq.answer}
                           </CollapsibleContent>
                         </Collapsible>
@@ -201,15 +201,15 @@ const HelpCenterPage: React.FC = () => {
         </div>
 
         {/* Contact Support */}
-        <Card className="bg-gradient-to-r from-soft-pink/10 to-deep-blue/10 dark:from-soft-pink/5 dark:to-deep-blue/5 border-0 shadow-lg">
+        <Card className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg">
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold text-deep-blue dark:text-white mb-4">
+            <h2 className="text-2xl font-bold text-white mb-4">
               Still Need Help?
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-300 mb-6">
               Can't find what you're looking for? Our support team is here to help.
             </p>
-            <Button className="bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90">
+            <Button className="bg-blue-600 text-white hover:bg-blue-700">
               Contact Support
             </Button>
           </CardContent>

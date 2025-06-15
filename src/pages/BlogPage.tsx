@@ -73,18 +73,18 @@ const BlogPage: React.FC = () => {
   const categories = ["All", "Profile Tips", "Relationships", "Dating Tips", "Family & Culture", "Safety", "Wedding Planning"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 pt-12 pb-16 max-w-7xl">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-black text-white">
+      <div className="container mx-auto px-4 pt-6 pb-16 max-w-7xl">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6 flex items-center gap-2 text-white hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
         </Button>
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-deep-blue dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Wedder Blog
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Insights, tips, and stories to help you navigate your matrimonial journey with confidence.
           </p>
         </div>
@@ -95,7 +95,7 @@ const BlogPage: React.FC = () => {
             <Badge
               key={index}
               variant={index === 0 ? "default" : "outline"}
-              className="px-4 py-2 cursor-pointer hover:bg-deep-blue/10 transition-colors"
+              className="px-4 py-2 cursor-pointer hover:bg-blue-800/50 transition-colors"
             >
               {category}
             </Badge>
@@ -105,7 +105,7 @@ const BlogPage: React.FC = () => {
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
-            <Card key={post.id} className="bg-white dark:bg-gray-800 border-0 shadow-md hover:shadow-lg transition-shadow cursor-pointer group">
+            <Card key={post.id} className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg hover:bg-gray-800/50 transition-shadow cursor-pointer group">
               <div className="aspect-video overflow-hidden rounded-t-lg">
                 <img
                   src={post.image}
@@ -118,20 +118,20 @@ const BlogPage: React.FC = () => {
                   <Badge variant="secondary" className="text-xs">
                     {post.category}
                   </Badge>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                  <span className="text-xs text-gray-400">
                     {post.readTime}
                   </span>
                 </div>
-                <CardTitle className="text-lg font-semibold text-deep-blue dark:text-white line-clamp-2">
+                <CardTitle className="text-lg font-semibold text-white line-clamp-2">
                   {post.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+                <p className="text-gray-300 text-sm mb-4 line-clamp-3">
                   {post.excerpt}
                 </p>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center space-x-3 text-xs text-gray-400">
                     <div className="flex items-center space-x-1">
                       <User className="w-3 h-3" />
                       <span>{post.author}</span>
@@ -141,7 +141,7 @@ const BlogPage: React.FC = () => {
                       <span>{post.date}</span>
                     </div>
                   </div>
-                  <Button variant="ghost" size="sm" className="text-deep-blue hover:text-deep-blue/80">
+                  <Button variant="ghost" size="sm" className="text-blue-400 hover:text-blue-300">
                     <ArrowRight className="w-4 h-4" />
                   </Button>
                 </div>
@@ -152,7 +152,7 @@ const BlogPage: React.FC = () => {
 
         {/* Load More Button */}
         <div className="text-center mt-12">
-          <Button className="bg-deep-blue text-white hover:bg-deep-blue/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90 px-8 py-3">
+          <Button className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-3">
             Load More Articles
           </Button>
         </div>

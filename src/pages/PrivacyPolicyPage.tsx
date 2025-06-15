@@ -12,7 +12,7 @@ const PrivacyPolicyPage: React.FC = () => {
   const sections = [
     {
       title: "Information We Collect",
-      icon: <Eye className="w-5 h-5 text-blue-500" />,
+      icon: <Eye className="w-5 h-5 text-blue-400" />,
       content: [
         "Personal information you provide when creating an account (name, email, phone number, date of birth)",
         "Profile information including photos, preferences, and biographical details",
@@ -23,7 +23,7 @@ const PrivacyPolicyPage: React.FC = () => {
     },
     {
       title: "How We Use Your Information",
-      icon: <Users className="w-5 h-5 text-green-500" />,
+      icon: <Users className="w-5 h-5 text-green-400" />,
       content: [
         "To provide and improve our matrimonial services",
         "To match you with compatible partners based on your preferences",
@@ -34,7 +34,7 @@ const PrivacyPolicyPage: React.FC = () => {
     },
     {
       title: "Information Sharing",
-      icon: <Shield className="w-5 h-5 text-red-500" />,
+      icon: <Shield className="w-5 h-5 text-red-400" />,
       content: [
         "We do not sell your personal information to third parties",
         "Profile information is shared with other users based on your privacy settings",
@@ -45,7 +45,7 @@ const PrivacyPolicyPage: React.FC = () => {
     },
     {
       title: "Data Security",
-      icon: <Lock className="w-5 h-5 text-purple-500" />,
+      icon: <Lock className="w-5 h-5 text-purple-400" />,
       content: [
         "We use industry-standard encryption to protect your data",
         "Regular security audits and monitoring of our systems",
@@ -57,29 +57,29 @@ const PrivacyPolicyPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 pt-12 pb-16 max-w-4xl">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-black text-white">
+      <div className="container mx-auto px-4 pt-6 pb-16 max-w-4xl">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6 flex items-center gap-2 text-white hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
         </Button>
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-deep-blue dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Privacy Policy
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
+          <p className="text-gray-300 mb-4">
             Your privacy is important to us. This policy explains how we collect, use, and protect your information.
           </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-400">
             Last updated: {lastUpdated}
           </p>
         </div>
 
         {/* Introduction */}
-        <Card className="bg-white dark:bg-gray-800 border-0 shadow-md mb-8">
+        <Card className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg mb-8">
           <CardContent className="p-8">
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="text-gray-300 leading-relaxed">
               At Wedder, we are committed to protecting your privacy and ensuring the security of your personal information. 
               This Privacy Policy explains how we collect, use, share, and protect your information when you use our matrimonial services. 
               By using Wedder, you agree to the practices described in this policy.
@@ -90,9 +90,9 @@ const PrivacyPolicyPage: React.FC = () => {
         {/* Main Sections */}
         <div className="space-y-8">
           {sections.map((section, index) => (
-            <Card key={index} className="bg-white dark:bg-gray-800 border-0 shadow-md">
+            <Card key={index} className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-3 text-deep-blue dark:text-white">
+                <CardTitle className="flex items-center space-x-3 text-white">
                   {section.icon}
                   <span>{section.title}</span>
                 </CardTitle>
@@ -101,8 +101,8 @@ const PrivacyPolicyPage: React.FC = () => {
                 <ul className="space-y-3">
                   {section.content.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-deep-blue rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-600 dark:text-gray-300">{item}</span>
+                      <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-300">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -112,33 +112,33 @@ const PrivacyPolicyPage: React.FC = () => {
         </div>
 
         {/* Your Rights */}
-        <Card className="bg-white dark:bg-gray-800 border-0 shadow-md mt-8">
+        <Card className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg mt-8">
           <CardHeader>
-            <CardTitle className="text-deep-blue dark:text-white">Your Rights and Choices</CardTitle>
+            <CardTitle className="text-white">Your Rights and Choices</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold text-deep-blue dark:text-white mb-2">Access Your Data</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <h4 className="font-semibold text-white mb-2">Access Your Data</h4>
+                <p className="text-sm text-gray-300">
                   You can access and download your personal data at any time through your account settings.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-deep-blue dark:text-white mb-2">Update Information</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <h4 className="font-semibold text-white mb-2">Update Information</h4>
+                <p className="text-sm text-gray-300">
                   You can update your profile information and preferences at any time.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-deep-blue dark:text-white mb-2">Delete Account</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <h4 className="font-semibold text-white mb-2">Delete Account</h4>
+                <p className="text-sm text-gray-300">
                   You can delete your account and all associated data from your settings.
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-deep-blue dark:text-white mb-2">Control Visibility</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <h4 className="font-semibold text-white mb-2">Control Visibility</h4>
+                <p className="text-sm text-gray-300">
                   Manage who can see your profile and contact you through privacy settings.
                 </p>
               </div>
@@ -147,15 +147,15 @@ const PrivacyPolicyPage: React.FC = () => {
         </Card>
 
         {/* Contact Information */}
-        <Card className="bg-gradient-to-r from-soft-pink/10 to-deep-blue/10 dark:from-soft-pink/5 dark:to-deep-blue/5 border-0 shadow-md mt-8">
+        <Card className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg mt-8">
           <CardContent className="p-8 text-center">
-            <h3 className="text-xl font-bold text-deep-blue dark:text-white mb-4">
+            <h3 className="text-xl font-bold text-white mb-4">
               Questions About Our Privacy Policy?
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-gray-300 mb-6">
               If you have any questions about this Privacy Policy or how we handle your data, please contact us.
             </p>
-            <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+            <div className="space-y-2 text-sm text-gray-300">
               <p>Email: privacy@wedder.com</p>
               <p>Phone: +91 80-1234-5678</p>
               <p>Address: Bangalore, Karnataka, India</p>

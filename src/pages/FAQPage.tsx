@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { HelpCircle, Search, MessageCircle, Shield, Heart, Users, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -102,18 +101,18 @@ const FAQPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-deep-blue/10 via-white to-white dark:from-deep-blue/20 dark:via-gray-900 dark:to-black">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 flex items-center gap-2 text-deep-blue dark:text-white hover:text-deep-blue/80 dark:hover:text-white/80">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-black text-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-6 flex items-center gap-2 text-white hover:text-white/80">
           <ArrowLeft className="w-5 h-5" />
           Back
         </Button>
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-deep-blue dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Frequently Asked Questions
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
             Find answers to common questions about using Wedder. Can't find what you're looking for? Contact our support team!
           </p>
         </div>
@@ -121,9 +120,9 @@ const FAQPage: React.FC = () => {
         {/* FAQ Categories */}
         <div className="space-y-8">
           {faqCategories.map((category, categoryIndex) => (
-            <Card key={categoryIndex} className="bg-white dark:bg-gray-800 border-0 shadow-lg">
+            <Card key={categoryIndex} className="bg-gray-800/30 backdrop-blur-sm border-gray-700 shadow-lg">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-3 text-deep-blue dark:text-white">
+                <CardTitle className="flex items-center space-x-3 text-white">
                   {category.icon}
                   <span>{category.title}</span>
                 </CardTitle>
@@ -131,11 +130,11 @@ const FAQPage: React.FC = () => {
               <CardContent>
                 <Accordion type="single" collapsible className="w-full">
                   {category.questions.map((faq, questionIndex) => (
-                    <AccordionItem key={questionIndex} value={`${categoryIndex}-${questionIndex}`}>
-                      <AccordionTrigger className="text-left text-deep-blue dark:text-white hover:text-deep-blue/80">
+                    <AccordionItem key={questionIndex} value={`${categoryIndex}-${questionIndex}`} className="border-gray-700">
+                      <AccordionTrigger className="text-left text-white hover:text-white/80">
                         {faq.question}
                       </AccordionTrigger>
-                      <AccordionContent className="text-gray-600 dark:text-gray-300">
+                      <AccordionContent className="text-gray-300">
                         {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -147,27 +146,27 @@ const FAQPage: React.FC = () => {
         </div>
 
         {/* Contact Support Section */}
-        <div className="bg-gradient-to-r from-soft-pink/10 to-deep-blue/10 dark:from-soft-pink/5 dark:to-deep-blue/5 rounded-2xl p-8 mt-16">
+        <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-8 mt-16 border border-gray-700">
           <div className="text-center">
-            <MessageCircle className="w-16 h-16 text-deep-blue dark:text-white mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-deep-blue dark:text-white mb-4">
+            <MessageCircle className="w-16 h-16 text-white mx-auto mb-6" />
+            <h2 className="text-3xl font-bold text-white mb-4">
               Still Have Questions?
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
               Our friendly support team is here to help! We typically respond to all inquiries within 24 hours.
             </p>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
-                <h3 className="font-semibold text-deep-blue dark:text-white mb-2">Email Support</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">support@wedder.com</p>
+                <h3 className="font-semibold text-white mb-2">Email Support</h3>
+                <p className="text-sm text-gray-300">support@wedder.com</p>
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-deep-blue dark:text-white mb-2">Phone Support</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">+91 80-1234-5678</p>
+                <h3 className="font-semibold text-white mb-2">Phone Support</h3>
+                <p className="text-sm text-gray-300">+91 80-1234-5678</p>
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-deep-blue dark:text-white mb-2">Live Chat</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">Available 9 AM - 9 PM IST</p>
+                <h3 className="font-semibold text-white mb-2">Live Chat</h3>
+                <p className="text-sm text-gray-300">Available 9 AM - 9 PM IST</p>
               </div>
             </div>
           </div>
