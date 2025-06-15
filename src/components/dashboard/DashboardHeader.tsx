@@ -40,32 +40,32 @@ const DashboardHeader: React.FC = () => {
   const profilePhoto = profile?.photos?.[0];
 
   return (
-    <div className="bg-gradient-to-r from-royal-plum via-royal-plum/90 to-blush-rose/20 border-b border-border px-4 py-3 sticky top-0 z-10">
+    <div className="bg-gradient-to-r from-royal-plum via-charcoal-black/20 to-royal-plum/80 border-b border-blush-rose/30 px-4 py-4 sticky top-0 z-10 shadow-lg">
       <div className="flex items-center justify-between max-w-4xl mx-auto">
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           <Link to="/profile" className="flex-shrink-0">
-            <Avatar className="w-9 h-9 cursor-pointer hover:ring-2 hover:ring-ivory-white transition-all">
+            <Avatar className="w-10 h-10 cursor-pointer hover:ring-2 hover:ring-regal-gold transition-all border-2 border-ivory-white/20">
               {profilePhoto && <AvatarImage src={profilePhoto} alt={displayName} className="object-cover" />}
-              <AvatarFallback className="bg-ivory-white text-royal-plum text-sm">
+              <AvatarFallback className="bg-ivory-white text-royal-plum text-sm font-semibold">
                 {loading ? '...' : getInitials(displayName)}
               </AvatarFallback>
             </Avatar>
           </Link>
           <div className="min-w-0 flex-1">
-            <h1 className="text-lg font-bold text-ivory-white truncate">
+            <h1 className="text-xl font-bold text-ivory-white truncate">
               Welcome back!
             </h1>
-            <p className="text-xs text-ivory-white/80">Ready to find your match?</p>
+            <p className="text-sm text-ivory-white/80 font-medium">Ready to find your match?</p>
           </div>
         </div>
         
-        <div className="flex items-center space-x-1 flex-shrink-0">
-          <Button variant="ghost" size="icon" title="Notifications" className="w-9 h-9 hover:bg-ivory-white/20">
-            <Bell className="w-4 h-4 text-ivory-white" />
+        <div className="flex items-center space-x-2 flex-shrink-0">
+          <Button variant="ghost" size="icon" title="Notifications" className="w-10 h-10 hover:bg-ivory-white/20 rounded-full">
+            <Bell className="w-5 h-5 text-ivory-white" />
           </Button>
-          <Button variant="ghost" size="icon" asChild title="Settings" className="w-9 h-9 hover:bg-ivory-white/20">
+          <Button variant="ghost" size="icon" asChild title="Settings" className="w-10 h-10 hover:bg-ivory-white/20 rounded-full">
             <Link to="/settings">
-              <Settings className="w-4 h-4 text-ivory-white" />
+              <Settings className="w-5 h-5 text-ivory-white" />
             </Link>
           </Button>
         </div>

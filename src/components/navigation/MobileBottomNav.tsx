@@ -61,8 +61,8 @@ const MobileBottomNav = () => {
   };
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-ivory-white border-t border-blush-rose z-50 safe-area-pb">
-      <div className="flex items-center justify-around py-2 px-4">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gradient-to-r from-ivory-white via-ivory-white to-blush-rose/10 border-t border-blush-rose/40 z-50 safe-area-pb backdrop-blur-sm shadow-lg">
+      <div className="flex items-center justify-around py-3 px-2">
         {visibleItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.href;
@@ -72,25 +72,20 @@ const MobileBottomNav = () => {
               key={item.href}
               onClick={() => handleNavClick(item.href)}
               className={cn(
-                "flex flex-col items-center justify-center py-2 px-3 rounded-lg transition-all duration-200 min-w-0 flex-1",
-                "hover:bg-blush-rose/20 active:scale-95",
+                "flex items-center justify-center p-3 rounded-2xl transition-all duration-300 min-w-0 flex-1 mx-1",
+                "hover:bg-blush-rose/30 active:scale-95 hover:shadow-md",
                 isActive 
-                  ? "text-royal-plum bg-blush-rose/30" 
-                  : "text-slate-gray hover:text-royal-plum"
+                  ? "text-ivory-white bg-gradient-to-br from-royal-plum to-royal-plum/80 shadow-lg scale-110" 
+                  : "text-slate-gray hover:text-royal-plum bg-transparent"
               )}
             >
               <Icon 
                 className={cn(
-                  "w-5 h-5 mb-1 transition-colors",
-                  isActive ? "text-royal-plum" : "text-slate-gray"
+                  "w-6 h-6 transition-all duration-300",
+                  isActive ? "text-ivory-white drop-shadow-sm" : "text-slate-gray"
                 )} 
+                strokeWidth={isActive ? 2.5 : 2}
               />
-              <span className={cn(
-                "text-xs font-medium truncate transition-colors",
-                isActive ? "text-royal-plum" : "text-slate-gray"
-              )}>
-                {item.label}
-              </span>
             </button>
           );
         })}
