@@ -38,7 +38,8 @@ export const useProfileData = () => {
     const { data, error } = await supabase
       .from('profiles')
       .upsert(profilePayload)
-      .select();
+      .select()
+      .single();
 
     if (error) {
       console.error('Profile save error:', error);
