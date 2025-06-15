@@ -2,7 +2,6 @@
 import React from 'react';
 import { type ChatMessage } from '@/types/chat';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
 import { MessageBubble } from './MessageBubble';
 
 interface MessageListProps {
@@ -35,16 +34,16 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, currentUser,
       <div className="space-y-4 max-w-2xl mx-auto">
         {messages.map((message, index) => {
           const showDate = index === 0 || 
-            formatDate(new Date(message.timestamp)) !== formatDate(new Date(messages[index - 1].timestamp));
+            new Date(message.timestamp).toDateString() !== new Date(messages[index - 1].timestamp).toDateString();
           const isUser = message.senderId === currentUser?.id;
 
           return (
             <div key={message.id}>
               {showDate && (
-                <div className="text-center mb-4">
-                  <Badge variant="outline" className="bg-white/80 text-gray-600 text-xs">
+                <div className="text-center my-6">
+                  <span className="bg-gray-100 text-gray-500 text-xs font-medium px-3 py-1.5 rounded-full">
                     {formatDate(new Date(message.timestamp))}
-                  </Badge>
+                  </span>
                 </div>
               )}
               <MessageBubble message={message} isUser={isUser} />

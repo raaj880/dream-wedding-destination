@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Send, Smile } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 
 interface MessageInputProps {
   onSendMessage: (content: string) => void;
@@ -27,12 +29,24 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => 
     }
   };
 
+  const onEmojiClick = (emojiData: EmojiClickData) => {
+    setNewMessage(prev => prev + emojiData.emoji);
+    inputRef.current?.focus();
+  };
+
   return (
     <div className="bg-white/90 backdrop-blur-md border-t border-gray-200 px-4 py-3 sticky bottom-0">
       <div className="flex items-center space-x-3 max-w-2xl mx-auto">
-        <Button variant="ghost" size="icon" className="text-gray-500 hover:text-deep-blue">
-          <Smile className="w-6 h-6" />
-        </Button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" size="icon" className="text-gray-500 hover:text-deep-blue">
+              <Smile className="w-6 h-6" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0 border-none mb-2">
+            <EmojiPicker onEmojiClick={onEmojiClick} />
+          </PopoverContent>
+        </Popover>
         
         <div className="flex-1 relative">
           <Input

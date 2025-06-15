@@ -33,26 +33,26 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isUser })
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
     >
       <div className={`max-w-xs lg:max-w-md ${isUser ? 'ml-auto' : 'mr-auto'}`}>
         <div
-          className={`px-4 py-3 rounded-2xl ${
+          className={`px-4 py-2 rounded-2xl shadow-sm ${
             isUser
-              ? 'bg-deep-blue text-white rounded-br-md'
-              : 'bg-soft-pink text-deep-blue rounded-bl-md'
+              ? 'bg-deep-blue text-white rounded-br-lg'
+              : 'bg-white text-deep-blue rounded-bl-lg border border-gray-200'
           }`}
         >
           <p className="text-sm leading-relaxed">{message.content}</p>
         </div>
-        <div className={`mt-1 px-2 ${isUser ? 'text-right' : 'text-left'}`}>
-          <span className="text-xs text-gray-500">
+        <div className={`mt-1.5 px-2 ${isUser ? 'text-right' : 'text-left'}`}>
+          <span className="text-xs text-gray-400">
             {formatTime(new Date(message.timestamp))}
-            {isUser && (
-              <span className="ml-1">
+            {isUser && message.status && (
+              <span className="ml-1.5">
                 {message.status === 'read' ? '✓✓' : '✓'}
               </span>
             )}

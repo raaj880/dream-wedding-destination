@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -58,7 +57,6 @@ const fetchMessages = async (matchId: string): Promise<ChatMessage[]> => {
         id: msg.id,
         chatId: msg.match_id,
         senderId: msg.sender_id,
-        receiverId: '', // The DB schema doesn't have a receiver_id, which the ChatMessage type expects.
         content: msg.content,
         type: msg.message_type as 'text' | 'image' | 'system',
         timestamp: new Date(msg.created_at),
@@ -121,7 +119,6 @@ export const useChat = (matchId: string) => {
                         id: payload.new.id,
                         chatId: payload.new.match_id,
                         senderId: payload.new.sender_id,
-                        receiverId: '',
                         content: payload.new.content,
                         type: payload.new.message_type as 'text' | 'image' | 'system',
                         timestamp: new Date(payload.new.created_at),

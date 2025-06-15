@@ -3,7 +3,6 @@ export interface ChatMessage {
   id: string;
   chatId: string;
   senderId: string;
-  receiverId: string;
   content: string;
   type: 'text' | 'image' | 'system';
   timestamp: Date;
