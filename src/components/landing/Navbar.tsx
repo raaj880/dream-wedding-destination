@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import DesktopNav from '@/components/navigation/DesktopNav';
@@ -58,9 +59,8 @@ const Navbar = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div onClick={handleLogoClick} className="flex items-center space-x-2 text-highlight hover:text-white transition-colors cursor-pointer">
-            <Heart className="w-7 h-7 text-highlight fill-highlight" />
-            <span className="text-3xl font-bold text-white">Wedder</span>
+          <div onClick={handleLogoClick} className="cursor-pointer">
+            <img src="/lovable-uploads/5c310514-b491-4277-8491-e9166333f0c2.png" alt="Wedder Logo" className="h-12" />
           </div>
 
           {/* Desktop Navigation */}

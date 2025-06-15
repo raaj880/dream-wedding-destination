@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Heart } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const SettingsHeader: React.FC = () => {
@@ -19,9 +19,8 @@ const SettingsHeader: React.FC = () => {
             </Button>
             <h1 className="text-xl font-semibold text-foreground">Settings</h1>
           </div>
-          <div onClick={() => navigate('/')} className="flex items-center space-x-2 text-foreground hover:text-gray-200 transition-colors cursor-pointer">
-            <Heart className="w-6 h-6 text-highlight fill-highlight" />
-            <span className="text-xl font-bold">Wedder</span>
+          <div onClick={() => navigate('/')} className="cursor-pointer">
+            <img src="/lovable-uploads/5c310514-b491-4277-8491-e9166333f0c2.png" alt="Wedder Logo" className="h-10" />
           </div>
         </div>
       </div>
