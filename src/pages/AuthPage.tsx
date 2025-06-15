@@ -44,16 +44,16 @@ const AuthPage: React.FC = () => {
         <Card className="shadow-2xl rounded-3xl overflow-hidden border border-card-gold/20 bg-card-dark-gray/90 backdrop-blur-xl">
           <CardContent className="p-8">
             <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'signup')} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8 bg-card-charcoal/50 rounded-2xl p-1.5 border border-card-gold/20">
+              <TabsList className="grid w-full grid-cols-2 mb-8 bg-card-charcoal rounded-2xl p-1.5 border border-card-gold/20">
                 <TabsTrigger 
                   value="login" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-xl py-3 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-xl py-3 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg data-[state=active]:shadow-card-gold/20 hover:bg-white/10 data-[state=active]:hover:brightness-110"
                 >
                   Sign In
                 </TabsTrigger>
                 <TabsTrigger 
                   value="signup" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-xl py-3 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-card-gold data-[state=active]:to-card-accent data-[state=active]:text-black rounded-xl py-3 transition-all duration-300 font-semibold text-gray-300 data-[state=active]:shadow-lg data-[state=active]:shadow-card-gold/20 hover:bg-white/10 data-[state=active]:hover:brightness-110"
                 >
                   Sign Up
                 </TabsTrigger>
