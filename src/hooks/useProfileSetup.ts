@@ -1,16 +1,49 @@
-
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProfileData, initialProfileData } from '@/types/profile';
 import { toast } from '@/components/ui/use-toast';
 import { useProfile } from '@/hooks/useProfile';
 
-export const useProfileSetup = (totalSteps: number, initialData?: ProfileData) => {
+export const useProfileSetup = (totalSteps: number, initialData?: any) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [profileData, setProfileData] = useState<ProfileData>(() => {
     console.log('🏗️ Initializing profile setup with data:', initialData);
-    return initialData || initialProfileData;
+    
+    if (initialData) {
+      // Convert database format to form format
+      const convertedData: ProfileData = {
+        ...initialProfileData,
+        fullName: initialData.full_name || '',
+        dob: initialData.date_of_birth ? new Date(initialData.date_of_birth) : undefined,
+        gender: initialData.gender || '',
+        location: initialData.location || '',
+        religion: initialData.religion || '',
+        community: initialData.community || '',
+        languages: Array.isArray(initialData.languages) 
+          ? initialData.languages.join(', ') 
+          : initialData.languages || '',
+        profession: initialData.profession || '',
+        education: initialData.education || '',
+        height: initialData.height || '',
+        marryTimeframe: initialData.marry_timeframe || '',
+        partnerAgeRange: [
+          initialData.partner_age_range_min || 20,
+          initialData.partner_age_range_max || 40
+        ],
+        partnerLocation: initialData.partner_location || '',
+        profileVisibility: initialData.profile_visibility || '',
+        bio: initialData.bio || '',
+        photos: [], // New files to upload
+        photoPreviews: initialData.photos || [], // Existing photo URLs
+      };
+      
+      console.log('🔄 Converted data for editing:', convertedData);
+      return convertedData;
+    }
+    
+    return initialProfileData;
   });
+  
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();

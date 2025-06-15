@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Edit, Settings } from 'lucide-react';
 
 interface ProfileActionsProps {
-  onEditProfile: () => void;
-  onSettings: () => void;
+  onEditProfile?: () => void;
+  onSettings?: () => void;
 }
 
 const ProfileActions: React.FC<ProfileActionsProps> = ({ onEditProfile, onSettings }) => {

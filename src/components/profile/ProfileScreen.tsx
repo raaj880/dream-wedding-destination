@@ -35,6 +35,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
     setSelectedPhotoIndex(null);
   };
 
+  // Ensure we have proper photo previews for display
+  const displayPhotos = profileData.photoPreviews && profileData.photoPreviews.length > 0 
+    ? profileData.photoPreviews 
+    : [];
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <ProfileHeader 
@@ -49,7 +54,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
           transition={{ duration: 0.5 }}
         >
           <ProfileGallery 
-            photoPreviews={profileData.photoPreviews} 
+            photoPreviews={displayPhotos} 
             onPhotoSelect={openLightbox}
           />
         </motion.div>
@@ -92,9 +97,9 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
         )}
       </div>
 
-      {selectedPhotoIndex !== null && (
+      {selectedPhotoIndex !== null && displayPhotos.length > 0 && (
         <PhotoLightbox
-          photos={profileData.photoPreviews}
+          photos={displayPhotos}
           selectedIndex={selectedPhotoIndex}
           onClose={closeLightbox}
         />
