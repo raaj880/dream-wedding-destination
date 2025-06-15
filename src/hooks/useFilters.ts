@@ -1,12 +1,34 @@
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { FilterOptions, FilterState, initialFilterOptions } from '@/types/filters';
 import { useLocalStorage } from './useLocalStorage';
 
 export function useFilters() {
   const [storedFilters, setStoredFilters] = useLocalStorage<FilterOptions>('userFilters', initialFilterOptions);
   const [currentFilters, setCurrentFilters] = useState<FilterOptions>(storedFilters);
-  const [isActive, setIsActive] = useState<boolean>(false);
+
+  // Calculate if filters are active by comparing with initial state
+  const hasActiveFilters = useCallback(() => {
+    return (
+      storedFilters.ageRange[0] !== initialFilterOptions.ageRange[0] ||
+      storedFilters.ageRange[1] !== initialFilterOptions.ageRange[1] ||
+      storedFilters.location !== initialFilterOptions.location ||
+      storedFilters.nearbyOnly !== initialFilterOptions.nearbyOnly ||
+      storedFilters.religions.length !== initialFilterOptions.religions.length ||
+      storedFilters.community !== initialFilterOptions.community ||
+      storedFilters.education !== initialFilterOptions.education ||
+      storedFilters.maritalIntent !== initialFilterOptions.maritalIntent ||
+      storedFilters.languages.length !== initialFilterOptions.languages.length ||
+      storedFilters.verifiedOnly !== initialFilterOptions.verifiedOnly
+    );
+  }, [storedFilters]);
+
+  const [isActive, setIsActive] = useState<boolean>(hasActiveFilters());
+
+  // Update isActive whenever stored filters change
+  useEffect(() => {
+    setIsActive(hasActiveFilters());
+  }, [storedFilters, hasActiveFilters]);
 
   const updateFilter = useCallback(<K extends keyof FilterOptions>(
     key: K,
@@ -20,7 +42,6 @@ export function useFilters() {
 
   const applyFilters = useCallback(() => {
     setStoredFilters(currentFilters);
-    setIsActive(true);
     console.log('Filters applied:', currentFilters);
   }, [currentFilters, setStoredFilters]);
 
@@ -28,7 +49,6 @@ export function useFilters() {
     const resetValues = { ...initialFilterOptions };
     setCurrentFilters(resetValues);
     setStoredFilters(resetValues);
-    setIsActive(false);
     console.log('Filters reset');
   }, [setStoredFilters]);
 
@@ -47,14 +67,10 @@ export function useFilters() {
     resetFilters();
   }, [resetFilters]);
 
-  const hasActiveFilters = useCallback(() => {
-    return JSON.stringify(currentFilters) !== JSON.stringify(initialFilterOptions);
-  }, [currentFilters]);
-
   return {
     filters: currentFilters,
     appliedFilters: storedFilters,
-    isActive: hasActiveFilters(),
+    isActive,
     updateFilter,
     applyFilters,
     resetFilters,
