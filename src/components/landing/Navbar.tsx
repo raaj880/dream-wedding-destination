@@ -112,7 +112,7 @@ const Navbar = () => {
               </button>
             ))}
             {!isAuthenticated && (
-              <Button asChild variant="primary" className="mt-4 rounded-full px-8 py-3 text-lg font-semibold transition-all hover:scale-105 w-3/4">
+              <Button asChild variant="default" className="mt-4 rounded-full px-8 py-3 text-lg font-semibold transition-all hover:scale-105 w-3/4">
                 <Link to="/auth" onClick={closeMobileMenu}>Join Now</Link>
               </Button>
             )}
