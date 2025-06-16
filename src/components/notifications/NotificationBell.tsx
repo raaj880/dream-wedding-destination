@@ -33,7 +33,7 @@ export const NotificationBell: React.FC = () => {
                 )}
             </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-80 md:w-96 p-0 bg-card-charcoal border-card-gold/30 text-white" align="end">
+        <PopoverContent className="w-80 md:w-96 p-0 bg-slate-900 border-slate-700 text-white shadow-2xl z-50" align="end">
             <NotificationList
                 notifications={notifications}
                 onNotificationClick={handleNotificationClick}

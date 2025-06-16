@@ -47,7 +47,7 @@ const FilterScreen: React.FC = () => {
     <div className="min-h-screen bg-background text-foreground">
       <FilterHeader onReset={handleReset} isActive={isActive} />
 
-      <div className="container mx-auto px-4 py-6 max-w-2xl space-y-6 pb-24">
+      <div className="container mx-auto px-4 py-6 max-w-2xl space-y-6 pb-32">
         <AgeRangeFilter 
           value={filters.ageRange} 
           onValueChange={(value) => updateFilter('ageRange', value)} 

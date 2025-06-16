@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '@/components/landing/Hero';
 import Features from '@/components/landing/Features';
 import Testimonials from '@/components/landing/Testimonials';
@@ -8,8 +8,13 @@ import FAQ from '@/components/landing/FAQ';
 import CallToAction from '@/components/landing/CallToAction';
 
 const Index = () => {
+  useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="bg-background">
+    <div className="bg-background min-h-screen">
       <Hero />
       <Features />
       <Testimonials />

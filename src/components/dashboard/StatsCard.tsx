@@ -32,20 +32,20 @@ const StatsCard: React.FC<StatsCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className={`shadow-sm ${onClick ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}>
+      <Card className={`shadow-sm ${onClick ? 'cursor-pointer hover:shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-slate-800 border-slate-700' : ''}`}>
         <CardContent className="p-4 text-center">
           {onClick ? (
             <Button 
               variant="ghost" 
-              className="w-full h-auto p-0 flex flex-col items-center space-y-2"
+              className="w-full h-auto p-0 flex flex-col items-center space-y-2 hover:bg-transparent group"
               onClick={onClick}
             >
-              <Icon className={`w-8 h-8 ${color}`} />
-              <div className="text-2xl font-bold text-foreground">
+              <Icon className={`w-8 h-8 ${color} group-hover:scale-110 transition-transform duration-300`} />
+              <div className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
                 {loading ? '...' : value}
               </div>
-              <div className="text-xs font-medium text-muted-foreground">{title}</div>
-              <div className="text-xs text-muted-foreground">{description}</div>
+              <div className="text-xs font-medium text-muted-foreground group-hover:text-slate-300 transition-colors duration-300">{title}</div>
+              <div className="text-xs text-muted-foreground group-hover:text-slate-300 transition-colors duration-300">{description}</div>
             </Button>
           ) : (
             <>

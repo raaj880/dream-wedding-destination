@@ -54,16 +54,16 @@ const QuickActionsGrid: React.FC<QuickActionsGridProps> = ({ totalMatches }) => 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
         >
-          <Card className="shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group">
+          <Card className="shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group transform hover:scale-105 hover:bg-slate-800 border-slate-700">
             <CardContent className="p-0">
               <Link to={action.href} className="block p-4">
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className={`w-12 h-12 ${action.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                  <div className={`w-12 h-12 ${action.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                     <action.icon className={`w-6 h-6 ${action.iconColor}`} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground text-sm">{action.title}</h3>
-                    <p className="text-xs text-muted-foreground">{action.description}</p>
+                    <h3 className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors duration-300">{action.title}</h3>
+                    <p className="text-xs text-muted-foreground group-hover:text-slate-300 transition-colors duration-300">{action.description}</p>
                   </div>
                 </div>
               </Link>
