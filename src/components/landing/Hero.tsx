@@ -25,12 +25,12 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-card pt-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-foreground mb-6">
+    <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-card pt-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up max-w-4xl" style={{ animationDelay: '0.2s' }}>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground mb-6 leading-tight">
           Swipe. Match. Marry.
         </h1>
-        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10">
+        <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
           India's modern marriage connection app built for Gen Z & Millennials.
         </p>
         <Button 

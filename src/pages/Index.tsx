@@ -9,8 +9,13 @@ import CallToAction from '@/components/landing/CallToAction';
 
 const Index = () => {
   useEffect(() => {
-    // Scroll to top when component mounts
-    window.scrollTo(0, 0);
+    // Force scroll to top immediately when component mounts
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    // Additional scroll to top to ensure it's at the very top
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 0);
   }, []);
 
   return (

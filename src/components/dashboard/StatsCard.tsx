@@ -32,7 +32,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Card className={`shadow-sm ${onClick ? 'cursor-pointer hover:shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-slate-800 border-slate-700' : ''}`}>
+      <Card className={`shadow-sm transition-all duration-300 ${onClick ? 'cursor-pointer hover:shadow-xl transform hover:scale-[1.02] hover:bg-slate-750 border-slate-700 hover:border-slate-600 bg-slate-800' : 'bg-slate-800 border-slate-700'}`}>
         <CardContent className="p-4 text-center">
           {onClick ? (
             <Button 
@@ -40,7 +40,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
               className="w-full h-auto p-0 flex flex-col items-center space-y-2 hover:bg-transparent group"
               onClick={onClick}
             >
-              <Icon className={`w-8 h-8 ${color} group-hover:scale-110 transition-transform duration-300`} />
+              <Icon className={`w-8 h-8 ${color} group-hover:scale-110 transition-transform duration-300 drop-shadow-lg`} />
               <div className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
                 {loading ? '...' : value}
               </div>
@@ -49,7 +49,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
             </Button>
           ) : (
             <>
-              <Icon className={`w-8 h-8 ${color} mx-auto mb-2`} />
+              <Icon className={`w-8 h-8 ${color} mx-auto mb-2 drop-shadow-lg`} />
               <div className="text-2xl font-bold text-foreground">
                 {loading ? '...' : value}
               </div>

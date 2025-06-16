@@ -9,7 +9,7 @@ interface ApplyFiltersButtonProps {
 
 const ApplyFiltersButton: React.FC<ApplyFiltersButtonProps> = ({ onClick }) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-4 z-50 safe-area-pb">
+    <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-4 z-50 pb-safe">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

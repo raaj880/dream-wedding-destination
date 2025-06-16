@@ -54,11 +54,11 @@ const QuickActionsGrid: React.FC<QuickActionsGridProps> = ({ totalMatches }) => 
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
         >
-          <Card className="shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer group transform hover:scale-105 hover:bg-slate-800 border-slate-700">
+          <Card className="shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group transform hover:scale-[1.02] bg-slate-800 border-slate-700 hover:border-slate-600 hover:bg-slate-750">
             <CardContent className="p-0">
               <Link to={action.href} className="block p-4">
                 <div className="flex flex-col items-center text-center space-y-2">
-                  <div className={`w-12 h-12 ${action.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-12 h-12 ${action.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg group-hover:shadow-xl`}>
                     <action.icon className={`w-6 h-6 ${action.iconColor}`} />
                   </div>
                   <div>
