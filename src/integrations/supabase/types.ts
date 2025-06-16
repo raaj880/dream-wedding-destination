@@ -234,7 +234,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_mutual_match: {
+        Args: { user1_uuid: string; user2_uuid: string }
+        Returns: boolean
+      }
+      get_match_id: {
+        Args: { user1_uuid: string; user2_uuid: string }
+        Returns: string
+      }
     }
     Enums: {
       interaction_enum: "like" | "pass" | "superlike" | "block" | "view"

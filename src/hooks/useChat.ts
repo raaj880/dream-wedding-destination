@@ -40,8 +40,6 @@ const fetchMessages = async (matchId: string): Promise<ChatMessage[]> => {
 
     if (error) throw new Error(error.message);
 
-    // The current ChatMessage type does not match the DB. This is a temporary fix.
-    // I will address this in a follow-up.
     return data.map(msg => ({
         id: msg.id,
         chatId: msg.match_id,
@@ -67,42 +65,50 @@ const sendMessage = async ({ matchId, content, senderId }: { matchId: string; co
     return data;
 };
 
-export const useChat = (participantId: string) => {
+const validateMatchAccess = async (matchId: string, userId: string): Promise<{ participant: UserProfile }> => {
+    // First verify the user has access to this match
+    const { data: match, error: matchError } = await supabase
+        .from('matches')
+        .select('user1_id, user2_id, status')
+        .eq('id', matchId)
+        .eq('status', 'active')
+        .single();
+
+    if (matchError || !match) {
+        throw new Error('Match not found or access denied');
+    }
+
+    // Verify current user is part of this match
+    if (match.user1_id !== userId && match.user2_id !== userId) {
+        throw new Error('Access denied - not part of this match');
+    }
+
+    // Get the other participant's ID
+    const participantId = match.user1_id === userId ? match.user2_id : match.user1_id;
+    
+    // Fetch participant profile
+    const participant = await fetchParticipantProfile(participantId);
+    
+    return { participant };
+};
+
+export const useChat = (matchId: string) => {
     const { user } = useAuth();
     const queryClient = useQueryClient();
 
-    const { data: matchId, isLoading: isLoadingMatchId } = useQuery({
-        queryKey: ['chatMatchId', participantId, user?.id],
+    const { data: matchData, isLoading: isLoadingMatch, error: matchError } = useQuery({
+        queryKey: ['chatAccess', matchId, user?.id],
         queryFn: async () => {
-            if (!user) throw new Error("User not found");
-            const { data, error } = await supabase
-                .from('matches')
-                .select('id')
-                .or(`and(user1_id.eq.${user.id},user2_id.eq.${participantId}),and(user1_id.eq.${participantId},user2_id.eq.${user.id})`)
-                .single();
-            if (error) {
-                console.error('Error fetching matchId:', error);
-                throw new Error(error.message);
-            }
-            if (!data) {
-                console.error('No match found for participantId:', participantId);
-                throw new Error('Match not found');
-            }
-            return data.id;
+            if (!user) throw new Error("User not authenticated");
+            return validateMatchAccess(matchId, user.id);
         },
-        enabled: !!user && !!participantId,
-    });
-
-    const { data: participant, isLoading: isLoadingParticipant } = useQuery({
-        queryKey: ['chatParticipant', participantId],
-        queryFn: () => fetchParticipantProfile(participantId),
-        enabled: !!participantId,
+        enabled: !!user && !!matchId,
     });
 
     const { data: messages, isLoading: isLoadingMessages } = useQuery({
         queryKey: ['messages', matchId],
-        queryFn: () => fetchMessages(matchId!),
-        enabled: !!matchId,
+        queryFn: () => fetchMessages(matchId),
+        enabled: !!matchId && !!matchData,
     });
 
     const mutation = useMutation({
@@ -113,7 +119,7 @@ export const useChat = (participantId: string) => {
     });
 
     useEffect(() => {
-        if (!matchId) return;
+        if (!matchId || !matchData) return;
 
         const channel = supabase
             .channel(`chat:${matchId}`)
@@ -151,12 +157,24 @@ export const useChat = (participantId: string) => {
         return () => {
             supabase.removeChannel(channel);
         };
-    }, [matchId, queryClient]);
+    }, [matchId, queryClient, matchData]);
+
+    // If there's a match error, show appropriate error
+    if (matchError) {
+        return {
+            participant: null,
+            messages: [],
+            isLoading: false,
+            error: matchError.message,
+            sendMessage: () => {},
+        };
+    }
 
     return {
-        participant,
+        participant: matchData?.participant || null,
         messages: messages || [],
-        isLoading: isLoadingMatchId || isLoadingParticipant || isLoadingMessages,
+        isLoading: isLoadingMatch || isLoadingMessages,
+        error: null,
         sendMessage: (content: string) => {
             if (!user || !matchId) return;
             mutation.mutate({ matchId, content, senderId: user.id });

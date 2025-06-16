@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, X, Star, MapPin, Briefcase, Users, Shield, Camera } from 'lucide-react';
@@ -6,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { PotentialMatch } from '@/hooks/usePotentialMatches';
+import MessageButton from '@/components/messaging/MessageButton';
 
 interface EnhancedProfileCardProps {
   profile: PotentialMatch;
@@ -135,6 +137,16 @@ const EnhancedProfileCard: React.FC<EnhancedProfileCardProps> = ({ profile, onSw
                   <span className="truncate">{profile.community}</span>
                 </div>
               )}
+            </div>
+
+            {/* Message Button for matched users */}
+            <div className="mb-2">
+              <MessageButton 
+                targetUserId={profile.id}
+                size="sm"
+                variant="outline"
+                className="w-full"
+              />
             </div>
           </div>
 
