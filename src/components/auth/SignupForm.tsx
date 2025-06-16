@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -93,10 +92,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
                 <FormLabel className="text-gray-300 font-medium">Full Name</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input 
                       placeholder="e.g., Aditi Sharma" 
-                      className="pl-11 bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-500 focus:border-card-gold focus:ring-card-gold/20 transition-all duration-200"
+                      className="pl-11 bg-slate-900 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
                       {...field} 
                     />
                   </div>
@@ -115,7 +114,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
                   <Input 
                     type="tel" 
                     placeholder="e.g., 9876543210" 
-                    className="bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-500 focus:border-card-gold focus:ring-card-gold/20 transition-all duration-200"
+                    className="bg-slate-900 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
                     {...field} 
                   />
                 </FormControl>
@@ -131,11 +130,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
                 <FormLabel className="text-gray-300 font-medium">Email <span className="text-gray-500 text-sm">(Optional)</span></FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input 
                       type="email" 
                       placeholder="you@example.com" 
-                      className="pl-11 bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-500 focus:border-card-gold focus:ring-card-gold/20 transition-all duration-200"
+                      className="pl-11 bg-slate-900 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
                       {...field} 
                     />
                   </div>
@@ -152,18 +151,18 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
                 <FormLabel className="text-gray-300 font-medium">Password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Create a strong password"
-                      className="pl-11 pr-11 bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-500 focus:border-card-gold focus:ring-card-gold/20 transition-all duration-200"
+                      className="pl-11 pr-11 bg-slate-900 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
                       {...field}
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-gray-500 hover:text-card-gold hover:bg-transparent transition-colors"
+                      className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-gray-400 hover:text-blue-400 hover:bg-transparent transition-colors"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -182,18 +181,18 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onSignupSucces
                 <FormLabel className="text-gray-300 font-medium">Confirm Password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type={showConfirmPassword ? 'text' : 'password'}
                       placeholder="Confirm your password"
-                      className="pl-11 pr-11 bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-500 focus:border-card-gold focus:ring-card-gold/20 transition-all duration-200"
+                      className="pl-11 pr-11 bg-slate-900 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
                       {...field}
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-gray-500 hover:text-card-gold hover:bg-transparent transition-colors"
+                      className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-gray-400 hover:text-blue-400 hover:bg-transparent transition-colors"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     >
                       {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}

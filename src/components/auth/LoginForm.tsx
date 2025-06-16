@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -80,10 +79,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
                 <FormLabel className="text-gray-300 font-medium">Email or Phone</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input 
                       placeholder="Enter your email or phone" 
-                      className="pl-11 bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-500 focus:border-card-gold focus:ring-card-gold/20 transition-all duration-200"
+                      className="pl-11 bg-slate-900 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
                       {...field} 
                     />
                   </div>
@@ -100,18 +99,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onLoginSuccess 
                 <FormLabel className="text-gray-300 font-medium">Password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       placeholder="Enter your password"
-                      className="pl-11 pr-11 bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-500 focus:border-card-gold focus:ring-card-gold/20 transition-all duration-200"
+                      className="pl-11 pr-11 bg-slate-900 border-slate-600 text-white placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
                       {...field}
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-gray-500 hover:text-card-gold hover:bg-transparent transition-colors"
+                      className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 text-gray-400 hover:text-blue-400 hover:bg-transparent transition-colors"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
