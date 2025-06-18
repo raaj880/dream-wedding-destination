@@ -8,7 +8,7 @@ import { useMutualMatch } from '@/hooks/useMutualMatch';
 
 interface MessageButtonProps {
   targetUserId: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'default' | 'lg';
   variant?: 'default' | 'outline' | 'ghost';
   className?: string;
   showLabel?: boolean;
@@ -16,7 +16,7 @@ interface MessageButtonProps {
 
 const MessageButton: React.FC<MessageButtonProps> = ({
   targetUserId,
-  size = 'md',
+  size = 'default',
   variant = 'default',
   className = '',
   showLabel = true
