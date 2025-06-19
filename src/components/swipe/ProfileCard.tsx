@@ -133,7 +133,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, onSwipe, isVisible, 
                 <h2 className="text-3xl font-bold text-white">
                   {profile.full_name}, {getAge()}
                 </h2>
-                {profile.is_verified && (
+                {profile.verified && (
                   <Shield className="w-6 h-6 text-primary fill-current" />
                 )}
               </div>

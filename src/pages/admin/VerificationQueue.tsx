@@ -39,33 +39,42 @@ const VerificationQueue: React.FC = () => {
           id,
           user_id,
           status,
-          created_at,
-          profiles!inner(
-            full_name,
-            photos,
-            location,
-            age
-          )
+          created_at
         `)
         .eq('status', 'pending')
         .order('created_at', { ascending: true });
 
       if (error) throw error;
 
-      const formattedRequests = data?.map(request => ({
-        id: request.id,
-        user_id: request.user_id,
-        status: request.status as 'pending' | 'approved' | 'rejected',
-        created_at: request.created_at,
-        profile: {
-          full_name: request.profiles.full_name || 'Unknown',
-          photos: request.profiles.photos || [],
-          location: request.profiles.location || 'Unknown',
-          age: request.profiles.age || 0,
-        }
-      })) || [];
+      // Fetch profile data for each request separately
+      const requestsWithProfiles = await Promise.all(
+        (data || []).map(async (request) => {
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('full_name, photos, location, age')
+            .eq('id', request.user_id)
+            .single();
 
-      setRequests(formattedRequests);
+          if (profileError) {
+            console.error('Error fetching profile:', profileError);
+          }
+
+          return {
+            id: request.id,
+            user_id: request.user_id,
+            status: request.status as 'pending' | 'approved' | 'rejected',
+            created_at: request.created_at,
+            profile: {
+              full_name: profile?.full_name || 'Unknown',
+              photos: profile?.photos || [],
+              location: profile?.location || 'Unknown',
+              age: profile?.age || 0,
+            }
+          };
+        })
+      );
+
+      setRequests(requestsWithProfiles);
     } catch (error) {
       console.error('Error fetching verification requests:', error);
       toast({

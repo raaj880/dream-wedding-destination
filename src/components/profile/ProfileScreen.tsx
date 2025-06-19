@@ -65,8 +65,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
         <div className="px-6 space-y-6 mt-6">
           <ProfileGallery 
-            photos={profileData.photoPreviews}
-            onPhotoClick={(index) => setSelectedPhotoIndex(index)}
+            photoPreviews={profileData.photoPreviews}
+            onPhotoSelect={(index) => setSelectedPhotoIndex(index)}
           />
           
           <ProfileSummary profileData={profileData} />
