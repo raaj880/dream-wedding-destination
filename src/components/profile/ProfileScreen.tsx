@@ -1,12 +1,14 @@
+
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { ProfileData } from '@/types/profile';
 import ProfileHeader from './ProfileHeader';
 import ProfileGallery from './ProfileGallery';
 import ProfileSummary from './ProfileSummary';
 import ProfileAbout from './ProfileAbout';
 import ProfilePreferences from './ProfilePreferences';
-import PhotoLightbox from './PhotoLightbox';
-import { ProfileData } from '@/types/profile';
 
 interface ProfileScreenProps {
   profileData: ProfileData;
@@ -14,83 +16,86 @@ interface ProfileScreenProps {
   onSettings?: () => void;
   onPhotoChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isOwnProfile?: boolean;
+  isVerified?: boolean;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({
-  profileData,
-  onEditProfile,
-  onSettings,
-  onPhotoChange,
-  isOwnProfile = true
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ 
+  profileData, 
+  onEditProfile, 
+  onSettings, 
+  onPhotoChange, 
+  isOwnProfile = false,
+  isVerified = false 
 }) => {
+  const navigate = useNavigate();
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
-  const openLightbox = (index: number) => {
-    setSelectedPhotoIndex(index);
+  const handleBack = () => {
+    if (isOwnProfile) {
+      navigate('/dashboard');
+    } else {
+      navigate(-1); // Go back to previous page
+    }
   };
-
-  const closeLightbox = () => {
-    setSelectedPhotoIndex(null);
-  };
-
-  // Ensure we have proper photo previews for display
-  const displayPhotos = profileData.photoPreviews && profileData.photoPreviews.length > 0 
-    ? profileData.photoPreviews 
-    : [];
 
   return (
     <div className="min-h-screen bg-background">
-      <ProfileHeader 
-        profileData={profileData}
-        onPhotoChange={onPhotoChange}
-        isOwnProfile={isOwnProfile}
-        onEditProfile={onEditProfile}
-        onSettings={onSettings}
-      />
-
-      <div className="container mx-auto px-4 py-6 max-w-4xl space-y-6 pb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ProfileGallery 
-            photoPreviews={displayPhotos} 
-            onPhotoSelect={openLightbox}
-          />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <ProfileSummary profileData={profileData} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <ProfileAbout bio={profileData.bio} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <ProfilePreferences profileData={profileData} />
-        </motion.div>
+      {/* Header with back button */}
+      <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-sm border-b border-border px-4 py-3">
+        <div className="flex items-center">
+          <Button variant="ghost" size="icon" onClick={handleBack}>
+            <ArrowLeft className="w-6 h-6" />
+          </Button>
+          <h1 className="ml-3 text-lg font-semibold text-foreground">
+            {isOwnProfile ? 'My Profile' : 'Profile'}
+          </h1>
+        </div>
       </div>
 
-      {selectedPhotoIndex !== null && displayPhotos.length > 0 && (
-        <PhotoLightbox
-          photos={displayPhotos}
-          selectedIndex={selectedPhotoIndex}
-          onClose={closeLightbox}
+      {/* Profile Content */}
+      <div className="pb-6">
+        <ProfileHeader 
+          profileData={profileData}
+          onEditProfile={onEditProfile}
+          onSettings={onSettings}
+          onPhotoChange={onPhotoChange}
+          isOwnProfile={isOwnProfile}
+          isVerified={isVerified}
         />
+
+        <div className="px-6 space-y-6 mt-6">
+          <ProfileGallery 
+            photos={profileData.photoPreviews}
+            onPhotoClick={(index) => setSelectedPhotoIndex(index)}
+          />
+          
+          <ProfileSummary profileData={profileData} />
+          
+          <ProfileAbout bio={profileData.bio} />
+          
+          <ProfilePreferences profileData={profileData} />
+        </div>
+      </div>
+
+      {/* Photo Lightbox */}
+      {selectedPhotoIndex !== null && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl max-h-full">
+            <img
+              src={profileData.photoPreviews[selectedPhotoIndex]}
+              alt={`Photo ${selectedPhotoIndex + 1}`}
+              className="max-w-full max-h-full object-contain rounded-lg"
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4 text-white hover:bg-white/20"
+              onClick={() => setSelectedPhotoIndex(null)}
+            >
+              ×
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );

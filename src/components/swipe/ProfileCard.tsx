@@ -1,7 +1,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, PanInfo, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
-import { Heart, X, Star, MapPin, Briefcase, GraduationCap, Church, Users, Info, Ruler } from 'lucide-react';
+import { Heart, X, Star, MapPin, Briefcase, GraduationCap, Church, Users, Info, Ruler, Shield } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -129,9 +129,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, onSwipe, isVisible, 
           {/* Info Overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none">
             <motion.div layout>
-              <h2 className="text-3xl font-bold text-white">
-                {profile.full_name}, {getAge()}
-              </h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-3xl font-bold text-white">
+                  {profile.full_name}, {getAge()}
+                </h2>
+                {profile.is_verified && (
+                  <Shield className="w-6 h-6 text-primary fill-current" />
+                )}
+              </div>
               <div className="flex items-center text-white/80 mt-1">
                 <MapPin className="w-4 h-4 mr-2" />
                 <span className="text-base">{profile.location}</span>

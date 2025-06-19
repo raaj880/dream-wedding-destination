@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { ProfileData } from '@/types/profile';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from '@/components/ui/badge';
-import { User, MapPin, Edit, Settings, Check } from 'lucide-react';
+import { User, MapPin, Edit, Settings, Check, Shield } from 'lucide-react';
 import { differenceInYears } from 'date-fns';
 import { Button } from '@/components/ui/button';
 
@@ -12,6 +13,7 @@ interface ProfileHeaderProps {
   isOwnProfile?: boolean;
   onEditProfile?: () => void;
   onSettings?: () => void;
+  isVerified?: boolean;
 }
 
 const getAge = (dob?: Date) => {
@@ -19,7 +21,14 @@ const getAge = (dob?: Date) => {
   return differenceInYears(new Date(), dob);
 };
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChange, isOwnProfile, onEditProfile, onSettings }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ 
+  profileData, 
+  onPhotoChange, 
+  isOwnProfile, 
+  onEditProfile, 
+  onSettings, 
+  isVerified = false 
+}) => {
   return (
     <div className="relative">
       {isOwnProfile && (
@@ -81,9 +90,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profileData, onPhotoChang
           </div>
 
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-foreground mb-1">
-              {profileData.fullName}
-            </h1>
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <h1 className="text-2xl font-bold text-foreground">
+                {profileData.fullName}
+              </h1>
+              {isVerified && (
+                <div className="flex items-center">
+                  <Shield className="w-6 h-6 text-primary fill-current" />
+                </div>
+              )}
+            </div>
             <p className="text-subtle mb-2">
               {getAge(profileData.dob)} years old
             </p>

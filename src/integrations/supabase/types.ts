@@ -127,6 +127,7 @@ export type Database = {
           hide_from_search: boolean
           id: string
           is_online: boolean | null
+          is_verified: boolean | null
           languages: string[] | null
           last_seen: string | null
           location: string | null
@@ -157,6 +158,7 @@ export type Database = {
           hide_from_search?: boolean
           id: string
           is_online?: boolean | null
+          is_verified?: boolean | null
           languages?: string[] | null
           last_seen?: string | null
           location?: string | null
@@ -187,6 +189,7 @@ export type Database = {
           hide_from_search?: boolean
           id?: string
           is_online?: boolean | null
+          is_verified?: boolean | null
           languages?: string[] | null
           last_seen?: string | null
           location?: string | null
@@ -229,11 +232,39 @@ export type Database = {
         }
         Relationships: []
       }
+      verification_requests: {
+        Row: {
+          created_at: string
+          id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      approve_verification_request: {
+        Args: { request_id: string }
+        Returns: undefined
+      }
       check_mutual_match: {
         Args: { user1_uuid: string; user2_uuid: string }
         Returns: boolean
@@ -244,6 +275,10 @@ export type Database = {
       }
       mark_messages_as_read: {
         Args: { p_match_id: string; p_message_ids: string[] }
+        Returns: undefined
+      }
+      reject_verification_request: {
+        Args: { request_id: string }
         Returns: undefined
       }
     }

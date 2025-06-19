@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProfileScreen from '@/components/profile/ProfileScreen';
@@ -18,9 +17,13 @@ const ProfilePage: React.FC = () => {
   const { recordProfileView } = useProfileViewing();
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [isOwnProfile, setIsOwnProfile] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
 
   const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
     console.log('🔄 Transforming raw profile:', rawProfile);
+    
+    // Store verification status
+    setIsVerified(rawProfile.is_verified || false);
     
     // Improved date parsing to handle timezone issues
     let dobDate: Date | undefined = undefined;
@@ -207,6 +210,7 @@ const ProfilePage: React.FC = () => {
       onSettings={isOwnProfile ? handleSettings : undefined}
       onPhotoChange={isOwnProfile ? handlePhotoChange : undefined}
       isOwnProfile={isOwnProfile}
+      isVerified={isVerified}
     />
   );
 };
