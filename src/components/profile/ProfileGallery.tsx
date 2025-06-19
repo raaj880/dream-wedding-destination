@@ -23,7 +23,7 @@ const ProfileGallery: React.FC<ProfileGalleryProps> = ({ photoPreviews, onPhotoS
       </CardHeader>
       <CardContent>
         <div className="flex space-x-3 overflow-x-auto pb-2">
-          {photePreviews.map((photo, index) => (
+          {photoPreviews.map((photo, index) => (
             <div
               key={index}
               className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all duration-200 hover:scale-105"
