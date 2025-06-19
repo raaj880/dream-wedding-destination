@@ -7,6 +7,7 @@ export interface ChatMessage {
   type: 'text' | 'image' | 'system';
   timestamp: Date;
   status: 'sent' | 'delivered' | 'read';
+  readAt?: Date;
 }
 
 export interface Chat {

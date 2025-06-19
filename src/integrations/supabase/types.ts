@@ -242,6 +242,10 @@ export type Database = {
         Args: { user1_uuid: string; user2_uuid: string }
         Returns: string
       }
+      mark_messages_as_read: {
+        Args: { p_match_id: string; p_message_ids: string[] }
+        Returns: undefined
+      }
     }
     Enums: {
       interaction_enum: "like" | "pass" | "superlike" | "block" | "view"

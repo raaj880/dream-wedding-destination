@@ -32,7 +32,7 @@ const ChatInterface: React.FC = () => {
       );
   }
 
-  const { participant, messages, isLoading, error, sendMessage } = useChat(matchId);
+  const { participant, messages, isLoading, error, isTyping, sendMessage, handleUserTyping } = useChat(matchId);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const ChatInterface: React.FC = () => {
 
   return (
     <div className="h-screen bg-background flex flex-col">
-      <ChatHeader participant={participant} />
+      <ChatHeader participant={participant} isTyping={isTyping} />
 
       <MessageList 
         messages={messages} 
@@ -99,7 +99,7 @@ const ChatInterface: React.FC = () => {
         </p>
       </div>
 
-      <MessageInput onSendMessage={handleSendMessage} />
+      <MessageInput onSendMessage={handleSendMessage} onTyping={handleUserTyping} />
     </div>
   );
 };

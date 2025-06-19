@@ -9,9 +9,10 @@ import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 
 interface MessageInputProps {
   onSendMessage: (content: string) => void;
+  onTyping?: () => void;
 }
 
-export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
+export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, onTyping }) => {
   const [newMessage, setNewMessage] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -29,9 +30,15 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => 
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMessage(e.target.value);
+    onTyping?.();
+  };
+
   const onEmojiClick = (emojiData: EmojiClickData) => {
     setNewMessage(prev => prev + emojiData.emoji);
     inputRef.current?.focus();
+    onTyping?.();
   };
 
   return (
@@ -52,7 +59,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => 
           <Input
             ref={inputRef}
             value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={handleInputChange}
             onKeyPress={handleKeyPress}
             placeholder="Type a message..."
             className="pr-12 bg-muted border-border focus:border-primary focus:ring-primary rounded-full"

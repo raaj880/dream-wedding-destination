@@ -8,9 +8,10 @@ import { type UserProfile } from '@/types/match';
 
 interface ChatHeaderProps {
   participant?: UserProfile;
+  isTyping?: boolean;
 }
 
-export const ChatHeader: React.FC<ChatHeaderProps> = ({ participant }) => {
+export const ChatHeader: React.FC<ChatHeaderProps> = ({ participant, isTyping = false }) => {
   const formatDate = (date: Date) => {
     const today = new Date();
     const messageDate = new Date(date);
@@ -58,7 +59,18 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ participant }) => {
               {participant.fullName}, {participant.age}
             </h3>
             <p className="text-sm text-muted-foreground">
-              {participant.isOnline ? 'Online' : `Last seen ${formatDate(participant.lastSeen)}`}
+              {isTyping ? (
+                <span className="text-primary flex items-center space-x-1">
+                  <span>Typing</span>
+                  <span className="flex space-x-1">
+                    <span className="w-1 h-1 bg-primary rounded-full animate-bounce"></span>
+                    <span className="w-1 h-1 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></span>
+                    <span className="w-1 h-1 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                  </span>
+                </span>
+              ) : (
+                participant.isOnline ? 'Online' : `Last seen ${formatDate(participant.lastSeen)}`
+              )}
             </p>
           </div>
         </div>
