@@ -22,14 +22,21 @@ const communityOptions = [
 const CommunitySelect: React.FC<CommunitySelectProps> = ({ value, onChange, error }) => {
   return (
     <div>
-      <Label className="text-gray-300">Community/Caste (Optional)</Label>
+      <Label className="text-gray-300 font-medium">Community/Caste (Optional)</Label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", error && "border-red-500")}>
+        <SelectTrigger className={cn(
+          "w-full mt-1 bg-slate-800 border-slate-600 text-white focus:border-card-gold focus:ring-card-gold/20",
+          error && "border-red-500"
+        )}>
           <SelectValue placeholder="Select your community" />
         </SelectTrigger>
-        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
+        <SelectContent className="bg-slate-800 border-slate-600 text-white z-[200] shadow-2xl max-h-60 overflow-y-auto">
           {communityOptions.map((option) => (
-            <SelectItem key={option} value={option.toLowerCase().replace(/\s+/g, '-')} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
+            <SelectItem 
+              key={option} 
+              value={option.toLowerCase().replace(/\s+/g, '-')} 
+              className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white cursor-pointer"
+            >
               {option}
             </SelectItem>
           ))}

@@ -35,7 +35,7 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
     } else if (value === 'dont-know') {
       updateData({ dosha: 'Unknown' });
     } else {
-      updateData({ dosha: '' }); // Will allow user to specify
+      updateData({ dosha: '' });
     }
   };
 
@@ -58,44 +58,54 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
       </CardHeader>
       <CardContent className="space-y-6 px-0">
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Time of Birth */}
           <div className="space-y-2">
             <Label className="text-gray-300 font-medium">Time of Birth</Label>
             <Input
               type="time"
               value={data.timeOfBirth || ''}
               onChange={(e) => updateData({ timeOfBirth: e.target.value })}
-              className={cn("bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.timeOfBirth && "border-red-500")}
+              className={cn(
+                "bg-slate-800 border-slate-600 text-white focus:border-card-gold focus:ring-card-gold/20",
+                errors.timeOfBirth && "border-red-500"
+              )}
             />
             {errors.timeOfBirth && (
               <p className="text-red-400 text-sm">{errors.timeOfBirth}</p>
             )}
           </div>
 
-          {/* Place of Birth */}
           <div className="space-y-2">
             <Label className="text-gray-300 font-medium">Place of Birth</Label>
             <Input
               placeholder="City, State, Country"
               value={data.placeOfBirth}
               onChange={(e) => updateData({ placeOfBirth: e.target.value })}
-              className={cn("bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-400 focus:border-card-gold", errors.placeOfBirth && "border-red-500")}
+              className={cn(
+                "bg-slate-800 border-slate-600 text-white placeholder:text-slate-400 focus:border-card-gold focus:ring-card-gold/20",
+                errors.placeOfBirth && "border-red-500"
+              )}
             />
             {errors.placeOfBirth && (
               <p className="text-red-400 text-sm">{errors.placeOfBirth}</p>
             )}
           </div>
 
-          {/* Rashi */}
           <div className="space-y-2">
             <Label className="text-gray-300 font-medium">Rashi (Moon Sign)</Label>
             <Select value={data.rashi} onValueChange={(value) => updateData({ rashi: value })}>
-              <SelectTrigger className={cn("bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.rashi && "border-red-500")}>
+              <SelectTrigger className={cn(
+                "bg-slate-800 border-slate-600 text-white focus:border-card-gold focus:ring-card-gold/20",
+                errors.rashi && "border-red-500"
+              )}>
                 <SelectValue placeholder="Select your Rashi" />
               </SelectTrigger>
-              <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
+              <SelectContent className="bg-slate-800 border-slate-600 text-white z-[200] shadow-2xl max-h-60 overflow-y-auto">
                 {RASHIS.map((rashi) => (
-                  <SelectItem key={rashi} value={rashi} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
+                  <SelectItem 
+                    key={rashi} 
+                    value={rashi} 
+                    className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white cursor-pointer"
+                  >
                     {rashi}
                   </SelectItem>
                 ))}
@@ -106,16 +116,22 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
             )}
           </div>
 
-          {/* Nakshatra */}
           <div className="space-y-2">
             <Label className="text-gray-300 font-medium">Nakshatra (Birth Star)</Label>
             <Select value={data.nakshatra} onValueChange={(value) => updateData({ nakshatra: value })}>
-              <SelectTrigger className={cn("bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.nakshatra && "border-red-500")}>
+              <SelectTrigger className={cn(
+                "bg-slate-800 border-slate-600 text-white focus:border-card-gold focus:ring-card-gold/20",
+                errors.nakshatra && "border-red-500"
+              )}>
                 <SelectValue placeholder="Select your Nakshatra" />
               </SelectTrigger>
-              <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
+              <SelectContent className="bg-slate-800 border-slate-600 text-white z-[200] shadow-2xl max-h-60 overflow-y-auto">
                 {NAKSHATRAS.map((nakshatra) => (
-                  <SelectItem key={nakshatra} value={nakshatra} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
+                  <SelectItem 
+                    key={nakshatra} 
+                    value={nakshatra} 
+                    className="text-white hover:bg-slate-700 focus:bg-slate-700 focus:text-white cursor-pointer"
+                  >
                     {nakshatra}
                   </SelectItem>
                 ))}
@@ -126,14 +142,16 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
             )}
           </div>
 
-          {/* Gothra */}
           <div className="space-y-2 md:col-span-2">
             <Label className="text-gray-300 font-medium">Gothra</Label>
             <Input
               placeholder="Enter your Gothra"
               value={data.gothra}
               onChange={(e) => updateData({ gothra: e.target.value })}
-              className={cn("bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-400 focus:border-card-gold", errors.gothra && "border-red-500")}
+              className={cn(
+                "bg-slate-800 border-slate-600 text-white placeholder:text-slate-400 focus:border-card-gold focus:ring-card-gold/20",
+                errors.gothra && "border-red-500"
+              )}
             />
             {errors.gothra && (
               <p className="text-red-400 text-sm">{errors.gothra}</p>
@@ -141,7 +159,6 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
           </div>
         </div>
 
-        {/* Dosha Section */}
         <div className="space-y-4">
           <Label className="text-gray-300 font-medium">Manglik/Dosha Status</Label>
           <RadioGroup
@@ -163,14 +180,13 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
             </div>
           </RadioGroup>
 
-          {/* Specific Dosha Input */}
           {getDoshaRadioValue() === 'yes' && (
             <div className="mt-4">
               <Input
                 placeholder="Specify dosha (e.g., Kuja Dosha, Naga Dosha)"
                 value={data.dosha}
                 onChange={(e) => updateData({ dosha: e.target.value })}
-                className="bg-card-charcoal border-card-gold/30 text-white placeholder:text-gray-400 focus:border-card-gold"
+                className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-400 focus:border-card-gold focus:ring-card-gold/20"
               />
             </div>
           )}

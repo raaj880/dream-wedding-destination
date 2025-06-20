@@ -29,26 +29,29 @@ const Step2BasicDetails: React.FC<Step2BasicDetailsProps> = ({ data, updateData,
       </CardHeader>
       <CardContent className="space-y-6 px-0">
         <div>
-          <Label htmlFor="fullName" className="text-gray-300">Full Name</Label>
+          <Label htmlFor="fullName" className="text-gray-300 font-medium">Full Name</Label>
           <Input
             id="fullName"
             placeholder="E.g. Jane Doe"
             value={data.fullName}
             onChange={(e) => updateData({ fullName: e.target.value })}
-            className={cn("mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.fullName && "border-red-500")}
+            className={cn(
+              "mt-1 bg-slate-800 border-slate-600 text-white placeholder:text-slate-400 focus:border-card-gold focus:ring-card-gold/20",
+              errors.fullName && "border-red-500"
+            )}
           />
           {errors.fullName && <p className="text-sm text-red-500 mt-1">{errors.fullName}</p>}
         </div>
 
         <div>
-          <Label htmlFor="dob" className="text-gray-300">Date of Birth</Label>
+          <Label htmlFor="dob" className="text-gray-300 font-medium">Date of Birth</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant={"outline"}
                 className={cn(
-                  "w-full justify-start text-left font-normal mt-1 bg-card-charcoal border-card-gold/30 text-white hover:bg-card-dark-gray hover:text-white focus:border-card-gold",
-                  !data.dob && "text-gray-400",
+                  "w-full justify-start text-left font-normal mt-1 bg-slate-800 border-slate-600 text-white hover:bg-slate-700 hover:text-white focus:border-card-gold",
+                  !data.dob && "text-slate-400",
                   errors.dob && "border-red-500"
                 )}
               >
@@ -56,21 +59,24 @@ const Step2BasicDetails: React.FC<Step2BasicDetailsProps> = ({ data, updateData,
                 {data.dob ? format(data.dob, "PPP") : <span>Pick a date</span>}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 bg-card-charcoal border-card-gold/50 text-white">
+            <PopoverContent className="w-auto p-0 bg-slate-800 border-slate-600 shadow-2xl z-[200]">
               <Calendar
                 mode="single"
                 selected={data.dob}
                 onSelect={(date) => updateData({ dob: date || undefined })}
                 initialFocus
                 fromYear={1950}
-                toYear={new Date().getFullYear() - 18} // Must be at least 18
+                toYear={new Date().getFullYear() - 18}
                 useCustomCaption
+                className="pointer-events-auto"
                 classNames={{
-                  day: "text-white hover:bg-card-gold hover:text-card-black rounded-full",
-                  day_selected:
-                    "bg-card-gold text-card-black focus:bg-card-gold focus:text-card-black rounded-full",
+                  day: "text-white hover:bg-card-gold hover:text-slate-900 rounded-full",
+                  day_selected: "bg-card-gold text-slate-900 focus:bg-card-gold focus:text-slate-900 rounded-full",
                   day_today: "text-card-gold border border-card-gold/50 rounded-full",
                   head_cell: "text-gray-400 font-medium",
+                  caption: "text-white",
+                  nav_button: "text-white hover:bg-slate-700",
+                  table: "text-white"
                 }}
               />
             </PopoverContent>
@@ -79,7 +85,7 @@ const Step2BasicDetails: React.FC<Step2BasicDetailsProps> = ({ data, updateData,
         </div>
 
         <div>
-          <Label className="text-gray-300">Gender</Label>
+          <Label className="text-gray-300 font-medium">Gender</Label>
           <RadioGroup
             value={data.gender}
             onValueChange={(value) => updateData({ gender: value as ProfileData['gender'] })}
