@@ -8,32 +8,48 @@ export const prepareProfilePayload = (profileData: ProfileData, userId: string, 
   
   // Convert languages string to array
   const languagesArray = profileData.languages 
-    ? profileData.languages.split(',').map(lang => lang.trim())
+    ? profileData.languages.split(',').map(lang => lang.trim()).filter(lang => lang)
     : [];
+
+  // Helper function to convert community display value to database format
+  const convertCommunityToDb = (communityValue: string) => {
+    if (!communityValue) return null;
+    
+    const communityMap: Record<string, string> = {
+      'Lingayat': 'lingayat',
+      'Brahmin': 'brahmin',
+      'Kuruba': 'kuruba',
+      'SC/ST': 'sc-st',
+      'Others': 'others',
+      'Prefer not to say': 'prefer-not-to-say'
+    };
+    
+    return communityMap[communityValue] || communityValue.toLowerCase().replace(/\s+/g, '-');
+  };
 
   return {
     id: userId,
-    full_name: profileData.fullName,
+    full_name: profileData.fullName || null,
     age,
     date_of_birth: profileData.dob?.toISOString().split('T')[0] || null,
     time_of_birth: profileData.timeOfBirth || null,
     place_of_birth: profileData.placeOfBirth || null,
     gender: profileData.gender || null,
-    location: profileData.location,
-    religion: profileData.religion,
-    community: profileData.community,
-    languages: languagesArray,
-    profession: profileData.profession,
-    education: profileData.education,
-    height: profileData.height,
-    marry_timeframe: profileData.marryTimeframe,
-    bio: profileData.bio,
-    photos: finalPhotoUrls,
+    location: profileData.location || null,
+    religion: profileData.religion || null,
+    community: convertCommunityToDb(profileData.community),
+    languages: languagesArray.length > 0 ? languagesArray : null,
+    profession: profileData.profession || null,
+    education: profileData.education || null,
+    height: profileData.height || null,
+    marry_timeframe: profileData.marryTimeframe || null,
+    bio: profileData.bio || null,
+    photos: finalPhotoUrls.length > 0 ? finalPhotoUrls : null,
     updated_at: new Date().toISOString(),
     partner_age_range_min: profileData.partnerAgeRange[0],
     partner_age_range_max: profileData.partnerAgeRange[1],
-    partner_location: profileData.partnerLocation,
-    profile_visibility: profileData.profileVisibility,
+    partner_location: profileData.partnerLocation || null,
+    profile_visibility: profileData.profileVisibility || 'everyone',
     // Jathaka/Horoscope fields
     rashi: profileData.rashi || null,
     nakshatra: profileData.nakshatra || null,

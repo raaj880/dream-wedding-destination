@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 interface CommunitySelectProps {
   value: string;
   onChange: (value: string) => void;
+  error?: string;
 }
 
 const communityOptions = [
@@ -18,22 +19,23 @@ const communityOptions = [
   'Prefer not to say'
 ];
 
-const CommunitySelect: React.FC<CommunitySelectProps> = ({ value, onChange }) => {
+const CommunitySelect: React.FC<CommunitySelectProps> = ({ value, onChange, error }) => {
   return (
     <div>
       <Label className="text-gray-300">Community/Caste (Optional)</Label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold")}>
+        <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", error && "border-red-500")}>
           <SelectValue placeholder="Select your community" />
         </SelectTrigger>
-        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white">
+        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-50">
           {communityOptions.map((option) => (
-            <SelectItem key={option} value={option.toLowerCase().replace(/\s+/g, '-')} className="focus:bg-card-gold/20">
+            <SelectItem key={option} value={option.toLowerCase().replace(/\s+/g, '-')} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20">
               {option}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
+      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
     </div>
   );
 };

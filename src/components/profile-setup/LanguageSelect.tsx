@@ -23,7 +23,7 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, error 
 
   return (
     <div>
-      <Label className="text-gray-700 dark:text-gray-300">Language(s) Spoken</Label>
+      <Label className="text-gray-300">Language(s) Spoken</Label>
       <ToggleGroup 
         type="multiple" 
         value={selectedLanguages} 
@@ -34,14 +34,14 @@ const LanguageSelect: React.FC<LanguageSelectProps> = ({ value, onChange, error 
           <ToggleGroupItem
             key={language}
             value={language}
-            className="data-[state=on]:bg-soft-pink data-[state=on]:text-deep-blue"
+            className="data-[state=on]:bg-card-gold data-[state=on]:text-card-black bg-card-charcoal border-card-gold/30 text-white hover:bg-card-gold/20"
           >
             {language}
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
       {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
-      <p className="text-xs text-gray-500 mt-1 dark:text-gray-400">Select multiple languages you speak fluently.</p>
+      <p className="text-xs text-gray-400 mt-1">Select multiple languages you speak fluently.</p>
     </div>
   );
 };

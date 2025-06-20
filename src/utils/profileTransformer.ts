@@ -5,6 +5,22 @@ import { Tables } from '@/integrations/supabase/types';
 export const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData => {
   console.log('🔄 Transforming raw profile:', rawProfile);
   
+  // Helper function to convert community value back to display format
+  const convertCommunityFromDb = (communityValue: string | null) => {
+    if (!communityValue) return '';
+    
+    const communityMap: Record<string, string> = {
+      'lingayat': 'Lingayat',
+      'brahmin': 'Brahmin',
+      'kuruba': 'Kuruba',
+      'sc-st': 'SC/ST',
+      'others': 'Others',
+      'prefer-not-to-say': 'Prefer not to say'
+    };
+    
+    return communityMap[communityValue] || communityValue;
+  };
+  
   // Improved date parsing to handle timezone issues
   let dobDate: Date | undefined = undefined;
   if (rawProfile.date_of_birth) {
@@ -25,7 +41,7 @@ export const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData
     gender: (rawProfile.gender as ProfileData['gender']) || '',
     location: rawProfile.location || '',
     religion: rawProfile.religion || '',
-    community: rawProfile.community || '',
+    community: convertCommunityFromDb(rawProfile.community),
     languages: rawProfile.languages?.join(', ') || '',
     profession: rawProfile.profession || '',
     education: rawProfile.education || '',

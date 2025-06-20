@@ -30,33 +30,23 @@ export const validateProfileStep = (step: number, data: ProfileData): Record<str
       if (!data.religion.trim()) {
         errors.religion = 'Religion is required';
       }
-      if (!data.community.trim()) {
-        errors.community = 'Community is required';
-      }
       if (!data.profession.trim()) {
         errors.profession = 'Profession is required';
       }
       if (!data.education.trim()) {
         errors.education = 'Education is required';
       }
+      if (!data.height.trim()) {
+        errors.height = 'Height is required';
+      }
+      // Community is optional, so no validation needed
       break;
 
     case 4: // Jathaka Details
       if (!data.placeOfBirth.trim()) {
         errors.placeOfBirth = 'Place of birth is required';
       }
-      if (!data.rashi.trim()) {
-        errors.rashi = 'Rashi is required';
-      }
-      if (!data.nakshatra.trim()) {
-        errors.nakshatra = 'Nakshatra is required';
-      }
-      if (!data.gothra.trim()) {
-        errors.gothra = 'Gothra is required';
-      }
-      if (!data.dosha.trim()) {
-        errors.dosha = 'Dosha status is required';
-      }
+      // Make Jathaka fields optional for now to avoid blocking users
       break;
 
     case 5: // Preferences
@@ -75,8 +65,8 @@ export const validateProfileStep = (step: number, data: ProfileData): Record<str
       if (!data.bio.trim()) {
         errors.bio = 'Bio is required';
       }
-      if (data.bio.length < 50) {
-        errors.bio = 'Bio should be at least 50 characters long';
+      if (data.bio.length < 30) {
+        errors.bio = 'Bio should be at least 30 characters long';
       }
       break;
   }
