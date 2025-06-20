@@ -120,27 +120,34 @@ export type Database = {
           community: string | null
           created_at: string | null
           date_of_birth: string | null
+          dosha: string | null
           education: string | null
           full_name: string | null
           gender: string | null
+          gothra: string | null
           height: string | null
           hide_from_search: boolean
           id: string
           is_online: boolean | null
           is_verified: boolean | null
+          jathakam_url: string | null
           languages: string[] | null
           last_seen: string | null
           location: string | null
           marry_timeframe: string | null
+          nakshatra: string | null
           notification_settings: Json
           partner_age_range_max: number | null
           partner_age_range_min: number | null
           partner_location: string | null
           photos: string[] | null
+          place_of_birth: string | null
           profession: string | null
           profile_visibility: string
+          rashi: string | null
           religion: string | null
           show_online_status: boolean
+          time_of_birth: string | null
           updated_at: string | null
           verified: boolean | null
         }
@@ -151,27 +158,34 @@ export type Database = {
           community?: string | null
           created_at?: string | null
           date_of_birth?: string | null
+          dosha?: string | null
           education?: string | null
           full_name?: string | null
           gender?: string | null
+          gothra?: string | null
           height?: string | null
           hide_from_search?: boolean
           id: string
           is_online?: boolean | null
           is_verified?: boolean | null
+          jathakam_url?: string | null
           languages?: string[] | null
           last_seen?: string | null
           location?: string | null
           marry_timeframe?: string | null
+          nakshatra?: string | null
           notification_settings?: Json
           partner_age_range_max?: number | null
           partner_age_range_min?: number | null
           partner_location?: string | null
           photos?: string[] | null
+          place_of_birth?: string | null
           profession?: string | null
           profile_visibility?: string
+          rashi?: string | null
           religion?: string | null
           show_online_status?: boolean
+          time_of_birth?: string | null
           updated_at?: string | null
           verified?: boolean | null
         }
@@ -182,27 +196,34 @@ export type Database = {
           community?: string | null
           created_at?: string | null
           date_of_birth?: string | null
+          dosha?: string | null
           education?: string | null
           full_name?: string | null
           gender?: string | null
+          gothra?: string | null
           height?: string | null
           hide_from_search?: boolean
           id?: string
           is_online?: boolean | null
           is_verified?: boolean | null
+          jathakam_url?: string | null
           languages?: string[] | null
           last_seen?: string | null
           location?: string | null
           marry_timeframe?: string | null
+          nakshatra?: string | null
           notification_settings?: Json
           partner_age_range_max?: number | null
           partner_age_range_min?: number | null
           partner_location?: string | null
           photos?: string[] | null
+          place_of_birth?: string | null
           profession?: string | null
           profile_visibility?: string
+          rashi?: string | null
           religion?: string | null
           show_online_status?: boolean
+          time_of_birth?: string | null
           updated_at?: string | null
           verified?: boolean | null
         }

@@ -8,6 +8,7 @@ import ProfileHeader from './ProfileHeader';
 import ProfileGallery from './ProfileGallery';
 import ProfileSummary from './ProfileSummary';
 import ProfileAbout from './ProfileAbout';
+import ProfileJathaka from './ProfileJathaka';
 import ProfilePreferences from './ProfilePreferences';
 
 interface ProfileScreenProps {
@@ -72,6 +73,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <ProfileSummary profileData={profileData} />
           
           <ProfileAbout bio={profileData.bio} />
+          
+          <ProfileJathaka profileData={profileData} />
           
           <ProfilePreferences profileData={profileData} />
         </div>

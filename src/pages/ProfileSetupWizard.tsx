@@ -10,13 +10,14 @@ import { useProfileSetup } from '@/hooks/useProfileSetup';
 import Step1Photos from '@/components/profile-setup/Step1Photos';
 import Step2BasicDetails from '@/components/profile-setup/Step2BasicDetails';
 import Step3Lifestyle from '@/components/profile-setup/Step3Lifestyle';
-import Step4Preferences from '@/components/profile-setup/Step4Preferences';
-import Step5BioPreview from '@/components/profile-setup/Step5BioPreview';
+import Step4JathakaDetails from '@/components/profile-setup/Step4JathakaDetails';
+import Step5Preferences from '@/components/profile-setup/Step5Preferences';
+import Step6BioPreview from '@/components/profile-setup/Step6BioPreview';
 import ProgressBar from '@/components/profile-setup/ProgressBar';
 import TrustNote from '@/components/profile-setup/TrustNote';
 
 const ProfileSetupWizard: React.FC = () => {
-  const totalSteps = 5;
+  const totalSteps = 6; // Updated to 6 steps
   const location = useLocation();
   const existingProfileData = location.state?.profileData;
   
@@ -52,9 +53,11 @@ const ProfileSetupWizard: React.FC = () => {
       case 3:
         return <Step3Lifestyle data={profileData} updateData={updateData} errors={errors} />;
       case 4:
-        return <Step4Preferences data={profileData} updateData={updateData} errors={errors} />;
+        return <Step4JathakaDetails data={profileData} updateData={updateData} errors={errors} />;
       case 5:
-        return <Step5BioPreview data={profileData} updateData={updateData} errors={errors} />;
+        return <Step5Preferences data={profileData} updateData={updateData} errors={errors} />;
+      case 6:
+        return <Step6BioPreview data={profileData} updateData={updateData} errors={errors} />;
       default:
         return null;
     }

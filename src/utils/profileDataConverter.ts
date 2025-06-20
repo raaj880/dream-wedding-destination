@@ -8,6 +8,8 @@ export const convertDatabaseToFormData = (databaseData: any): ProfileData => {
     ...initialProfileData,
     fullName: databaseData.full_name || '',
     dob: databaseData.date_of_birth ? new Date(databaseData.date_of_birth) : undefined,
+    timeOfBirth: databaseData.time_of_birth || '',
+    placeOfBirth: databaseData.place_of_birth || '',
     gender: databaseData.gender || '',
     location: databaseData.location || '',
     religion: databaseData.religion || '',
@@ -28,6 +30,12 @@ export const convertDatabaseToFormData = (databaseData: any): ProfileData => {
     bio: databaseData.bio || '',
     photos: [], // New files to upload
     photoPreviews: databaseData.photos || [], // Existing photo URLs
+    // Jathaka/Horoscope fields
+    rashi: databaseData.rashi || '',
+    nakshatra: databaseData.nakshatra || '',
+    gothra: databaseData.gothra || '',
+    dosha: databaseData.dosha || '',
+    jathakamUrl: databaseData.jathakam_url || '',
   };
   
   console.log('✅ Converted data for editing:', convertedData);

@@ -4,6 +4,8 @@ export interface ProfileData {
   photoPreviews: string[];
   fullName: string;
   dob?: Date;
+  timeOfBirth?: string;
+  placeOfBirth: string;
   gender: 'male' | 'female' | 'other' | '';
   location: string; // Simplified from auto-suggest
   religion: string;
@@ -17,6 +19,12 @@ export interface ProfileData {
   partnerLocation: string;
   profileVisibility: 'everyone' | 'matches' | 'match_family' | '';
   bio: string;
+  // Jathaka/Horoscope fields
+  rashi: string;
+  nakshatra: string;
+  gothra: string;
+  dosha: string;
+  jathakamUrl?: string;
 }
 
 export const initialProfileData: ProfileData = {
@@ -24,6 +32,8 @@ export const initialProfileData: ProfileData = {
   photoPreviews: [],
   fullName: '',
   dob: undefined,
+  timeOfBirth: '',
+  placeOfBirth: '',
   gender: '',
   location: '',
   religion: '',
@@ -37,5 +47,10 @@ export const initialProfileData: ProfileData = {
   partnerLocation: '',
   profileVisibility: '',
   bio: '',
+  // Jathaka/Horoscope fields
+  rashi: '',
+  nakshatra: '',
+  gothra: '',
+  dosha: '',
+  jathakamUrl: '',
 };
-
