@@ -39,9 +39,9 @@ const LocationSelect: React.FC<LocationSelectProps> = ({
         <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", error && "border-red-500")}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-50">
+        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
           {locationOptions.map((city) => (
-            <SelectItem key={city} value={city} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20">
+            <SelectItem key={city} value={city} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
               {city}
             </SelectItem>
           ))}

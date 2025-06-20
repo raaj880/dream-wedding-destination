@@ -34,8 +34,12 @@ const Step3Lifestyle: React.FC<Step3LifestyleProps> = ({ data, updateData, error
             <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.religion && "border-red-500")}>
               <SelectValue placeholder="Select your religion" />
             </SelectTrigger>
-            <SelectContent className="bg-card-charcoal border-card-gold/50 text-white">
-              {religionOptions.map(option => <SelectItem key={option} value={option} className="focus:bg-card-gold/20">{option}</SelectItem>)}
+            <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
+              {religionOptions.map(option => 
+                <SelectItem key={option} value={option} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
+                  {option}
+                </SelectItem>
+              )}
             </SelectContent>
           </Select>
           {errors.religion && <p className="text-sm text-red-500 mt-1">{errors.religion}</p>}
@@ -70,8 +74,12 @@ const Step3Lifestyle: React.FC<Step3LifestyleProps> = ({ data, updateData, error
             <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.education && "border-red-500")}>
               <SelectValue placeholder="Select your highest education" />
             </SelectTrigger>
-            <SelectContent className="bg-card-charcoal border-card-gold/50 text-white">
-              {educationOptions.map(option => <SelectItem key={option} value={option} className="focus:bg-card-gold/20">{option}</SelectItem>)}
+            <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
+              {educationOptions.map(option => 
+                <SelectItem key={option} value={option} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
+                  {option}
+                </SelectItem>
+              )}
             </SelectContent>
           </Select>
           {errors.education && <p className="text-sm text-red-500 mt-1">{errors.education}</p>}

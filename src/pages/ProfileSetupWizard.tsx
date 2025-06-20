@@ -47,7 +47,7 @@ const ProfileSetupWizard: React.FC = () => {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <Step1Photos data={profileData} updateData={updateData} triggerValidation={triggerValidation} />;
+        return <Step1Photos data={profileData} updateData={updateData} triggerValidation={triggerValidation} isEditMode={isEditMode} />;
       case 2:
         return <Step2BasicDetails data={profileData} updateData={updateData} errors={errors} />;
       case 3:

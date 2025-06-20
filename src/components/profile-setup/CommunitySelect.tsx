@@ -27,9 +27,9 @@ const CommunitySelect: React.FC<CommunitySelectProps> = ({ value, onChange, erro
         <SelectTrigger className={cn("w-full mt-1 bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", error && "border-red-500")}>
           <SelectValue placeholder="Select your community" />
         </SelectTrigger>
-        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-50">
+        <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
           {communityOptions.map((option) => (
-            <SelectItem key={option} value={option.toLowerCase().replace(/\s+/g, '-')} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20">
+            <SelectItem key={option} value={option.toLowerCase().replace(/\s+/g, '-')} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
               {option}
             </SelectItem>
           ))}

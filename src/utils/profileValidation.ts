@@ -1,12 +1,13 @@
 
 import { ProfileData } from '@/types/profile';
 
-export const validateProfileStep = (step: number, data: ProfileData): Record<string, string> => {
+export const validateProfileStep = (step: number, data: ProfileData, isEditMode: boolean = false): Record<string, string> => {
   const errors: Record<string, string> = {};
 
   switch (step) {
     case 1: // Photos
-      if (data.photos.length === 0 && data.photoPreviews.length === 0) {
+      // Make photos optional for edit mode, but required for new profiles
+      if (!isEditMode && data.photos.length === 0 && data.photoPreviews.length === 0) {
         errors.photos = 'Please upload at least one photo';
       }
       break;

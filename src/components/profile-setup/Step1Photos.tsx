@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,11 +9,12 @@ interface Step1PhotosProps {
   data: ProfileData;
   updateData: (newData: Partial<ProfileData>) => void;
   triggerValidation: () => boolean;
+  isEditMode?: boolean;
 }
 
 const MAX_PHOTOS = 3;
 
-const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerValidation }) => {
+const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerValidation, isEditMode = false }) => {
   // Use a ref to keep track of blob URLs for cleanup, avoiding stale closures.
   const blobUrlsRef = React.useRef<string[]>([]);
   blobUrlsRef.current = data.photoPreviews.filter(p => p.startsWith('blob:'));
@@ -71,11 +71,11 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
     <Card className="w-full animate-in fade-in-50 duration-500 bg-transparent border-none shadow-none">
       <CardHeader className="px-0">
         <CardTitle className="text-2xl font-semibold text-card-gold flex items-center">
-          {hasExistingPhotos ? 'Manage Your Photos' : 'Add Your Best Photos'} <span className="ml-2">📸</span>
+          {isEditMode && hasExistingPhotos ? 'Manage Your Photos' : 'Add Your Best Photos'} <span className="ml-2">📸</span>
         </CardTitle>
         <CardDescription className="text-gray-400">
-          {hasExistingPhotos 
-            ? 'You can add more photos or remove existing ones. Your profile looks great!'
+          {isEditMode && hasExistingPhotos 
+            ? 'You can add more photos or remove existing ones. Photo upload is optional while editing.'
             : 'Profiles with photos get 7x more matches! Upload 1-3 photos.'
           }
         </CardDescription>
@@ -142,8 +142,12 @@ const Step1Photos: React.FC<Step1PhotosProps> = ({ data, updateData, triggerVali
           </Button>
         )}
         
-        {totalPhotos === 0 && (
+        {totalPhotos === 0 && !isEditMode && (
           <p className="text-sm text-red-500 text-center pt-2">Please upload at least one photo to continue.</p>
+        )}
+
+        {isEditMode && totalPhotos === 0 && (
+          <p className="text-sm text-blue-400 text-center pt-2">Photo upload is optional while editing your profile.</p>
         )}
       </CardContent>
     </Card>

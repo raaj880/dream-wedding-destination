@@ -38,12 +38,12 @@ export const useProfileSetupState = (totalSteps: number, initialData?: any) => {
   }, []);
 
   const validateStep = useCallback((step: number): boolean => {
-    const newErrors = validateProfileStep(step, profileData);
+    const newErrors = validateProfileStep(step, profileData, isEditMode);
     setErrors(newErrors);
     const isValid = Object.keys(newErrors).length === 0;
-    console.log(`✅ Step ${step} validation:`, { isValid, errors: newErrors });
+    console.log(`✅ Step ${step} validation:`, { isValid, errors: newErrors, isEditMode });
     return isValid;
-  }, [profileData]);
+  }, [profileData, isEditMode]);
 
   const nextStep = useCallback(() => {
     console.log(`➡️ Attempting to go to next step from ${currentStep}`);

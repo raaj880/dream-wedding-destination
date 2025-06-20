@@ -93,9 +93,9 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
               <SelectTrigger className={cn("bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.rashi && "border-red-500")}>
                 <SelectValue placeholder="Select your Rashi" />
               </SelectTrigger>
-              <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-50">
+              <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
                 {RASHIS.map((rashi) => (
-                  <SelectItem key={rashi} value={rashi} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20">
+                  <SelectItem key={rashi} value={rashi} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
                     {rashi}
                   </SelectItem>
                 ))}
@@ -113,9 +113,9 @@ const Step4JathakaDetails: React.FC<Step4JathakaDetailsProps> = ({ data, updateD
               <SelectTrigger className={cn("bg-card-charcoal border-card-gold/30 text-white focus:border-card-gold", errors.nakshatra && "border-red-500")}>
                 <SelectValue placeholder="Select your Nakshatra" />
               </SelectTrigger>
-              <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-50">
+              <SelectContent className="bg-card-charcoal border-card-gold/50 text-white z-[100] shadow-xl">
                 {NAKSHATRAS.map((nakshatra) => (
-                  <SelectItem key={nakshatra} value={nakshatra} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20">
+                  <SelectItem key={nakshatra} value={nakshatra} className="text-white hover:bg-card-gold/20 focus:bg-card-gold/20 bg-card-charcoal">
                     {nakshatra}
                   </SelectItem>
                 ))}
