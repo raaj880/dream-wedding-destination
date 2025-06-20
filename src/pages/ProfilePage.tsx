@@ -40,6 +40,8 @@ const ProfilePage: React.FC = () => {
     return {
       fullName: rawProfile.full_name || '',
       dob: dobDate,
+      timeOfBirth: rawProfile.time_of_birth || '',
+      placeOfBirth: rawProfile.place_of_birth || '',
       gender: (rawProfile.gender as ProfileData['gender']) || '',
       location: rawProfile.location || '',
       religion: rawProfile.religion || '',
@@ -59,6 +61,12 @@ const ProfilePage: React.FC = () => {
       bio: rawProfile.bio || '',
       photos: [], // Always empty for existing profiles since these are File objects
       photoPreviews: rawProfile.photos || [], // URLs from database
+      // Jathaka/Horoscope fields
+      rashi: rawProfile.rashi || '',
+      nakshatra: rawProfile.nakshatra || '',
+      gothra: rawProfile.gothra || '',
+      dosha: rawProfile.dosha || '',
+      jathakamUrl: rawProfile.jathakam_url || '',
     };
   };
 
