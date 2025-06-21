@@ -15,6 +15,7 @@ export const useProfileSetup = (totalSteps: number, initialData?: any) => {
     prevStep,
     triggerValidation,
     validateStep,
+    isDataInitialized,
   } = useProfileSetupState(totalSteps, initialData);
 
   const { handleSubmit, loading } = useProfileSubmission(
@@ -36,5 +37,6 @@ export const useProfileSetup = (totalSteps: number, initialData?: any) => {
     handleSubmit: () => handleSubmit(profileData),
     triggerValidation,
     isEditMode,
+    isDataInitialized,
   };
 };

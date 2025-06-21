@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import { useProfileSetup } from '@/hooks/useProfileSetup';
+import { useProfile } from '@/hooks/useProfile';
 
 // Step components
 import Step1Photos from '@/components/profile-setup/Step1Photos';
@@ -17,11 +18,48 @@ import ProgressBar from '@/components/profile-setup/ProgressBar';
 import TrustNote from '@/components/profile-setup/TrustNote';
 
 const ProfileSetupWizard: React.FC = () => {
-  const totalSteps = 6; // Updated to 6 steps
+  const totalSteps = 6;
   const location = useLocation();
-  const existingProfileData = location.state?.profileData;
+  const [initialProfileData, setInitialProfileData] = useState(null);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(false);
+  const { getProfile } = useProfile();
   
-  console.log('🔍 ProfileSetupWizard loaded with existing data:', existingProfileData);
+  // Check if we're in edit mode (coming from profile page or have existing data)
+  const isEditMode = location.pathname.includes('edit') || location.state?.profileData;
+  
+  console.log('🔍 ProfileSetupWizard loaded:', { 
+    isEditMode, 
+    hasStateData: !!location.state?.profileData,
+    pathname: location.pathname 
+  });
+
+  // Fetch existing profile data if in edit mode and no data passed via state
+  useEffect(() => {
+    const fetchExistingProfile = async () => {
+      if (isEditMode && !location.state?.profileData) {
+        setIsLoadingProfile(true);
+        try {
+          console.log('🔄 Fetching existing profile data for edit...');
+          const existingProfile = await getProfile();
+          if (existingProfile) {
+            console.log('✅ Found existing profile:', existingProfile);
+            setInitialProfileData(existingProfile);
+          } else {
+            console.log('⚠️ No existing profile found');
+          }
+        } catch (error) {
+          console.error('❌ Error fetching profile:', error);
+        } finally {
+          setIsLoadingProfile(false);
+        }
+      } else if (location.state?.profileData) {
+        console.log('📋 Using profile data from state');
+        setInitialProfileData(location.state.profileData);
+      }
+    };
+
+    fetchExistingProfile();
+  }, [isEditMode, location.state?.profileData, getProfile]);
   
   const {
     currentStep,
@@ -34,14 +72,14 @@ const ProfileSetupWizard: React.FC = () => {
     prevStep,
     handleSubmit,
     triggerValidation,
-    isEditMode,
-  } = useProfileSetup(totalSteps, existingProfileData);
+  } = useProfileSetup(totalSteps, initialProfileData);
 
   console.log('🔧 ProfileSetup hook state:', {
     currentStep,
     isEditMode,
     hasProfileData: !!profileData,
-    profileDataKeys: profileData ? Object.keys(profileData) : []
+    profileDataKeys: profileData ? Object.keys(profileData) : [],
+    isLoadingProfile
   });
 
   const renderStep = () => {
@@ -62,6 +100,19 @@ const ProfileSetupWizard: React.FC = () => {
         return null;
     }
   };
+
+  // Show loading state while fetching profile data
+  if (isLoadingProfile) {
+    return (
+      <div className="min-h-screen bg-card-charcoal text-white flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-card-gold mx-auto"></div>
+          <p className="text-card-gold text-lg">Loading your profile details...</p>
+          <p className="text-gray-400 text-sm">Please wait while we fetch your information</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-card-charcoal text-white">

@@ -20,32 +20,55 @@ export const convertDatabaseToFormData = (databaseData: any): ProfileData => {
     return communityMap[communityValue] || communityValue;
   };
 
+  // Helper function to safely parse date
+  const parseDate = (dateString: string | null | undefined): Date | undefined => {
+    if (!dateString) return undefined;
+    try {
+      // Add noon time to avoid timezone issues
+      const date = new Date(dateString + 'T12:00:00');
+      return isNaN(date.getTime()) ? undefined : date;
+    } catch (error) {
+      console.warn('Date parsing error:', error);
+      return undefined;
+    }
+  };
+
   const convertedData: ProfileData = {
     ...initialProfileData,
+    // Basic Information
     fullName: databaseData.full_name || '',
-    dob: databaseData.date_of_birth ? new Date(databaseData.date_of_birth + 'T12:00:00') : undefined,
+    dob: parseDate(databaseData.date_of_birth),
     timeOfBirth: databaseData.time_of_birth || '',
     placeOfBirth: databaseData.place_of_birth || '',
     gender: databaseData.gender || '',
     location: databaseData.location || '',
+    
+    // Background & Beliefs
     religion: databaseData.religion || '',
     community: convertCommunityFromDb(databaseData.community || ''),
     languages: Array.isArray(databaseData.languages) 
       ? databaseData.languages.join(', ') 
-      : databaseData.languages || '',
+      : (databaseData.languages || ''),
     profession: databaseData.profession || '',
     education: databaseData.education || '',
     height: databaseData.height || '',
-    marryTimeframe: databaseData.marry_timeframe || '',
+    
+    // Partner Preferences
+    marryTimeframe: (databaseData.marry_timeframe as ProfileData['marryTimeframe']) || '',
     partnerAgeRange: [
       Math.max(18, databaseData.partner_age_range_min || 20),
       Math.min(100, databaseData.partner_age_range_max || 40)
     ],
     partnerLocation: databaseData.partner_location || '',
-    profileVisibility: databaseData.profile_visibility || 'everyone',
+    profileVisibility: (databaseData.profile_visibility as ProfileData['profileVisibility']) || 'everyone',
+    
+    // Bio
     bio: databaseData.bio || '',
-    photos: [], // New files to upload
-    photoPreviews: databaseData.photos || [], // Existing photo URLs
+    
+    // Photos
+    photos: [], // New files to upload (always empty for existing profiles)
+    photoPreviews: Array.isArray(databaseData.photos) ? databaseData.photos : [], // Existing photo URLs
+    
     // Jathaka/Horoscope fields
     rashi: databaseData.rashi || '',
     nakshatra: databaseData.nakshatra || '',

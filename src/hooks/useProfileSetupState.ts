@@ -1,25 +1,37 @@
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { ProfileData, initialProfileData } from '@/types/profile';
 import { convertDatabaseToFormData } from '@/utils/profileDataConverter';
 import { validateProfileStep } from '@/utils/profileValidation';
 
 export const useProfileSetupState = (totalSteps: number, initialData?: any) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [profileData, setProfileData] = useState<ProfileData>(() => {
-    console.log('🏗️ Initializing profile setup with data:', initialData);
-    return initialData ? convertDatabaseToFormData(initialData) : initialProfileData;
-  });
-  
+  const [isDataInitialized, setIsDataInitialized] = useState(false);
+  const [profileData, setProfileData] = useState<ProfileData>(initialProfileData);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isEditMode = !!initialData;
 
-  console.log('🔧 useProfileSetupState initialized:', {
+  console.log('🔧 useProfileSetupState - Initial setup:', {
     isEditMode,
     hasInitialData: !!initialData,
-    currentProfileData: profileData
+    isDataInitialized
   });
+
+  // Initialize profile data when initialData changes
+  useEffect(() => {
+    if (initialData && !isDataInitialized) {
+      console.log('🏗️ Initializing profile data with:', initialData);
+      const convertedData = convertDatabaseToFormData(initialData);
+      setProfileData(convertedData);
+      setIsDataInitialized(true);
+      console.log('✅ Profile data initialized:', convertedData);
+    } else if (!initialData && !isDataInitialized) {
+      console.log('🆕 No initial data, using default profile data');
+      setProfileData(initialProfileData);
+      setIsDataInitialized(true);
+    }
+  }, [initialData, isDataInitialized]);
 
   const updateData = useCallback((newData: Partial<ProfileData>) => {
     console.log('📝 Updating profile data:', newData);
@@ -71,5 +83,6 @@ export const useProfileSetupState = (totalSteps: number, initialData?: any) => {
     prevStep,
     triggerValidation,
     validateStep,
+    isDataInitialized,
   };
 };
