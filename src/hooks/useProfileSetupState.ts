@@ -15,17 +15,25 @@ export const useProfileSetupState = (totalSteps: number, initialData?: any) => {
   console.log('🔧 useProfileSetupState - Initial setup:', {
     isEditMode,
     hasInitialData: !!initialData,
-    isDataInitialized
+    isDataInitialized,
+    initialDataType: typeof initialData
   });
 
   // Initialize profile data when initialData changes
   useEffect(() => {
     if (initialData && !isDataInitialized) {
       console.log('🏗️ Initializing profile data with:', initialData);
-      const convertedData = convertDatabaseToFormData(initialData);
-      setProfileData(convertedData);
-      setIsDataInitialized(true);
-      console.log('✅ Profile data initialized:', convertedData);
+      try {
+        const convertedData = convertDatabaseToFormData(initialData);
+        console.log('✅ Converted data for form:', convertedData);
+        setProfileData(convertedData);
+        setIsDataInitialized(true);
+      } catch (error) {
+        console.error('❌ Error converting database data:', error);
+        // Fallback to default data if conversion fails
+        setProfileData(initialProfileData);
+        setIsDataInitialized(true);
+      }
     } else if (!initialData && !isDataInitialized) {
       console.log('🆕 No initial data, using default profile data');
       setProfileData(initialProfileData);

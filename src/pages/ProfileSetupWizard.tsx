@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import { useProfileSetup } from '@/hooks/useProfileSetup';
 import { useProfile } from '@/hooks/useProfile';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // Step components
 import Step1Photos from '@/components/profile-setup/Step1Photos';
@@ -22,21 +23,23 @@ const ProfileSetupWizard: React.FC = () => {
   const location = useLocation();
   const [initialProfileData, setInitialProfileData] = useState(null);
   const [isLoadingProfile, setIsLoadingProfile] = useState(false);
+  const [dataInitialized, setDataInitialized] = useState(false);
   const { getProfile } = useProfile();
   
   // Check if we're in edit mode (coming from profile page or have existing data)
-  const isEditMode = location.pathname.includes('edit') || location.state?.profileData;
+  const isEditMode = location.pathname.includes('edit') || location.state?.profileData || location.state?.isEditMode;
   
   console.log('🔍 ProfileSetupWizard loaded:', { 
     isEditMode, 
     hasStateData: !!location.state?.profileData,
-    pathname: location.pathname 
+    pathname: location.pathname,
+    locationState: location.state
   });
 
   // Fetch existing profile data if in edit mode and no data passed via state
   useEffect(() => {
     const fetchExistingProfile = async () => {
-      if (isEditMode && !location.state?.profileData) {
+      if (isEditMode && !location.state?.profileData && !dataInitialized) {
         setIsLoadingProfile(true);
         try {
           console.log('🔄 Fetching existing profile data for edit...');
@@ -51,15 +54,20 @@ const ProfileSetupWizard: React.FC = () => {
           console.error('❌ Error fetching profile:', error);
         } finally {
           setIsLoadingProfile(false);
+          setDataInitialized(true);
         }
-      } else if (location.state?.profileData) {
+      } else if (location.state?.profileData && !dataInitialized) {
         console.log('📋 Using profile data from state');
         setInitialProfileData(location.state.profileData);
+        setDataInitialized(true);
+      } else if (!isEditMode && !dataInitialized) {
+        console.log('🆕 New profile setup - no data to fetch');
+        setDataInitialized(true);
       }
     };
 
     fetchExistingProfile();
-  }, [isEditMode, location.state?.profileData, getProfile]);
+  }, [isEditMode, location.state?.profileData, getProfile, dataInitialized]);
   
   const {
     currentStep,
@@ -72,6 +80,7 @@ const ProfileSetupWizard: React.FC = () => {
     prevStep,
     handleSubmit,
     triggerValidation,
+    isDataInitialized,
   } = useProfileSetup(totalSteps, initialProfileData);
 
   console.log('🔧 ProfileSetup hook state:', {
@@ -79,7 +88,9 @@ const ProfileSetupWizard: React.FC = () => {
     isEditMode,
     hasProfileData: !!profileData,
     profileDataKeys: profileData ? Object.keys(profileData) : [],
-    isLoadingProfile
+    isLoadingProfile,
+    isDataInitialized,
+    dataInitialized
   });
 
   const renderStep = () => {
@@ -101,14 +112,38 @@ const ProfileSetupWizard: React.FC = () => {
     }
   };
 
-  // Show loading state while fetching profile data
-  if (isLoadingProfile) {
+  // Show loading state while fetching profile data or initializing
+  if (isLoadingProfile || !dataInitialized || !isDataInitialized) {
     return (
-      <div className="min-h-screen bg-card-charcoal text-white flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-card-gold mx-auto"></div>
-          <p className="text-card-gold text-lg">Loading your profile details...</p>
-          <p className="text-gray-400 text-sm">Please wait while we fetch your information</p>
+      <div className="min-h-screen bg-card-charcoal text-white">
+        <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <Card className="shadow-premium bg-card-dark-gray border border-card-gold/20">
+            <CardHeader className="text-center">
+              <Skeleton className="h-8 w-64 mx-auto mb-4 bg-slate-700" />
+              <Skeleton className="h-2 w-full bg-slate-700" />
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="text-center space-y-4">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-card-gold mx-auto"></div>
+                <p className="text-card-gold text-lg">
+                  {isEditMode ? 'Loading your profile details...' : 'Preparing your profile setup...'}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {isEditMode ? 'We\'re fetching your current information so you can make updates' : 'Please wait while we set everything up for you'}
+                </p>
+              </div>
+              
+              {/* Loading skeleton for form fields */}
+              <div className="space-y-4">
+                <Skeleton className="h-4 w-32 bg-slate-700" />
+                <Skeleton className="h-10 w-full bg-slate-700" />
+                <Skeleton className="h-4 w-32 bg-slate-700" />
+                <Skeleton className="h-10 w-full bg-slate-700" />
+                <Skeleton className="h-4 w-32 bg-slate-700" />
+                <Skeleton className="h-20 w-full bg-slate-700" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     );
@@ -122,6 +157,11 @@ const ProfileSetupWizard: React.FC = () => {
             <CardTitle className="text-3xl font-bold text-card-gold mb-2">
               {isEditMode ? 'Edit Your Profile' : 'Complete Your Profile'}
             </CardTitle>
+            {isEditMode && (
+              <p className="text-gray-400 text-sm mb-4">
+                Your current information is pre-filled. Update any fields you'd like to change.
+              </p>
+            )}
             <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
           </CardHeader>
           <CardContent className="space-y-6">
