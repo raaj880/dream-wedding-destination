@@ -1,52 +1,87 @@
 
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from '@/components/ui/use-toast';
 import { useProfile } from '@/hooks/useProfile';
 import { ProfileData } from '@/types/profile';
+import { toast } from '@/components/ui/use-toast';
+import { sanitizeProfileData } from '@/utils/profileValidation';
+import { logSecurityEvent } from '@/utils/authSecurity';
 
 export const useProfileSubmission = (
   isEditMode: boolean,
   currentStep: number,
   validateStep: (step: number) => boolean,
-  setIsSubmitting: (value: boolean) => void
+  setIsSubmitting: (loading: boolean) => void
 ) => {
   const navigate = useNavigate();
   const { saveProfile, loading } = useProfile();
 
   const handleSubmit = useCallback(async (profileData: ProfileData) => {
-    console.log('🚀 Submitting profile:', { isEditMode, profileData });
+    console.log('🚀 Starting profile submission process');
     
-    if (!validateStep(currentStep)) {
-      console.log('❌ Validation failed, not submitting');
+    if (currentStep !== 6 || !validateStep(6)) {
+      console.log('❌ Final step validation failed');
+      toast({
+        title: "Validation Error",
+        description: "Please complete all required fields before submitting.",
+        variant: "destructive"
+      });
       return;
     }
 
     setIsSubmitting(true);
+
     try {
-      await saveProfile(profileData);
+      // Sanitize all profile data before submission
+      const sanitizedData = sanitizeProfileData(profileData);
       
-      toast({
-        title: isEditMode ? "Profile Updated! 🎉" : "Profile Created Successfully! 🎉",
-        description: isEditMode ? "Your changes have been saved." : "Welcome to Wedder! Your profile is now live.",
+      console.log('💾 Saving sanitized profile data...');
+      await saveProfile(sanitizedData);
+      
+      // Log security event
+      await logSecurityEvent(isEditMode ? 'profile_updated' : 'profile_created', {
+        hasPhotos: sanitizedData.photos.length > 0 || sanitizedData.photoPreviews.length > 0,
+        completedSteps: 6
       });
 
-      // Navigate to profile page after edit, or dashboard after creation
-      navigate(isEditMode ? '/profile' : '/dashboard', { replace: true });
-    } catch (error) {
-      console.error('❌ Error saving profile:', error);
       toast({
-        title: isEditMode ? "Update Failed" : "Profile Save Failed",
-        description: "Something went wrong. Please try again.",
+        title: isEditMode ? "Profile Updated!" : "Profile Created!",
+        description: isEditMode 
+          ? "Your profile has been successfully updated." 
+          : "Welcome! Your profile has been created successfully.",
+      });
+
+      console.log('✅ Profile submission completed successfully');
+      
+      // Navigate based on mode
+      if (isEditMode) {
+        navigate('/profile', { replace: true });
+      } else {
+        navigate('/', { replace: true });
+      }
+    } catch (error) {
+      console.error('❌ Profile submission error:', error);
+      
+      // Log security event for failed submission
+      await logSecurityEvent('profile_submission_failed', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        isEditMode
+      });
+      
+      toast({
+        title: "Submission Failed",
+        description: error instanceof Error 
+          ? error.message 
+          : "An unexpected error occurred. Please try again.",
         variant: "destructive"
       });
     } finally {
       setIsSubmitting(false);
     }
-  }, [currentStep, validateStep, saveProfile, navigate, isEditMode, setIsSubmitting]);
+  }, [currentStep, validateStep, saveProfile, isEditMode, navigate, setIsSubmitting]);
 
   return {
     handleSubmit,
-    loading,
+    loading
   };
 };
