@@ -14,13 +14,357 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          details: Json | null
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      matches: {
+        Row: {
+          id: string
+          last_message_at: string | null
+          matched_at: string
+          status: string
+          user1_id: string
+          user2_id: string
+        }
+        Insert: {
+          id?: string
+          last_message_at?: string | null
+          matched_at?: string
+          status?: string
+          user1_id: string
+          user2_id: string
+        }
+        Update: {
+          id?: string
+          last_message_at?: string | null
+          matched_at?: string
+          status?: string
+          user1_id?: string
+          user2_id?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          edited_at: string | null
+          id: string
+          match_id: string
+          message_type: string
+          read_at: string | null
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          edited_at?: string | null
+          id?: string
+          match_id: string
+          message_type?: string
+          read_at?: string | null
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          edited_at?: string | null
+          id?: string
+          match_id?: string
+          message_type?: string
+          read_at?: string | null
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          read: boolean | null
+          related_match_id: string | null
+          related_user_id: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          read?: boolean | null
+          related_match_id?: string | null
+          related_user_id?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          read?: boolean | null
+          related_match_id?: string | null
+          related_user_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_related_match_id_fkey"
+            columns: ["related_match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          account_status: string | null
+          age: number | null
+          bio: string | null
+          community: string | null
+          created_at: string | null
+          date_of_birth: string | null
+          dosha: string | null
+          education: string | null
+          full_name: string
+          gender: string | null
+          gothra: string | null
+          height: string | null
+          hide_from_search: boolean | null
+          id: string
+          is_online: boolean | null
+          jathakam_url: string | null
+          languages: string[] | null
+          last_seen: string | null
+          location: string | null
+          marry_timeframe: string | null
+          nakshatra: string | null
+          notification_settings: Json | null
+          partner_age_range_max: number | null
+          partner_age_range_min: number | null
+          partner_location: string[] | null
+          photos: string[] | null
+          place_of_birth: string | null
+          profession: string | null
+          profile_visibility: string | null
+          rashi: string | null
+          religion: string | null
+          show_online_status: boolean | null
+          time_of_birth: string | null
+          updated_at: string | null
+          verified: boolean | null
+        }
+        Insert: {
+          account_status?: string | null
+          age?: number | null
+          bio?: string | null
+          community?: string | null
+          created_at?: string | null
+          date_of_birth?: string | null
+          dosha?: string | null
+          education?: string | null
+          full_name: string
+          gender?: string | null
+          gothra?: string | null
+          height?: string | null
+          hide_from_search?: boolean | null
+          id: string
+          is_online?: boolean | null
+          jathakam_url?: string | null
+          languages?: string[] | null
+          last_seen?: string | null
+          location?: string | null
+          marry_timeframe?: string | null
+          nakshatra?: string | null
+          notification_settings?: Json | null
+          partner_age_range_max?: number | null
+          partner_age_range_min?: number | null
+          partner_location?: string[] | null
+          photos?: string[] | null
+          place_of_birth?: string | null
+          profession?: string | null
+          profile_visibility?: string | null
+          rashi?: string | null
+          religion?: string | null
+          show_online_status?: boolean | null
+          time_of_birth?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+        }
+        Update: {
+          account_status?: string | null
+          age?: number | null
+          bio?: string | null
+          community?: string | null
+          created_at?: string | null
+          date_of_birth?: string | null
+          dosha?: string | null
+          education?: string | null
+          full_name?: string
+          gender?: string | null
+          gothra?: string | null
+          height?: string | null
+          hide_from_search?: boolean | null
+          id?: string
+          is_online?: boolean | null
+          jathakam_url?: string | null
+          languages?: string[] | null
+          last_seen?: string | null
+          location?: string | null
+          marry_timeframe?: string | null
+          nakshatra?: string | null
+          notification_settings?: Json | null
+          partner_age_range_max?: number | null
+          partner_age_range_min?: number | null
+          partner_location?: string[] | null
+          photos?: string[] | null
+          place_of_birth?: string | null
+          profession?: string | null
+          profile_visibility?: string | null
+          rashi?: string | null
+          religion?: string | null
+          show_online_status?: boolean | null
+          time_of_birth?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
+      user_interactions: {
+        Row: {
+          created_at: string
+          id: string
+          interaction_type: string
+          target_user_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          interaction_type: string
+          target_user_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          interaction_type?: string
+          target_user_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      verification_requests: {
+        Row: {
+          created_at: string | null
+          id: string
+          rejection_reason: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          submitted_at: string
+          user_id: string
+          verification_photos: string[]
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          user_id: string
+          verification_photos: string[]
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          rejection_reason?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submitted_at?: string
+          user_id?: string
+          verification_photos?: string[]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      approve_verification_request: {
+        Args: { request_id: string; reviewer_id: string }
+        Returns: undefined
+      }
+      check_mutual_match: {
+        Args: { user1_id: string; user2_id: string }
+        Returns: boolean
+      }
+      get_match_id: {
+        Args: { user1_id: string; user2_id: string }
+        Returns: string
+      }
+      log_audit_event: {
+        Args: {
+          p_action: string
+          p_details?: Json
+          p_ip_address?: string
+          p_user_agent?: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
+      mark_messages_as_read: {
+        Args: { p_match_id: string; p_user_id: string }
+        Returns: undefined
+      }
+      reject_verification_request: {
+        Args: { reason: string; request_id: string; reviewer_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

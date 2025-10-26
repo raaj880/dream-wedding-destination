@@ -25,11 +25,11 @@ const VerificationCard: React.FC = () => {
       // Check if user is verified
       const { data: profile } = await supabase
         .from('profiles')
-        .select('is_verified')
+        .select('verified')
         .eq('id', user.id)
         .single();
 
-      if (profile?.is_verified) {
+      if (profile?.verified) {
         setIsVerified(true);
         setVerificationStatus('approved');
         return;
@@ -61,8 +61,7 @@ const VerificationCard: React.FC = () => {
         .from('verification_requests')
         .insert({
           user_id: user.id,
-          document_type: 'profile_review',
-          document_url: 'pending',
+          verification_photos: ['pending'],
           status: 'pending'
         });
 

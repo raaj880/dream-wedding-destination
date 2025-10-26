@@ -90,8 +90,10 @@ const VerificationQueue: React.FC = () => {
   const handleApprove = async (requestId: string) => {
     setProcessing(requestId);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
       const { error } = await supabase.rpc('approve_verification_request', {
-        request_id: requestId
+        request_id: requestId,
+        reviewer_id: user?.id
       });
 
       if (error) throw error;
@@ -118,8 +120,10 @@ const VerificationQueue: React.FC = () => {
   const handleReject = async (requestId: string) => {
     setProcessing(requestId);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
       const { error } = await supabase.rpc('reject_verification_request', {
         request_id: requestId,
+        reviewer_id: user?.id,
         reason: 'Rejected by admin'
       });
 

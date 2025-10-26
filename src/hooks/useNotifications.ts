@@ -23,7 +23,7 @@ const fetchNotifications = async (userId: string): Promise<Notification[]> => {
       matched_user_name: n.title || undefined,
       message_preview: n.message || undefined,
     },
-    isRead: n.is_read,
+    isRead: n.read,
     createdAt: new Date(n.created_at),
   }));
 };
@@ -31,7 +31,7 @@ const fetchNotifications = async (userId: string): Promise<Notification[]> => {
 const markNotificationAsRead = async (notificationId: string) => {
   const { error } = await supabase
     .from('notifications')
-    .update({ is_read: true })
+    .update({ read: true })
     .eq('id', notificationId);
 
   if (error) throw new Error(error.message);
@@ -40,9 +40,9 @@ const markNotificationAsRead = async (notificationId: string) => {
 const markAllNotificationsAsRead = async (userId: string) => {
   const { error } = await supabase
     .from('notifications')
-    .update({ is_read: true })
+    .update({ read: true })
     .eq('user_id', userId)
-    .eq('is_read', false);
+    .eq('read', false);
 
   if (error) throw new Error(error.message);
 };
@@ -92,7 +92,7 @@ export const useNotifications = () => {
             userId: payload.new.user_id,
             type: payload.new.type as NotificationType,
             data: payload.new.data as any,
-            isRead: payload.new.is_read,
+            isRead: payload.new.read,
             createdAt: new Date(payload.new.created_at),
           };
           queryClient.setQueryData(queryKey, (oldData: Notification[] | undefined) => {

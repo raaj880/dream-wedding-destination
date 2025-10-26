@@ -52,7 +52,7 @@ export const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData
       Math.max(18, rawProfile.partner_age_range_min || 20), 
       Math.min(100, rawProfile.partner_age_range_max || 40)
     ],
-    partnerLocation: rawProfile.partner_location || '',
+    partnerLocation: Array.isArray(rawProfile.partner_location) ? rawProfile.partner_location.join(', ') : (rawProfile.partner_location || ''),
     profileVisibility: (rawProfile.profile_visibility as ProfileData['profileVisibility']) || 'everyone',
     bio: rawProfile.bio || '',
     photos: [], // Always empty for existing profiles since these are File objects

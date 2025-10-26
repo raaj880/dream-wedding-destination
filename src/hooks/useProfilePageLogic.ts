@@ -32,7 +32,7 @@ export const useProfilePageLogic = () => {
           const transformedProfile = transformRawProfile(rawProfile);
           console.log('✅ Transformed profile data:', transformedProfile);
           setProfileData(transformedProfile);
-          setIsVerified(rawProfile.is_verified || false);
+          setIsVerified(rawProfile.verified || false);
         } else {
           console.log('⚠️ No profile found, redirecting to setup');
           navigate('/profile-setup');

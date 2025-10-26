@@ -22,8 +22,8 @@ export const useMutualMatch = (targetUserId?: string) => {
         // Check if mutual match exists using the database function
         const { data: mutualMatch, error: mutualError } = await supabase
           .rpc('check_mutual_match', {
-            user1_uuid: user.id,
-            user2_uuid: targetUserId
+            user1_id: user.id,
+            user2_id: targetUserId
           });
 
         if (mutualError) {
@@ -39,8 +39,8 @@ export const useMutualMatch = (targetUserId?: string) => {
         if (mutualMatch) {
           const { data: matchIdData, error: matchIdError } = await supabase
             .rpc('get_match_id', {
-              user1_uuid: user.id,
-              user2_uuid: targetUserId
+              user1_id: user.id,
+              user2_id: targetUserId
             });
 
           if (matchIdError) {
