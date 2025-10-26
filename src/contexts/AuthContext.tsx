@@ -22,12 +22,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('Setting up auth state listener...');
+    if (import.meta.env.DEV) {
+      console.log('Setting up auth state listener...');
+    }
     
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.email);
+        if (import.meta.env.DEV) {
+          console.log('Auth state changed:', event);
+        }
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -36,20 +40,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('Initial session:', session?.user?.email);
+      if (import.meta.env.DEV) {
+        console.log('Initial session loaded');
+      }
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
     return () => {
-      console.log('Cleaning up auth subscription');
+      if (import.meta.env.DEV) {
+        console.log('Cleaning up auth subscription');
+      }
       subscription.unsubscribe();
     };
   }, []);
 
   const login = async (email: string, password: string) => {
-    console.log('Attempting login for:', email);
+    if (import.meta.env.DEV) {
+      console.log('Attempting login');
+    }
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -57,11 +67,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       
       if (error) {
-        console.error('Login error:', error);
+        console.error('Login error:', error.message);
         return { error };
       }
       
-      console.log('Login successful:', data.user?.email);
+      if (import.meta.env.DEV) {
+        console.log('Login successful');
+      }
       return { error: null };
     } catch (error) {
       console.error('Login exception:', error);
@@ -70,7 +82,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signup = async (userData: any) => {
-    console.log('Attempting signup for:', userData.email || userData.phoneNumber);
+    if (import.meta.env.DEV) {
+      console.log('Attempting signup');
+    }
     try {
       const email = userData.email || `${userData.phoneNumber}@wedder.app`;
       const redirectUrl = `${window.location.origin}/`;
@@ -88,11 +102,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       
       if (error) {
-        console.error('Signup error:', error);
+        console.error('Signup error:', error.message);
         return { error };
       }
       
-      console.log('Signup successful:', data.user?.email);
+      if (import.meta.env.DEV) {
+        console.log('Signup successful');
+      }
       return { error: null };
     } catch (error) {
       console.error('Signup exception:', error);
@@ -101,12 +117,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
-    console.log('Logging out user');
+    if (import.meta.env.DEV) {
+      console.log('Logging out user');
+    }
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {
-        console.error('Logout error:', error);
-      } else {
+        console.error('Logout error:', error.message);
+      } else if (import.meta.env.DEV) {
         console.log('Logout successful');
       }
     } catch (error) {

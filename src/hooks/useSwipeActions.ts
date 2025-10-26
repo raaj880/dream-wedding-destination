@@ -18,12 +18,9 @@ export const useSwipeActions = () => {
   ): Promise<SwipeResult> => {
     if (!user) throw new Error('User not authenticated');
     
-    console.log('🎯 Recording interaction:', { 
-      userId: user.id, 
-      targetUserId, 
-      action,
-      timestamp: new Date().toISOString()
-    });
+    if (import.meta.env.DEV) {
+      console.log('Recording interaction:', action);
+    }
     
     setLoading(true);
     try {
@@ -39,15 +36,19 @@ export const useSwipeActions = () => {
         .single();
 
       if (interactionError) {
-        console.error('❌ Error recording interaction:', interactionError);
+        console.error('Error recording interaction:', interactionError.message);
         throw interactionError;
       }
 
-      console.log('✅ Interaction recorded successfully:', interactionData);
+      if (import.meta.env.DEV) {
+        console.log('Interaction recorded successfully');
+      }
 
       // Check for mutual like to create a match
       if (action === 'like' || action === 'superlike') {
-        console.log('💝 Checking for mutual like...');
+        if (import.meta.env.DEV) {
+          console.log('Checking for mutual like...');
+        }
         
         const { data: mutualInteractions, error: checkError } = await supabase
           .from('user_interactions')
@@ -57,15 +58,19 @@ export const useSwipeActions = () => {
           .in('interaction_type', ['like', 'superlike']);
 
         if (checkError) {
-          console.error('❌ Error checking mutual like:', checkError);
+          console.error('Error checking mutual like:', checkError.message);
           throw checkError;
         }
 
-        console.log('🔍 Mutual like check result:', mutualInteractions);
+        if (import.meta.env.DEV) {
+          console.log('Mutual like check completed');
+        }
 
         // If a mutual like or superlike exists, create a match
         if (mutualInteractions && mutualInteractions.length > 0) {
-          console.log('🎉 Creating match!');
+          if (import.meta.env.DEV) {
+            console.log('Creating match...');
+          }
           const user1Id = user.id < targetUserId ? user.id : targetUserId;
           const user2Id = user.id < targetUserId ? targetUserId : user.id;
 
@@ -82,19 +87,20 @@ export const useSwipeActions = () => {
             // It's possible the match already exists, which would violate the unique constraint.
             // We can ignore this specific error and assume the match is there.
             if (matchError.code !== '23505') { // 23505 is unique_violation
-                 console.error('❌ Error creating match:', matchError);
+                 console.error('Error creating match:', matchError.message);
                  throw matchError;
-            } else {
-                 console.log('👍 Match already exists, no action needed.');
-                 // We can optionally fetch the existing match ID here if needed
+            } else if (import.meta.env.DEV) {
+                 console.log('Match already exists');
             }
           }
 
-          console.log('✅ Match created successfully:', match);
+          if (import.meta.env.DEV) {
+            console.log('Match created successfully');
+          }
           // Even if match existed, we return true.
           return { isMatch: true, matchId: match?.id };
-        } else {
-          console.log('💔 No mutual like found yet');
+        } else if (import.meta.env.DEV) {
+          console.log('No mutual like found yet');
         }
       }
 
@@ -111,7 +117,9 @@ export const useSwipeActions = () => {
     if (!user) return [];
 
     try {
-      console.log('📋 Fetching swiped user IDs for user:', user.id);
+      if (import.meta.env.DEV) {
+        console.log('Fetching swiped user IDs');
+      }
       
       const { data, error } = await supabase
         .from('user_interactions')
@@ -119,16 +127,18 @@ export const useSwipeActions = () => {
         .eq('user_id', user.id);
 
       if (error) {
-        console.error('❌ Error fetching swiped users:', error);
+        console.error('Error fetching swiped users:', error.message);
         return [];
       }
 
       const swipedIds = data.map(interaction => interaction.target_user_id);
-      console.log('✅ Swiped user IDs:', swipedIds);
+      if (import.meta.env.DEV) {
+        console.log('Fetched', swipedIds.length, 'swiped users');
+      }
       
       return swipedIds;
     } catch (error) {
-      console.error('❌ Error getting swiped user IDs:', error);
+      console.error('Error getting swiped user IDs:', error);
       return [];
     }
   };
