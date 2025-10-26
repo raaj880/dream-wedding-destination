@@ -113,9 +113,8 @@ export const validateSession = async () => {
 export const logSecurityEvent = async (action: string, details?: any) => {
   try {
     const { error } = await supabase.rpc('log_audit_event', {
-      p_action: action,
-      p_table_name: 'security_events',
-      p_new_data: details ? JSON.stringify(details) : null
+      event_type_param: action,
+      event_data_param: details ? JSON.parse(JSON.stringify(details)) : null
     });
     
     if (error) {

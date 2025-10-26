@@ -13,7 +13,7 @@ export interface ProfileData {
   languages: string; // Simplified from multi-select chips to comma-separated string
   profession: string;
   education: string;
-  height: string; // e.g., "5'10\"" or "178cm"
+  height: string | number; // e.g., "5'10\"" or "178cm" or number in cm
   marryTimeframe: '6m' | '1y' | '2y' | 'norush' | '';
   partnerAgeRange: [number, number];
   partnerLocation: string;

@@ -119,7 +119,8 @@ const VerificationQueue: React.FC = () => {
     setProcessing(requestId);
     try {
       const { error } = await supabase.rpc('reject_verification_request', {
-        request_id: requestId
+        request_id: requestId,
+        reason: 'Rejected by admin'
       });
 
       if (error) throw error;

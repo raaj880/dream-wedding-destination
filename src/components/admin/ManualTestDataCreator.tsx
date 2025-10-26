@@ -77,23 +77,9 @@ const ManualTestDataCreator: React.FC = () => {
           // Wait a bit for the user to be created
           await new Promise(resolve => setTimeout(resolve, 1000));
 
-          // Create basic profile
-          const { error: profileError } = await supabase
-            .from('profiles')
-            .insert({
-              id: authData.user.id,
-              full_name: user.fullName,
-              profile_visibility: 'everyone'
-            });
+          // Profile will be auto-created by trigger
+          console.log(`✅ User ${user.email} created, profile auto-created by trigger`);
 
-          if (profileError) {
-            console.error(`❌ Profile error for ${user.email}:`, profileError);
-            results.failed++;
-            results.errors.push(`Profile error for ${user.email}: ${profileError.message}`);
-            continue;
-          }
-
-          console.log(`✅ Successfully created ${user.email}`);
           results.success++;
 
         } catch (error) {

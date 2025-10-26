@@ -14,10 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          created_at: string | null
+          event_data: Json | null
+          event_type: string
+          id: string
+          ip_address: unknown
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: unknown
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: unknown
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       matches: {
         Row: {
           created_at: string | null
           id: string
+          last_message_at: string | null
           matched_at: string | null
           status: string | null
           user1_id: string
@@ -26,6 +57,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           id?: string
+          last_message_at?: string | null
           matched_at?: string | null
           status?: string | null
           user1_id: string
@@ -34,6 +66,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           id?: string
+          last_message_at?: string | null
           matched_at?: string | null
           status?: string | null
           user1_id?: string
@@ -166,28 +199,44 @@ export type Database = {
           bio: string | null
           community: string | null
           created_at: string | null
+          date_of_birth: string | null
+          dosha: string | null
           education: string | null
           email_notifications: boolean | null
           full_name: string
           gender: string
+          gothra: string | null
           height: number | null
+          hide_from_search: boolean | null
           id: string
           is_online: boolean | null
+          is_verified: boolean | null
           jathaka_details: Json | null
+          jathakam_url: string | null
           language: string | null
+          languages: string[] | null
           last_seen: string | null
           location: string
           marital_status: string | null
+          marry_timeframe: string | null
           match_notifications: boolean | null
           message_notifications: boolean | null
+          nakshatra: string | null
+          notification_settings: Json | null
+          partner_age_range_max: number | null
+          partner_age_range_min: number | null
+          partner_location: string | null
           partner_preferences: Json | null
           photos: string[] | null
+          place_of_birth: string | null
           profession: string | null
           profile_visibility: string | null
           push_notifications: boolean | null
+          rashi: string | null
           religion: string | null
           show_in_search: boolean | null
           show_online_status: boolean | null
+          time_of_birth: string | null
           updated_at: string | null
           verified: boolean | null
         }
@@ -197,28 +246,44 @@ export type Database = {
           bio?: string | null
           community?: string | null
           created_at?: string | null
+          date_of_birth?: string | null
+          dosha?: string | null
           education?: string | null
           email_notifications?: boolean | null
           full_name: string
           gender: string
+          gothra?: string | null
           height?: number | null
+          hide_from_search?: boolean | null
           id: string
           is_online?: boolean | null
+          is_verified?: boolean | null
           jathaka_details?: Json | null
+          jathakam_url?: string | null
           language?: string | null
+          languages?: string[] | null
           last_seen?: string | null
           location: string
           marital_status?: string | null
+          marry_timeframe?: string | null
           match_notifications?: boolean | null
           message_notifications?: boolean | null
+          nakshatra?: string | null
+          notification_settings?: Json | null
+          partner_age_range_max?: number | null
+          partner_age_range_min?: number | null
+          partner_location?: string | null
           partner_preferences?: Json | null
           photos?: string[] | null
+          place_of_birth?: string | null
           profession?: string | null
           profile_visibility?: string | null
           push_notifications?: boolean | null
+          rashi?: string | null
           religion?: string | null
           show_in_search?: boolean | null
           show_online_status?: boolean | null
+          time_of_birth?: string | null
           updated_at?: string | null
           verified?: boolean | null
         }
@@ -228,28 +293,44 @@ export type Database = {
           bio?: string | null
           community?: string | null
           created_at?: string | null
+          date_of_birth?: string | null
+          dosha?: string | null
           education?: string | null
           email_notifications?: boolean | null
           full_name?: string
           gender?: string
+          gothra?: string | null
           height?: number | null
+          hide_from_search?: boolean | null
           id?: string
           is_online?: boolean | null
+          is_verified?: boolean | null
           jathaka_details?: Json | null
+          jathakam_url?: string | null
           language?: string | null
+          languages?: string[] | null
           last_seen?: string | null
           location?: string
           marital_status?: string | null
+          marry_timeframe?: string | null
           match_notifications?: boolean | null
           message_notifications?: boolean | null
+          nakshatra?: string | null
+          notification_settings?: Json | null
+          partner_age_range_max?: number | null
+          partner_age_range_min?: number | null
+          partner_location?: string | null
           partner_preferences?: Json | null
           photos?: string[] | null
+          place_of_birth?: string | null
           profession?: string | null
           profile_visibility?: string | null
           push_notifications?: boolean | null
+          rashi?: string | null
           religion?: string | null
           show_in_search?: boolean | null
           show_online_status?: boolean | null
+          time_of_birth?: string | null
           updated_at?: string | null
           verified?: boolean | null
         }
@@ -374,6 +455,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_verification_request: {
+        Args: { request_id: string }
+        Returns: undefined
+      }
       check_mutual_match: {
         Args: { user1_uuid: string; user2_uuid: string }
         Returns: boolean
@@ -389,8 +474,21 @@ export type Database = {
         }
         Returns: boolean
       }
+      log_audit_event: {
+        Args: {
+          event_data_param?: Json
+          event_type_param: string
+          ip_address_param?: unknown
+          user_agent_param?: string
+        }
+        Returns: string
+      }
       mark_messages_as_read: {
         Args: { p_match_id: string; p_user_id: string }
+        Returns: undefined
+      }
+      reject_verification_request: {
+        Args: { reason: string; request_id: string }
         Returns: undefined
       }
     }

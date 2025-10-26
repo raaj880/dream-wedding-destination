@@ -148,7 +148,13 @@ export const usePotentialMatches = () => {
         photos: p.photos?.length || 0
       })));
 
-      setMatches(validProfiles);
+      // Convert height to string for interface compatibility
+      const mappedProfiles = validProfiles.map(p => ({
+        ...p,
+        height: p.height ? String(p.height) : undefined
+      }));
+
+      setMatches(mappedProfiles);
     } catch (err) {
       console.error('❌ Error in fetchPotentialMatches:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch matches');

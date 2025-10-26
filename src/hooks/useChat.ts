@@ -130,7 +130,7 @@ export const useChat = (matchId: string) => {
         try {
             await supabase.rpc('mark_messages_as_read', {
                 p_match_id: matchId,
-                p_message_ids: messageIds
+                p_user_id: user.id
             });
             
             // Invalidate queries to refresh read status

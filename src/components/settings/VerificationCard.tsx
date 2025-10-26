@@ -61,6 +61,8 @@ const VerificationCard: React.FC = () => {
         .from('verification_requests')
         .insert({
           user_id: user.id,
+          document_type: 'profile_review',
+          document_url: 'pending',
           status: 'pending'
         });
 

@@ -17,7 +17,12 @@ const fetchNotifications = async (userId: string): Promise<Notification[]> => {
     id: n.id,
     userId: n.user_id,
     type: n.type as NotificationType,
-    data: n.data as any,
+    data: {
+      match_id: n.related_match_id || undefined,
+      matched_user_id: n.related_user_id || undefined,
+      matched_user_name: n.title || undefined,
+      message_preview: n.message || undefined,
+    },
     isRead: n.is_read,
     createdAt: new Date(n.created_at),
   }));

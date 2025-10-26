@@ -45,7 +45,7 @@ export const transformRawProfile = (rawProfile: Tables<'profiles'>): ProfileData
     languages: rawProfile.languages?.join(', ') || '',
     profession: rawProfile.profession || '',
     education: rawProfile.education || '',
-    height: rawProfile.height || '',
+    height: rawProfile.height ? String(rawProfile.height) : '',
     marryTimeframe: (rawProfile.marry_timeframe as ProfileData['marryTimeframe']) || '',
     // Ensure valid age range with proper bounds
     partnerAgeRange: [

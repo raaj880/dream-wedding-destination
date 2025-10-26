@@ -60,7 +60,7 @@ export const validateProfileStep = (step: number, data: ProfileData, isEditMode:
         errors.education = 'Education is required';
       }
       
-      if (!data.height.trim()) {
+      if (!data.height || (typeof data.height === 'string' && !data.height.trim())) {
         errors.height = 'Height is required';
       }
       break;
