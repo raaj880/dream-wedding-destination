@@ -1,0 +1,31 @@
+Test Users for Wedder App - Use with ManualTestDataCreator Component
+=======================================================================
+
+MALE USERS (5):
+---------------
+arjun.sharma@test.com, Test@123, Arjun Sharma
+rajesh.kumar@test.com, Test@123, Rajesh Kumar
+vikram.reddy@test.com, Test@123, Vikram Reddy
+sanjay.gowda@test.com, Test@123, Sanjay Gowda
+anil.patel@test.com, Test@123, Anil Patel
+
+FEMALE USERS (5):
+-----------------
+priya.nair@test.com, Test@123, Priya Nair
+deepika.rao@test.com, Test@123, Deepika Rao
+anjali.hegde@test.com, Test@123, Anjali Hegde
+meera.krishna@test.com, Test@123, Meera Krishna
+kavya.shetty@test.com, Test@123, Kavya Shetty
+
+INSTRUCTIONS:
+-------------
+1. Navigate to the ManualTestDataCreator admin page in your app
+2. Copy and paste the email/password pairs above into the textarea
+3. Click "Create Users from Data" button
+4. After users are created, you'll need to manually update their profiles with:
+   - Age, gender, location, profession, education
+   - Bio, religion, community, languages
+   - Height, marriage timeframe, preferences
+   - Jathaka details (rashi, nakshatra, gothra, dosha)
+
+Or use the automated test data generator if available.

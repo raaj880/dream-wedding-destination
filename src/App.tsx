@@ -26,6 +26,7 @@ import BlogPage from '@/pages/BlogPage';
 import ContactPage from '@/pages/ContactPage';
 import HelpCenterPage from '@/pages/HelpCenterPage';
 import FAQPage from '@/pages/FAQPage';
+import TestDataPopulator from '@/pages/admin/TestDataPopulator';
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,7 @@ function App() {
                 } />
                 <Route path="/chat/:matchId" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
                 <Route path="/chat" element={<ProtectedRoute><ChatInterface /></ProtectedRoute>} />
+                <Route path="/admin/test-data" element={<ProtectedRoute><TestDataPopulator /></ProtectedRoute>} />
               </Routes>
             </div>
             <Footer />
